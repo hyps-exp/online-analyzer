@@ -77,7 +77,7 @@ DCHit::~DCHit( void )
 
 void DCHit::SetTdcCFT( int tdc )
 {
-  m_tdc.push_back(tdc); 
+  m_tdc.push_back(tdc);
   m_belong_track.push_back(false);
 }
 
@@ -86,9 +86,9 @@ void
 DCHit::SetDummyPair()
 {
   data_pair a_pair = {0.,
-		      0., 
-		      std::numeric_limits<double>::quiet_NaN(), 
-		      std::numeric_limits<double>::quiet_NaN(), 
+		      0.,
+		      std::numeric_limits<double>::quiet_NaN(),
+		      std::numeric_limits<double>::quiet_NaN(),
 		      -1,
 		      false,
 		      true};
@@ -127,7 +127,7 @@ DCHit::CalcDCObservables( void )
 
   IntVec leading_cont, trailing_cont;
 
-  // Prepare 
+  // Prepare
   {
     for ( int m = 0; m < nh_tdc; ++m ) {
       leading_cont.push_back( m_tdc.at( m ) );
@@ -141,9 +141,9 @@ DCHit::CalcDCObservables( void )
 
     int i_t = 0;
     for(int i = 0; i<nh_tdc; ++i){
-      data_pair a_pair = {0., 0., 
-			  std::numeric_limits<double>::quiet_NaN(), 
-			  std::numeric_limits<double>::quiet_NaN(), 
+      data_pair a_pair = {0., 0.,
+			  std::numeric_limits<double>::quiet_NaN(),
+			  std::numeric_limits<double>::quiet_NaN(),
 			  -1, false, false};
 
       int leading  = leading_cont.at(i);
@@ -182,13 +182,13 @@ DCHit::CalcDCObservables( void )
     double ctime;
     if( !gTdc.GetTime( m_layer, m_wire, leading_cont.at(i), ctime ) ){
       return false;
-    } 
+    }
 
     double dtime, dlength;
     double corrected_ctime = ctime + m_ofs_dt;
     if( !gDrift.CalcDrift( m_layer, m_wire, corrected_ctime, dtime, dlength ) ){
       status = false;
-    } 
+    }
 
     m_pair_cont.at(i).drift_time   = dtime;
     m_pair_cont.at(i).drift_length = dlength;
@@ -210,7 +210,7 @@ DCHit::CalcDCObservables( void )
     case 119: case 120: case 121: case 122: case 123: case 124:
       if( MinDLBc[m_layer-100] < m_pair_cont.at(i).drift_length && m_pair_cont.at(i).drift_length < MaxDLBc[m_layer-100] ){
 	m_pair_cont.at(i).dl_range = true;
-      } 
+      }
       break;
 
       // SDC1,2,3
@@ -273,7 +273,7 @@ DCHit::CalcMWPCObservables( void )
 
   IntVec leading_cont, trailing_cont;
 
-  // Prepare 
+  // Prepare
   {
     for ( int m = 0; m < nh_tdc; ++m ) {
       leading_cont.push_back( m_tdc.at( m ) );
@@ -288,8 +288,8 @@ DCHit::CalcMWPCObservables( void )
     int i_t = 0;
     for(int i = 0; i<nh_tdc; ++i){
       data_pair a_pair = {0., 0.,
-			  std::numeric_limits<double>::quiet_NaN(), 
-			  std::numeric_limits<double>::quiet_NaN(), 
+			  std::numeric_limits<double>::quiet_NaN(),
+			  std::numeric_limits<double>::quiet_NaN(),
 			  -1, false, false};
 
       int leading  = leading_cont.at(i);
@@ -328,12 +328,12 @@ DCHit::CalcMWPCObservables( void )
     double ctime;
     if( !gTdc.GetTime( m_layer, m_wire, leading_cont.at(i), ctime ) ){
       return false;
-    } 
+    }
 
     double dtime, dlength;
     if( !gDrift.CalcDrift( m_layer, m_wire, ctime, dtime, dlength ) ){
       status = false;
-    } 
+    }
 
     m_pair_cont.at(i).drift_time   = dtime;
     m_pair_cont.at(i).drift_length = dlength;
@@ -352,7 +352,7 @@ DCHit::CalcMWPCObservables( void )
       m_pair_cont.at(i).dl_range = true;
     }else{
       status = false;
-    } 
+    }
   }
 
   return status;
@@ -373,9 +373,9 @@ DCHit::CalcFiberObservables( void )
   std::size_t nh_tdc = m_tdc.size();
 
   for( std::size_t i=0; i<nh_tdc; i++ ){
-    data_pair a_pair = {(double)m_tdc[i], 0., 
-			std::numeric_limits<double>::quiet_NaN(), 
-			std::numeric_limits<double>::quiet_NaN(), 
+    data_pair a_pair = {(double)m_tdc[i], 0.,
+			std::numeric_limits<double>::quiet_NaN(),
+			std::numeric_limits<double>::quiet_NaN(),
 			-1, false, true};
     m_pair_cont.push_back( a_pair );
   }
@@ -395,17 +395,17 @@ DCHit::CalcCFTObservables( void )
   //m_z     = gGeom.GetLocalZ( m_layer );
 
   bool status = true;
-    
+
   std::size_t nh_tdc = m_tdc.size();
   for( std::size_t i=0; i<nh_tdc; i++ ){
-    data_pair a_pair = {(double)m_tdc[i], 0., 
-			std::numeric_limits<double>::quiet_NaN(), 
-			std::numeric_limits<double>::quiet_NaN(), 
+    data_pair a_pair = {(double)m_tdc[i], 0.,
+			std::numeric_limits<double>::quiet_NaN(),
+			std::numeric_limits<double>::quiet_NaN(),
 			//-1, false, true};
 			-1, false, false};
     m_pair_cont.push_back( a_pair );
   }
-  
+
 
   return status;
 }
@@ -421,10 +421,10 @@ DCHit::GetResolution( void ) const
 void
 DCHit::TotCut(double min_tot, bool adopt_nan)
 {
-  auto itr_new_end = 
+  auto itr_new_end =
     std::remove_if(m_pair_cont.begin(), m_pair_cont.end(),
-		   [min_tot, adopt_nan](data_pair a_pair)->bool 
-		   {return (isnan(a_pair.tot) && adopt_nan) ? false : !(a_pair.tot > min_tot);}
+		   [min_tot, adopt_nan](data_pair a_pair)->bool
+		   {return (std::isnan(a_pair.tot) && adopt_nan) ? false : !(a_pair.tot > min_tot);}
 		   );
   m_pair_cont.erase(itr_new_end, m_pair_cont.end());
 }
@@ -433,14 +433,14 @@ DCHit::TotCut(double min_tot, bool adopt_nan)
 void
 DCHit::GateDriftTime(double min, double max, bool select_1st)
 {
-  auto itr_new_end = 
+  auto itr_new_end =
     std::remove_if(m_pair_cont.begin(), m_pair_cont.end(),
 		   [min, max](data_pair a_pair)->bool
 		   {return !(min < a_pair.drift_time && a_pair.drift_time < max);}
 		   );
   m_pair_cont.erase(itr_new_end, m_pair_cont.end());
   if(0 == m_pair_cont.size()) return;
-  
+
   if(select_1st) m_pair_cont.erase(m_pair_cont.begin()+1, m_pair_cont.end());
 }
 

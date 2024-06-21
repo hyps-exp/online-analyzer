@@ -22,6 +22,8 @@ enum DetectorType {
   kMsT, kMsT_T0, kMtx3D,
   // Detector unique ID in the S-2S system
   kAC1, kSDC1, kSDC2, kSDC3, kSDC4, kSDC5, kTOF, kSAC3, kSFV,
+  // HYPS
+  kDC1,
   // VMEEASIROC unique ID
   kVMEEASIROC,
   //E70
@@ -170,6 +172,7 @@ public:
   TString MakeDetectorName( const TString& name );
 
   TList* createTimeStamp( Bool_t flag_ps=true );
+  TList* createDC1( Bool_t flag_ps=true );
   TList* createBH1( Bool_t flag_ps=true );
   TList* createBFT( Bool_t flag_ps=true );
   TList* createBC3( Bool_t flag_ps=true );
