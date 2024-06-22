@@ -104,6 +104,8 @@ process_begin(const std::vector<std::string>& argv)
   tab_macro->Add(macro::Get("split32"));
   tab_macro->Add(macro::Get("split33"));
   tab_macro->Add(macro::Get("dispDC1"));
+  tab_macro->Add(macro::Get("dispDC2"));
+  tab_macro->Add(macro::Get("dispDC3"));
   tab_macro->Add(macro::Get("dispBH1"));
   tab_macro->Add(macro::Get("dispBFT"));
   tab_macro->Add(macro::Get("dispBC3"));
@@ -260,9 +262,9 @@ process_event()
       trigger_flag[trigger::kL1SpillOff] ||
       trigger_flag[trigger::kSpillOnEnd] ||
       trigger_flag[trigger::kSpillOffEnd];
-    if(!l1_flag)
-      hddaq::cerr << "#W Trigger flag is missing : "
-		  << trigger_flag << std::endl;
+    // if(!l1_flag)
+    //   hddaq::cerr << "#W Trigger flag is missing : "
+    // 		  << trigger_flag << std::endl;
 
 #if 0
     gUnpacker.dump_data_device(k_device);

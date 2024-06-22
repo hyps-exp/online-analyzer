@@ -1,7 +1,7 @@
 // Updater belongs to the namespace hddaq::gui
 using namespace hddaq::gui;
 
-void dispDC1( void )
+void dispDC2( void )
 {
   // You must write these lines for the thread safe
   // ----------------------------------
@@ -10,14 +10,14 @@ void dispDC1( void )
   // ----------------------------------
 
   gStyle->SetOptStat(1111110);
-  int n_layer = 6;
+  int n_layer = 5;
 
   // draw TDC
   {
     TCanvas *c = (TCanvas*)gROOT->FindObject("c1");
     c->Clear();
     c->Divide(3,2);
-    int base_id = HistMaker::getUniqueID(kDC1, 0, kTDC, 0);
+    int base_id = HistMaker::getUniqueID(kDC2, 0, kTDC, 0);
     // int base_id_ctot = HistMaker::getUniqueID(kDC1, 0, kTDC, kTOTcutOffset);
     for( int i=0; i<n_layer; ++i ){
       c->cd(i+1);
@@ -36,7 +36,7 @@ void dispDC1( void )
     TCanvas *c = (TCanvas*)gROOT->FindObject("c2");
     c->Clear();
     c->Divide(3,2);
-    int base_id = HistMaker::getUniqueID(kDC1, 0, kTDC2D, 0);
+    int base_id = HistMaker::getUniqueID(kDC2, 0, kTDC2D, 0);
     // int base_id_ctot = HistMaker::getUniqueID(kDC1, 0, kTDC2D, kTOTcutOffset);
     for( int i=0; i<n_layer; ++i ){
       c->cd(i+1);
@@ -93,7 +93,7 @@ void dispDC1( void )
     TCanvas *c = (TCanvas*)gROOT->FindObject("c4");
     c->Clear();
     c->Divide(3,2);
-    int base_id = HistMaker::getUniqueID(kDC1, 0, kHitPat, 0);
+    int base_id = HistMaker::getUniqueID(kDC2, 0, kHitPat, 0);
     // int base_id_ctot = HistMaker::getUniqueID(kDC1, 0, kHitPat, kTOTcutOffset);
     for( int i=0; i<n_layer; ++i ){
       c->cd(i+1);
@@ -172,7 +172,7 @@ void dispDC1( void )
     TCanvas *c = (TCanvas*)gROOT->FindObject("c8");
     c->Clear();
     c->Divide(3,2);
-    int base_id = HistMaker::getUniqueID(kDC1, 0, kTDC, 10);
+    int base_id = HistMaker::getUniqueID(kDC2, 0, kTDC, 10);
     //    int base_id_ctot = HistMaker::getUniqueID(kSDC1, 0, kTDC, 1+kTOTcutOffset);
     for( int i=0; i<n_layer; ++i ){
       c->cd(i+1);

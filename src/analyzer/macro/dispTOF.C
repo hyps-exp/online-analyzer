@@ -18,7 +18,7 @@ void dispTOF()
   {
     TCanvas *c = (TCanvas*)gROOT->FindObject("c1");
     c->Clear();
-    c->Divide(5,4);
+    c->Divide(4,4);
     int adc_id     = HistMaker::getUniqueID( kTOF, 0, kADC );
     int adcwtdc_id = HistMaker::getUniqueID( kTOF, 0, kADCwTDC );
     for( int i=0; i<NumOfSegTOF; ++i ){
@@ -41,7 +41,7 @@ void dispTOF()
   {
     TCanvas *c = (TCanvas*)gROOT->FindObject("c2");
     c->Clear();
-    c->Divide(5,4);
+    c->Divide(4,4);
     int adc_id     = HistMaker::getUniqueID(kTOF, 0, kADC, 1+NumOfSegTOF);
     int adcwtdc_id = HistMaker::getUniqueID(kTOF, 0, kADCwTDC, 1+NumOfSegTOF);
     for( int i=0; i<NumOfSegTOF; ++i ){
@@ -68,7 +68,7 @@ void dispTOF()
   {
     TCanvas *c = (TCanvas*)gROOT->FindObject("c3");
     c->Clear();
-    c->Divide(5,4);
+    c->Divide(4,4);
     int tdc_id = HistMaker::getUniqueID( kTOF, 0, kTDC );
     for( int i=0; i<NumOfSegTOF; ++i ){
       c->cd(i+1);
@@ -83,7 +83,7 @@ void dispTOF()
   {
     TCanvas *c = (TCanvas*)gROOT->FindObject("c4");
     c->Clear();
-    c->Divide(5,4);
+    c->Divide(4,4);
     int tdc_id = HistMaker::getUniqueID( kTOF, 0, kTDC, 1+NumOfSegTOF );
     for( int i=0; i<NumOfSegTOF; ++i ){
       c->cd(i+1);

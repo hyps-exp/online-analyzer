@@ -90,6 +90,9 @@ my_tgt_rawhist_hbx	:= $(bin_dir)/raw_hist_hbx
 my_obj_rawhist_vmeeasiroc	:= $(core_obj) user_rawhist_vmeeasiroc.o $(gui_obj)
 my_tgt_rawhist_vmeeasiroc	:= $(bin_dir)/raw_hist_vmeeasiroc
 
+my_obj_rawhist_hyps	:= $(core_obj) user_rawhist_hyps.o $(gui_obj)
+my_tgt_rawhist_hyps	:= $(bin_dir)/raw_hist_hyps
+
 my_obj_mstmonitor_e40	:= $(core_obj) user_mstmonitor_e40.o
 my_tgt_mstmonitor_e40	:= $(bin_dir)/mstmonitor_e40
 
@@ -113,6 +116,12 @@ my_tgt_jsroot_e42	:= $(bin_dir)/jsroot_e42
 
 my_obj_jsroot_e70	:= $(core_obj) user_jsroot_e70.o
 my_tgt_jsroot_e70	:= $(bin_dir)/jsroot_e70
+
+my_obj_jsroot_hyps	:= $(core_obj) user_jsroot_hyps.o
+my_tgt_jsroot_hyps	:= $(bin_dir)/jsroot_hyps
+
+my_obj_jsroot_hyps	:= $(core_obj) user_jsroot_hyps.o
+my_tgt_jsroot_hyps	:= $(bin_dir)/jsroot_hyps
 
 my_obj_jsroot_scaler	:= $(core_obj) user_jsroot_scaler.o
 my_tgt_jsroot_scaler	:= $(bin_dir)/jsroot_scaler
@@ -210,12 +219,14 @@ all::	$(my_tgt_skeleton) $(my_tgt_udebug) $(my_tgt_tag) \
 	$(my_tgt_rawhist_aft) \
 	$(my_tgt_rawhist_hbx) \
 	$(my_tgt_rawhist_vmeeasiroc) \
+	$(my_tgt_rawhist_hyps) \
 	$(my_tgt_beammonitor) \
 	$(my_tgt_scaler_e70) \
 	$(my_tgt_scaler_e72) \
 	$(my_tgt_scaler_sch) \
 	$(my_tgt_scaler_daq) \
 	$(my_tgt_jsroot_e70) \
+	$(my_tgt_jsroot_hyps) \
 	$(my_tgt_jsroot_beamprofile) \
 	$(my_tgt_jsroot_scaler) \
 	$(my_tgt_jsroot_scaler_hbx) \
@@ -392,7 +403,15 @@ my_obj_rawhist_vmeeasiroc	:= $(my_obj_rawhist_vmeeasiroc) \
 my_lib_rawhist_vmeeasiroc	:= libmyrawhist_vmeeasiroc.so
 $(eval $(call make-lib,$(my_lib_rawhist_vmeeasiroc),$(my_obj_rawhist_vmeeasiroc)))
 $(eval $(call make-gui-target,$(my_tgt_rawhist_vmeeasiroc),$(my_lib_rawhist_vmeeasiroc)))
-#
+
+#______________________________________________________________________________
+my_obj_rawhist_hyps	:= $(addprefix $(my_dir)/src/,$(my_obj_rawhist_hyps))
+my_obj_rawhist_hyps	:= $(my_obj_rawhist_hyps) \
+		$(my_dir)/dict/GuiPs_Dict.o
+my_lib_rawhist_hyps	:= libmyrawhist_hyps.so
+$(eval $(call make-lib,$(my_lib_rawhist_hyps),$(my_obj_rawhist_hyps)))
+$(eval $(call make-gui-target,$(my_tgt_rawhist_hyps),$(my_lib_rawhist_hyps)))
+
 #______________________________________________________________________________
 my_obj_vme01debug	:= $(addprefix $(my_dir)/src/,$(my_obj_vme01debug))
 my_lib_vme01debug	:= libmyvme01debug.so
@@ -446,6 +465,13 @@ my_obj_jsroot_e70 := $(my_obj_jsroot_e70)
 my_lib_jsroot_e70 := libmyjsroot_e70.so
 $(eval $(call make-lib,$(my_lib_jsroot_e70),$(my_obj_jsroot_e70)))
 $(eval $(call make-nogui-target,$(my_tgt_jsroot_e70),$(my_lib_jsroot_e70)))
+#
+#______________________________________________________________________________
+my_obj_jsroot_hyps := $(addprefix $(my_dir)/src/,$(my_obj_jsroot_hyps))
+my_obj_jsroot_hyps := $(my_obj_jsroot_hyps)
+my_lib_jsroot_hyps := libmyjsroot_hyps.so
+$(eval $(call make-lib,$(my_lib_jsroot_hyps),$(my_obj_jsroot_hyps)))
+$(eval $(call make-nogui-target,$(my_tgt_jsroot_hyps),$(my_lib_jsroot_hyps)))
 #
 #______________________________________________________________________________
 my_obj_jsroot_scaler	:= $(addprefix $(my_dir)/src/,$(my_obj_jsroot_scaler))

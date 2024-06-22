@@ -1,7 +1,7 @@
 // Updater belongs to the namespace hddaq::gui
 using namespace hddaq::gui;
 
-void dispDC1( void )
+void dispDC3( void )
 {
   // You must write these lines for the thread safe
   // ----------------------------------
@@ -10,15 +10,15 @@ void dispDC1( void )
   // ----------------------------------
 
   gStyle->SetOptStat(1111110);
-  int n_layer = 6;
+  int n_layer = 5;
 
   // draw TDC
   {
     TCanvas *c = (TCanvas*)gROOT->FindObject("c1");
     c->Clear();
     c->Divide(3,2);
-    int base_id = HistMaker::getUniqueID(kDC1, 0, kTDC, 0);
-    // int base_id_ctot = HistMaker::getUniqueID(kDC1, 0, kTDC, kTOTcutOffset);
+    int base_id = HistMaker::getUniqueID(kDC3, 0, kTDC, 0);
+    // int base_id_ctot = HistMaker::getUniqueID(kDC3, 0, kTDC, kTOTcutOffset);
     for( int i=0; i<n_layer; ++i ){
       c->cd(i+1);
       TH1 *h = (TH1*)GHist::get(base_id + i);
@@ -36,8 +36,8 @@ void dispDC1( void )
     TCanvas *c = (TCanvas*)gROOT->FindObject("c2");
     c->Clear();
     c->Divide(3,2);
-    int base_id = HistMaker::getUniqueID(kDC1, 0, kTDC2D, 0);
-    // int base_id_ctot = HistMaker::getUniqueID(kDC1, 0, kTDC2D, kTOTcutOffset);
+    int base_id = HistMaker::getUniqueID(kDC3, 0, kTDC2D, 0);
+    // int base_id_ctot = HistMaker::getUniqueID(kDC3, 0, kTDC2D, kTOTcutOffset);
     for( int i=0; i<n_layer; ++i ){
       c->cd(i+1);
       TH1 *h = (TH1*)GHist::get(base_id + i);;
@@ -56,8 +56,8 @@ void dispDC1( void )
   //   TCanvas *c = (TCanvas*)gROOT->FindObject("c3");
   //   c->Clear();
   //   c->Divide(3,2);
-  //   int base_id = HistMaker::getUniqueID(kDC1, 0, kADC, 0);
-  //   // int base_id_ctot = HistMaker::getUniqueID(kDC1, 0, kADC, kTOTcutOffset);
+  //   int base_id = HistMaker::getUniqueID(kDC3, 0, kADC, 0);
+  //   // int base_id_ctot = HistMaker::getUniqueID(kDC3, 0, kADC, kTOTcutOffset);
   //   for( int i=0; i<n_layer; ++i ){
   //     c->cd(i+1);
   //     TH1 *h = (TH1*)GHist::get(base_id + i);;
@@ -93,8 +93,8 @@ void dispDC1( void )
     TCanvas *c = (TCanvas*)gROOT->FindObject("c4");
     c->Clear();
     c->Divide(3,2);
-    int base_id = HistMaker::getUniqueID(kDC1, 0, kHitPat, 0);
-    // int base_id_ctot = HistMaker::getUniqueID(kDC1, 0, kHitPat, kTOTcutOffset);
+    int base_id = HistMaker::getUniqueID(kDC3, 0, kHitPat, 0);
+    // int base_id_ctot = HistMaker::getUniqueID(kDC3, 0, kHitPat, kTOTcutOffset);
     for( int i=0; i<n_layer; ++i ){
       c->cd(i+1);
       TH1 *h = (TH1*)GHist::get(base_id + i);
@@ -113,7 +113,7 @@ void dispDC1( void )
   //   TCanvas *c = (TCanvas*)gROOT->FindObject("c5");
   //   c->Clear();
   //   c->Divide(3,2);
-  //   int base_id = HistMaker::getUniqueID(kDC1, 0, kMulti);
+  //   int base_id = HistMaker::getUniqueID(kDC3, 0, kMulti);
   //   for( int i=0; i<n_layer; ++i ){
   //     c->cd(i+1);
   //     TH1 *h_wot = (TH1*)GHist::get(base_id + i);//->Clone();
@@ -136,8 +136,8 @@ void dispDC1( void )
   //   TCanvas *c = (TCanvas*)gROOT->FindObject("c6");
   //   c->Clear();
   //   c->Divide(3,2);
-  //   int base_id = HistMaker::getUniqueID(kDC1, 0, kTDC2D, 20+kTOTcutOffset);
-  //   //    int base_id_ctot = HistMaker::getUniqueID(kSDC1, 0, kTDC2D, 1+kTOTcutOffset);
+  //   int base_id = HistMaker::getUniqueID(kDC3, 0, kTDC2D, 20+kTOTcutOffset);
+  //   //    int base_id_ctot = HistMaker::getUniqueID(kSDC3, 0, kTDC2D, 1+kTOTcutOffset);
   //   for( int i=0; i<n_layer; ++i ){
   //     c->cd(i+1);
   //     TH2 *h = (TH2*)GHist::get(base_id + i);;
@@ -154,8 +154,8 @@ void dispDC1( void )
   //   TCanvas *c = (TCanvas*)gROOT->FindObject("c7");
   //   c->Clear();
   //   c->Divide(3,2);
-  //   //    int base_id = HistMaker::getUniqueID(kSDC1, 0, kTDC2D, 21+kTOTcutOffset);
-  //   int base_id_ctot = HistMaker::getUniqueID(kDC1, 0, kTDC2D, 30+kTOTcutOffset);
+  //   //    int base_id = HistMaker::getUniqueID(kSDC3, 0, kTDC2D, 21+kTOTcutOffset);
+  //   int base_id_ctot = HistMaker::getUniqueID(kDC3, 0, kTDC2D, 30+kTOTcutOffset);
   //   for( int i=0; i<n_layer; ++i ){
   //     c->cd(i+1);
   //     TH2 *h = (TH2*)GHist::get(base_id_ctot + i);;
@@ -172,8 +172,8 @@ void dispDC1( void )
     TCanvas *c = (TCanvas*)gROOT->FindObject("c8");
     c->Clear();
     c->Divide(3,2);
-    int base_id = HistMaker::getUniqueID(kDC1, 0, kTDC, 10);
-    //    int base_id_ctot = HistMaker::getUniqueID(kSDC1, 0, kTDC, 1+kTOTcutOffset);
+    int base_id = HistMaker::getUniqueID(kDC3, 0, kTDC, 10);
+    //    int base_id_ctot = HistMaker::getUniqueID(kSDC3, 0, kTDC, 1+kTOTcutOffset);
     for( int i=0; i<n_layer; ++i ){
       c->cd(i+1);
       TH1 *h = (TH1*)GHist::get(base_id + i);

@@ -22,6 +22,7 @@
 #include <TThread.h>
 #include <TMutex.h>
 #include <TPaveStats.h>
+#include <TSystem.h>
 
 #include "Main.hh"
 #include "lexical_cast.hh"
@@ -318,6 +319,8 @@ Updater::run()
   Main& g_main = Main::getInstance();
   for (;;)
     {
+      // std::cout << __func__ << " " << __LINE__ << std::endl;
+      // gSystem->ProcessEvents();
       if (g_main.isZombie())
 	{
 // 	  std::cout << "#D Updater detects end of main" << std::endl;
