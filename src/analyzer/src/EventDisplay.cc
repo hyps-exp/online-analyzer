@@ -1582,6 +1582,7 @@ EventDisplay::DrawInitTrack( void )
 
 }
 
+#if 0
 //______________________________________________________________________________
 void
 EventDisplay::DrawHitWire( Int_t lid, Int_t hit_wire, Bool_t range_check, Bool_t tdc_check )
@@ -1701,6 +1702,7 @@ EventDisplay::DrawHitWire( Int_t lid, Int_t hit_wire, Bool_t range_check, Bool_t
   m_canvas->Update();
 
 }
+#endif
 
 //______________________________________________________________________________
 void
