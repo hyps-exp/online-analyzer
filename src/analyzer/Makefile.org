@@ -214,27 +214,12 @@ my_tgt_ktune_e70      := $(bin_dir)/ktune_e70
 
 #______________________________________________________________________________
 all::	$(my_tgt_skeleton) $(my_tgt_udebug) $(my_tgt_tag) \
-	$(my_tgt_event_display) \
-	$(my_tgt_rawhist_e70) \
-	$(my_tgt_rawhist_aft) \
-	$(my_tgt_rawhist_hbx) \
 	$(my_tgt_rawhist_vmeeasiroc) \
 	$(my_tgt_rawhist_hyps) \
-	$(my_tgt_beammonitor) \
-	$(my_tgt_scaler_e70) \
-	$(my_tgt_scaler_e72) \
-	$(my_tgt_scaler_sch) \
 	$(my_tgt_scaler_daq) \
-	$(my_tgt_jsroot_e70) \
 	$(my_tgt_jsroot_hyps) \
-	$(my_tgt_jsroot_beamprofile) \
 	$(my_tgt_jsroot_scaler) \
-	$(my_tgt_jsroot_scaler_hbx) \
-	$(my_tgt_jsroot_beammonitor) \
-	$(my_tgt_jsroot_totmonitor) \
 	$(my_tgt_vme01debug) \
-	$(my_tgt_ktune_y2020) \
-	$(my_tgt_ktune_e70) \
 	$(core_dict_lib)
 #	$(my_old_tgt)
 
@@ -262,7 +247,22 @@ my_old_tgt	:= $(my_tgt_rawhist_e13) $(my_tgt_beamprofile_e13) \
 	$(my_tgt_rawhist_e03) \
 	$(my_tgt_beamprofile_e03) \
 	$(my_tgt_scaler_e03) \
-	$(my_tgt_jsroot_e03)
+	$(my_tgt_jsroot_e03) \
+	$(my_tgt_event_display) \
+	$(my_tgt_rawhist_e70) \
+	$(my_tgt_rawhist_aft) \
+	$(my_tgt_rawhist_hbx) \
+	$(my_tgt_beammonitor) \
+	$(my_tgt_scaler_e70) \
+	$(my_tgt_scaler_e72) \
+	$(my_tgt_scaler_sch) \
+	$(my_tgt_jsroot_e70) \
+	$(my_tgt_jsroot_beamprofile) \
+	$(my_tgt_jsroot_scaler_hbx) \
+	$(my_tgt_jsroot_beammonitor) \
+	$(my_tgt_jsroot_totmonitor) \
+	$(my_tgt_ktune_y2020) \
+	$(my_tgt_ktune_e70)
 
 #______________________________________________________________________________
 $(my_dir)/dict/%_Dict.cc: $(my_dir)/include/%.hh $(my_dir)/linkdef/%_LinkDef.hh
