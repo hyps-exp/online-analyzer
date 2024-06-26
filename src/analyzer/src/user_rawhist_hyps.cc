@@ -597,7 +597,7 @@ process_event()
 	  tdc = gUnpacker.get(k_device, l, 0, w, k_leading, m);
 	  hptr_array[sdc1t_id + l]->Fill(tdc);
 	  hptr_array[sdc1t_wide_id + l]->Fill(tdc); //TDCwide
-	  std::cout << GREEN << "<SDC1> layer: " << l << ", wire: " << w << ", hit#: " << m << ", TDC: " << tdc << CLEAR << std::endl;
+	  // std::cout << GREEN << "<SDC1> layer: " << l << ", wire: " << w << ", hit#: " << m << ", TDC: " << tdc << CLEAR << std::endl;
 	  if (tdc1st<tdc) tdc1st = tdc;
 
 	  // tdc 2D
@@ -746,7 +746,7 @@ process_event()
 	  tdc = gUnpacker.get(k_device, l, 0, w, k_leading, m);
 	  hptr_array[sdc2t_id + l]->Fill(tdc);
 	  hptr_array[sdc2t_wide_id + l]->Fill(tdc); //TDCwide
-	  std::cout << PINK << "<SDC2> layer: " << l << ", wire: " << w << ", hit#: " << m << ", TDC: " << tdc << CLEAR << std::endl;
+	  // std::cout << PINK << "<SDC2> layer: " << l << ", wire: " << w << ", hit#: " << m << ", TDC: " << tdc << CLEAR << std::endl;
 	  if (tdc1st<tdc) tdc1st = tdc;
 
 	  // tdc 2D
@@ -893,7 +893,7 @@ process_event()
 	  tdc = gUnpacker.get(k_device, l, 0, w, k_leading, m);
 	  hptr_array[sdc3t_id + l]->Fill(tdc);
 	  hptr_array[sdc3t_wide_id + l]->Fill(tdc); //TDCwide
-	  std::cout << CYAN << "<SDC3> layer: " << l << ", wire: " << w << ", hit#: " << m << ", TDC: " << tdc << CLEAR << std::endl;
+	  // std::cout << CYAN << "<SDC3> layer: " << l << ", wire: " << w << ", hit#: " << m << ", TDC: " << tdc << CLEAR << std::endl;
 	  if (tdc1st<tdc) tdc1st = tdc;
 
 	  // tdc 2D
