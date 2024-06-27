@@ -1332,14 +1332,14 @@ TList* HistMaker::createTOF( Bool_t flag_ps )
     for(Int_t i = 0; i<NumOfSegTOF*2; ++i){
       const char* title = NULL;
       if(i < NumOfSegTOF){
-	Int_t seg = i+1; // 1 origin
+	Int_t seg = i;
 	title = Form("%s_%s_%dU", nameDetector, nameSubDir, seg);
       }else{
-	Int_t seg = i+1-NumOfSegTOF; // 1 origin
+	Int_t seg = i-NumOfSegTOF;
 	title = Form("%s_%s_%dD", nameDetector, nameSubDir, seg);
       }
 
-      sub_dir->Add(createTH1(target_id + i+1, title, // 1 origin
+      sub_dir->Add(createTH1(target_id + i, title,
 			     0x1000, 0, 0x1000,
 			     "ADC [ch]", ""));
     }
@@ -1361,14 +1361,14 @@ TList* HistMaker::createTOF( Bool_t flag_ps )
     for( Int_t i=0; i<NumOfSegTOF*2; ++i ){
       const char* title = NULL;
       if( i<NumOfSegTOF ){
-	Int_t seg = i+1; // 1 origin
+	Int_t seg = i;
 	title = Form("%s_%s_%dU", nameDetector, nameSubDir, seg);
       }else{
-	Int_t seg = i+1-NumOfSegTOF; // 1 origin
+	Int_t seg = i-NumOfSegTOF;
 	title = Form("%s_%s_%dD", nameDetector, nameSubDir, seg);
       }
 
-      sub_dir->Add(createTH1(target_id + i+1, title, // 1 origin
+      sub_dir->Add(createTH1(target_id + i, title,
 			     0x1000, 0, 0x1000,
 			     "ADC [ch]", ""));
     }
@@ -1390,14 +1390,14 @@ TList* HistMaker::createTOF( Bool_t flag_ps )
     for(Int_t i = 0; i<NumOfSegTOF*2; ++i){
       const char* title = NULL;
       if(i < NumOfSegTOF){
-	Int_t seg = i+1; // 1 origin
+	Int_t seg = i;
 	title = Form("%s_%s_%dU", nameDetector, nameSubDir, seg);
       }else{
-	Int_t seg = i+1-NumOfSegTOF; // 1 origin
+	Int_t seg = i-NumOfSegTOF;
 	title = Form("%s_%s_%dD", nameDetector, nameSubDir, seg);
       }
 
-      sub_dir->Add(createTH1(target_id + i+1, title, // 1 origin
+      sub_dir->Add(createTH1(target_id + i, title,
 			     50000, 0, 2000000,
 			     "TDC [ch]", ""));
     }
@@ -1411,7 +1411,7 @@ TList* HistMaker::createTOF( Bool_t flag_ps )
     const char* title = "TOF_hit_pattern";
     Int_t target_id = getUniqueID(kTOF, 0, kHitPat, 0);
     // Add to the top directory
-    top_dir->Add(createTH1(target_id + 1, title, // 1 origin
+    top_dir->Add(createTH1(target_id, title,
 			   NumOfSegTOF, 0, NumOfSegTOF,
 			   "Segment", ""));
   }
@@ -1421,7 +1421,7 @@ TList* HistMaker::createTOF( Bool_t flag_ps )
     const char* title = "TOF_multiplicity";
     Int_t target_id = getUniqueID(kTOF, 0, kMulti, 0);
     // Add to the top directory
-    top_dir->Add(createTH1(target_id + 1, title, // 1 origin
+    top_dir->Add(createTH1(target_id, title,
 			   NumOfSegTOF, 0, NumOfSegTOF,
 			   "Multiplicity", ""));
   }

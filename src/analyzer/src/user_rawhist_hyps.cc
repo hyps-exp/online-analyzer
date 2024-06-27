@@ -103,11 +103,12 @@ process_begin(const std::vector<std::string>& argv)
 
   // Add macros to the Macro tab
   //tab_macro->Add(hoge());
-  // tab_macro->Add(macro::Get("clear_all_canvas"));
-  // tab_macro->Add(macro::Get("clear_canvas"));
-  // tab_macro->Add(macro::Get("split22"));
-  // tab_macro->Add(macro::Get("split32"));
-  // tab_macro->Add(macro::Get("split33"));
+  tab_macro->Add(macro::Get("clear_all_canvas"));
+  tab_macro->Add(macro::Get("clear_canvas"));
+  tab_macro->Add(macro::Get("split22"));
+  tab_macro->Add(macro::Get("split32"));
+  tab_macro->Add(macro::Get("split33"));
+  tab_macro->Add(macro::Get("dispCaenV1725"));
   // tab_macro->Add(macro::Get("dispBFT"));
   // tab_macro->Add(macro::Get("dispBH2"));
   // tab_macro->Add(macro::Get("dispSDC1"));
@@ -132,7 +133,7 @@ process_begin(const std::vector<std::string>& argv)
   tab_hist->Add(gHist.createSDC1());
   tab_hist->Add(gHist.createSDC2());
   tab_hist->Add(gHist.createSDC3());
-  // tab_hist->Add(gHist.createTOF());
+  tab_hist->Add(gHist.createTOF());
   // tab_hist->Add(gHist.createAC1());
   // tab_hist->Add(gHist.createCorrelation());
   // tab_hist->Add(gHist.createTriggerFlag());
