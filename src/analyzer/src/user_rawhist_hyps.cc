@@ -128,6 +128,7 @@ process_begin(const std::vector<std::string>& argv)
   //  tab_macro->Add(macro::Get("dispAcEfficiency"));
 
   // Add histograms to the Hist tab
+  tab_hist->Add(gHist.createCaenV1725());
   tab_hist->Add(gHist.createSDC1());
   tab_hist->Add(gHist.createSDC2());
   tab_hist->Add(gHist.createSDC3());
@@ -375,6 +376,31 @@ process_event()
     return 0;
 
 #endif //TriggerFlag, DAQ, TimeStamp
+
+
+  // CaenV1725 ------------------------------------------------------------
+  {
+    static const std::string dname("CaenV1725");
+    static const auto device_id = gUnpacker.get_device_id(dname);
+    static const auto fadc_id = gUnpacker.get_data_id(dname, "fadc");
+    static const auto fadc_hid = gHist.getSequentialID(kCaenV1725, 0, kFADC, 0);
+
+    for(Int_t seg=0; seg<NumOfSegCaenV1725; ++seg){
+      Int_t n = gUnpacker.get_entries(device_id, 0, seg, 0, fadc_id);
+      for(Int_t m=0; m<n; ++m){
+        Int_t fadc = gUnpacker.get(device_id, 0, seg, 0, fadc_id, m);
+        hptr_array[fadc_hid + seg]->Fill(m, fadc);
+      }
+    }
+#if 0
+    // Debug, dump data relating this detector
+    gUnpacker.dump_data_device(device_id);
+#endif
+  }//
+
+#if DEBUG
+  std::cout << __FILE__ << " " << __LINE__ << std::endl;
+#endif
 
 
 #if 0 //SDC0

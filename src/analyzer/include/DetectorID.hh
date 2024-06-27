@@ -6,6 +6,8 @@
 #include <iostream>
 #include <TString.h>
 
+const Int_t NumOfSegCaenV1725 = 16;
+
 // Counters ___________________________________________________________
 const Int_t DetIdBH1      =  1;
 const Int_t DetIdBH2      =  2;

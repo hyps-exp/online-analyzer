@@ -47,7 +47,7 @@ enum DetectorType {
   kKIC, kHDC, kTOFMT,
   // Others
   kTriggerFlag, kDAQ, kCorrelation,
-  kCorrelation_catch, kMisc,
+  kCorrelation_catch, kMisc, kCaenV1725,
   kTimeStamp, kDCEff,
   sizeDetectorType,
   factorDetectorType = 10000000
@@ -170,6 +170,8 @@ public:
                         Double_t ymin, Double_t ymax );
 
   TString MakeDetectorName( const TString& name );
+
+  TList* createCaenV1725( Bool_t flag_ps=true );
 
   TList* createTimeStamp( Bool_t flag_ps=true );
   TList* createDC1( Bool_t flag_ps=true );

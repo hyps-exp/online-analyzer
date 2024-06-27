@@ -277,6 +277,40 @@ HistMaker::createTimeStamp( Bool_t flag_ps )
 
 
 // -------------------------------------------------------------------------
+// createCaenV1725
+// -------------------------------------------------------------------------
+TList*
+HistMaker::createCaenV1725(Bool_t flag_ps)
+{
+  TString strDet = CONV_STRING(kCaenV1725);
+  name_created_detectors_.push_back(strDet);
+  if(flag_ps){
+    name_ps_files_.push_back(strDet);
+  }
+  const char* nameDetector = strDet.Data();
+  TList *top_dir = new TList;
+  top_dir->SetName(nameDetector);
+
+  { ///// FADC
+    TString strSubDir  = CONV_STRING(kFADC);
+    const char* nameSubDir = strSubDir.Data();
+    TList *sub_dir = new TList;
+    sub_dir->SetName(nameSubDir);
+    Int_t target_id = getUniqueID(kCaenV1725, 0, kFADC, 0);
+    for(Int_t i = 0; i<NumOfSegCaenV1725; ++i){
+      const Char_t* title = Form("%s_%s_%d", nameDetector, nameSubDir, i);
+      sub_dir->Add(createTH2(target_id + i, title,
+                             1024, 0, 1024, 0x200, 0, 0x3fff,
+                             "Sample#", "ADC [ch]"));
+    }
+    top_dir->Add(sub_dir);
+  }
+
+  return top_dir;
+}
+
+
+// -------------------------------------------------------------------------
 // createHDC
 // -------------------------------------------------------------------------
 TList* HistMaker::createHDC( Bool_t flag_ps )
