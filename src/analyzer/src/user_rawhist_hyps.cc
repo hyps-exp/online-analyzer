@@ -997,7 +997,7 @@ process_event()
 
 #endif //SDC2,3
 
-#if 0 //TOF&AC
+#if 1 //TOF
 
   //------------------------------------------------------------------
   //TOF
@@ -1005,15 +1005,15 @@ process_event()
   std::vector<Int_t> hitseg_tof;
   { ///// TOF
     static const auto device_id = gUnpacker.get_device_id("TOF");
-    static const auto adc_id = gUnpacker.get_data_id("TOF", "adc");
-    static const auto tdc_id = gUnpacker.get_data_id("TOF", "tdc");
-    static const auto tdc_min = gUser.GetParameter("TdcTOF", 0);
-    static const auto tdc_max = gUser.GetParameter("TdcTOF", 1);
-    static const auto adc_hid = gHist.getSequentialID(kTOF, 0, kADC);
-    static const auto tdc_hid = gHist.getSequentialID(kTOF, 0, kTDC);
-    static const auto awt_hid = gHist.getSequentialID(kTOF, 0, kADCwTDC);
-    static const auto hit_hid = gHist.getSequentialID(kTOF, 0, kHitPat);
-    static const auto mul_hid = gHist.getSequentialID(kTOF, 0, kMulti);
+    static const auto adc_id    = gUnpacker.get_data_id("TOF", "adc");
+    static const auto tdc_id    = gUnpacker.get_data_id("TOF", "tdc");
+    static const auto tdc_min   = gUser.GetParameter("TdcTOF", 0);
+    static const auto tdc_max   = gUser.GetParameter("TdcTOF", 1);
+    static const auto adc_hid   = gHist.getSequentialID(kTOF, 0, kADC,     0);
+    static const auto tdc_hid   = gHist.getSequentialID(kTOF, 0, kTDC,     0);
+    static const auto awt_hid   = gHist.getSequentialID(kTOF, 0, kADCwTDC, 0);
+    static const auto hit_hid   = gHist.getSequentialID(kTOF, 0, kHitPat,  0);
+    static const auto mul_hid   = gHist.getSequentialID(kTOF, 0, kMulti,   0);
     std::vector<std::vector<Int_t>> hit_flag(NumOfSegTOF);
     Int_t multiplicity = 0;
     for(Int_t seg=0; seg<NumOfSegTOF; ++seg) {
@@ -1059,6 +1059,10 @@ process_event()
 #if DEBUG
   std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif
+
+#endif
+
+#if 0 //AC
 
   //------------------------------------------------------------------
   //AC1
@@ -1143,7 +1147,7 @@ process_event()
   std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif
 
-#endif // TOF&AC
+#endif // AC1
 
 
 #if 0 //Correlation, BTOF

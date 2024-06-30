@@ -1206,7 +1206,7 @@ TList* HistMaker::createSDC3( Bool_t flag_ps )
   return top_dir;
 }
 
-
+#if 0
 // -------------------------------------------------------------------------
 // createBAC
 // -------------------------------------------------------------------------
@@ -1297,7 +1297,7 @@ TList* HistMaker::createBAC( Bool_t flag_ps )
 
   return top_dir;
 }
-
+#endif
 
 // -------------------------------------------------------------------------
 // createTOF
@@ -1430,7 +1430,7 @@ TList* HistMaker::createTOF( Bool_t flag_ps )
   return top_dir;
 }
 
-
+#if 0
 // -------------------------------------------------------------------------
 // createCFT
 // -------------------------------------------------------------------------
@@ -2209,7 +2209,7 @@ TList* HistMaker::createPiID( Bool_t flag_ps )
   // Return the TList pointer which is added into TGFileBrowser
   return top_dir;
 }
-
+#endif
 
 // -------------------------------------------------------------------------
 // createTriggerFlag
