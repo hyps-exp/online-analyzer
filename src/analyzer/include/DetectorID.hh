@@ -6,6 +6,8 @@
 #include <iostream>
 #include <TString.h>
 
+const Int_t NumOfSegCaenV792  = 32;
+const Int_t NumOfSegTOF_HRTDC  = 64;
 const Int_t NumOfSegCaenV1725 = 16;
 
 // Counters ___________________________________________________________

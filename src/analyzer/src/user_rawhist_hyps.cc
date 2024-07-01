@@ -108,6 +108,8 @@ process_begin(const std::vector<std::string>& argv)
   tab_macro->Add(macro::Get("split22"));
   tab_macro->Add(macro::Get("split32"));
   tab_macro->Add(macro::Get("split33"));
+  tab_macro->Add(macro::Get("dispCaenV792"));
+  tab_macro->Add(macro::Get("dispTOF_HRTDC"));
   tab_macro->Add(macro::Get("dispCaenV1725"));
   // tab_macro->Add(macro::Get("dispBFT"));
   // tab_macro->Add(macro::Get("dispBH2"));
@@ -129,6 +131,8 @@ process_begin(const std::vector<std::string>& argv)
   //  tab_macro->Add(macro::Get("dispAcEfficiency"));
 
   // Add histograms to the Hist tab
+  tab_hist->Add(gHist.createCaenV792());
+  tab_hist->Add(gHist.createTOF_HRTDC());
   tab_hist->Add(gHist.createCaenV1725());
   tab_hist->Add(gHist.createSDC1());
   tab_hist->Add(gHist.createSDC2());
@@ -257,8 +261,7 @@ process_event()
     for(auto&& c : gUnpacker.get_root()->get_child_list()) {
       if (!c.second)
 	continue;
-      auto t = gUnpacker.get_node_header(c.second->get_id(),
-					 DAQNode::k_unix_time);
+      auto t = gUnpacker.get_node_header(c.second->get_id(), DAQNode::k_unix_time);
       hptr_array[hist_id+i]->Fill(t);
       ++i;
     }
@@ -351,15 +354,15 @@ process_event()
 	  ++multihit_hid;
 	}
       }
-      { // BH2MTLR
-	static const auto device_id = gUnpacker.get_device_id("BH2MTLR");
-	static const auto tdc_id = gUnpacker.get_data_id("BH2MTLR", "tdc");
-	for(Int_t seg=0; seg<NumOfSegBH2; ++seg) {
-	  Int_t nhit_l = gUnpacker.get_entries(device_id, 0, seg, 0, tdc_id);
-	  hptr_array[multihit_hid]->Fill(seg, nhit_l);
-	}
-	++multihit_hid;
-      }
+      // { // BH2MTLR
+      // 	static const auto device_id = gUnpacker.get_device_id("BH2MTLR");
+      // 	static const auto tdc_id = gUnpacker.get_data_id("BH2MTLR", "tdc");
+      // 	for(Int_t seg=0; seg<NumOfSegBH2; ++seg) {
+      // 	  Int_t nhit_l = gUnpacker.get_entries(device_id, 0, seg, 0, tdc_id);
+      // 	  hptr_array[multihit_hid]->Fill(seg, nhit_l);
+      // 	}
+      // 	++multihit_hid;
+      // }
 
       // { // HUL node overflow
       // 	for(Int_t i=0, n=hul_fe_id.size(); i<n; ++i) {
@@ -377,6 +380,63 @@ process_event()
     return 0;
 
 #endif //TriggerFlag, DAQ, TimeStamp
+
+
+  // CaenV792 ------------------------------------------------------------
+  {
+    static const std::string dname("CaenV792");
+    static const auto device_id = gUnpacker.get_device_id(dname);
+    static const auto adc_id   = gUnpacker.get_data_id(dname, "adc");
+    static const auto adc_hid  = gHist.getSequentialID(kCaenV792, 0, kADC, 0);
+
+    for(Int_t seg=0; seg<NumOfSegCaenV792; ++seg){
+      Int_t n = gUnpacker.get_entries(device_id, 0, seg, 0, adc_id);
+      for(Int_t m=0; m<n; ++m){
+        Int_t adc = gUnpacker.get(device_id, 0, seg, 0, adc_id, m);
+        hptr_array[adc_hid + seg]->Fill(adc);
+      }
+    }
+#if 0
+    // Debug, dump data relating this detector
+    gUnpacker.dump_data_device(device_id);
+#endif
+  }//
+
+#if DEBUG
+  std::cout << __FILE__ << " " << __LINE__ << std::endl;
+#endif
+
+
+  //------------------------------------------------------------------
+  // TOF_HRTDC
+  //------------------------------------------------------------------
+  {
+    static const auto device_id = gUnpacker.get_device_id("TOF_HRTDC");
+    static const auto tdc_id    = gUnpacker.get_data_id("TOF_HRTDC", "tdc");
+    static const auto tdc_min   = gUser.GetParameter("TdcTOF", 0);
+    static const auto tdc_max   = gUser.GetParameter("TdcTOF", 1);
+    static const auto tdc_hid   = gHist.getSequentialID(kTOF_HRTDC, 0, kTDC,     0);
+
+    for(Int_t seg=0; seg<NumOfSegTOF_HRTDC; ++seg) {
+      // TDC
+      for(Int_t m=0, n=gUnpacker.get_entries(device_id, 0, seg, 0, tdc_id);
+	  m<n; ++m) {
+	auto tdc = gUnpacker.get(device_id, 0, seg, 0, tdc_id, m);
+	if (tdc != 0) {
+	  hptr_array[tdc_hid + seg]->Fill(tdc);
+	}
+      }
+    }
+
+#if 0
+    // Debug, dump data relating this detector
+    gUnpacker.dump_data_device(k_device);
+#endif
+  }
+
+#if DEBUG
+  std::cout << __FILE__ << " " << __LINE__ << std::endl;
+#endif
 
 
   // CaenV1725 ------------------------------------------------------------
@@ -550,6 +610,7 @@ process_event()
 #endif
 
 #endif //SDC0
+
 
   // SDC1 ------------------------------------------------------------
   std::vector< std::vector<Int_t> > SDC1HitCont(NumOfLayersSDC1);

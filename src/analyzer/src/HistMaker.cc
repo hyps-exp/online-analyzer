@@ -277,6 +277,74 @@ HistMaker::createTimeStamp( Bool_t flag_ps )
 
 
 // -------------------------------------------------------------------------
+// createCaenV792
+// -------------------------------------------------------------------------
+TList*
+HistMaker::createCaenV792(Bool_t flag_ps)
+{
+  TString strDet = CONV_STRING(kCaenV792);
+  name_created_detectors_.push_back(strDet);
+  if(flag_ps){
+    name_ps_files_.push_back(strDet);
+  }
+  const char* nameDetector = strDet.Data();
+  TList *top_dir = new TList;
+  top_dir->SetName(nameDetector);
+
+  { ///// ADC
+    TString strSubDir  = CONV_STRING(kADC);
+    const char* nameSubDir = strSubDir.Data();
+    TList *sub_dir = new TList;
+    sub_dir->SetName(nameSubDir);
+    Int_t target_id = getUniqueID(kCaenV792, 0, kADC, 0);
+    for(Int_t i = 0; i<NumOfSegCaenV792; ++i){
+      const Char_t* title = Form("%s_%s_%d", nameDetector, nameSubDir, i);
+      sub_dir->Add(createTH1(target_id + i, title,
+                             1024, 0, 1024,
+                             "ADC [ch]", ""));
+    }
+    top_dir->Add(sub_dir);
+  }
+
+  return top_dir;
+}
+
+
+// -------------------------------------------------------------------------
+// createTOF_HRTDC
+// -------------------------------------------------------------------------
+TList*
+HistMaker::createTOF_HRTDC(Bool_t flag_ps)
+{
+  TString strDet = CONV_STRING(kTOFHRTDC);
+  name_created_detectors_.push_back(strDet);
+  if(flag_ps){
+    name_ps_files_.push_back(strDet);
+  }
+  const char* nameDetector = strDet.Data();
+  TList *top_dir = new TList;
+  top_dir->SetName(nameDetector);
+
+  { ///// TDC
+    TString strSubDir  = CONV_STRING(kTDC);
+    const char* nameSubDir = strSubDir.Data();
+    TList *sub_dir = new TList;
+    sub_dir->SetName(nameSubDir);
+    Int_t target_id = getUniqueID(kTOF_HRTDC, 0, kTDC, 0);
+    for(Int_t i = 0; i<NumOfSegTOF_HRTDC; ++i){
+      const Char_t* title = Form("%s_%s_%d", nameDetector, nameSubDir, i);
+      sub_dir->Add(createTH1(target_id + i, title,
+                             50000, 0, 2000000,
+                             "TDC [ch]", ""));
+    }
+    top_dir->Add(sub_dir);
+  }
+
+  return top_dir;
+}
+
+
+// -------------------------------------------------------------------------
 // createCaenV1725
 // -------------------------------------------------------------------------
 TList*
