@@ -23,7 +23,7 @@ enum DetectorType {
   // Detector unique ID in the S-2S system
   kAC1, kSDC1, kSDC2, kSDC3, kSDC4, kSDC5, kTOF, kSAC3, kSFV,
   // HYPS
-  kDC1, kDC2, kDC3,
+  kSDC0, kDC1, kDC2, kDC3,
   // VMEEASIROC unique ID
   kVMEEASIROC,
   //E70
@@ -189,6 +189,7 @@ public:
   TList* createFAC( Bool_t flag_ps=true );
   TList* createPVAC( Bool_t flag_ps=true );
   TList* createVMEEASIROC( Bool_t flag_ps=true );
+  TList* createSDC0( Bool_t flag_ps=true );
   TList* createSDC1( Bool_t flag_ps=true );
   TList* createSDC2( Bool_t flag_ps=true );
   TList* createSCH( Bool_t flag_ps=true );

@@ -32,13 +32,13 @@
 
 namespace
 {
-  using namespace hddaq::unpacker;
-  const std::string& class_name("ConfMan");
-  const std::string& kConfFile("CONF");
-  std::string sConfDir;
-  UnpackerManager&      gUnpacker = GUnpacker::get_instance();
-  const MatrixParamMan& gMatrix   = MatrixParamMan::GetInstance();
-  const UserParamMan&   gUser     = UserParamMan::GetInstance();
+using namespace hddaq::unpacker;
+const std::string& class_name("ConfMan");
+const std::string& kConfFile("CONF");
+std::string sConfDir;
+UnpackerManager&      gUnpacker = GUnpacker::get_instance();
+const MatrixParamMan& gMatrix   = MatrixParamMan::GetInstance();
+const UserParamMan&   gUser     = UserParamMan::GetInstance();
 }
 
 ClassImp( ConfMan );

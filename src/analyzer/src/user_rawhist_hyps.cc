@@ -134,6 +134,7 @@ process_begin(const std::vector<std::string>& argv)
   tab_hist->Add(gHist.createCaenV792());
   tab_hist->Add(gHist.createTOF_HRTDC());
   tab_hist->Add(gHist.createCaenV1725());
+  tab_hist->Add(gHist.createSDC0());
   tab_hist->Add(gHist.createSDC1());
   tab_hist->Add(gHist.createSDC2());
   tab_hist->Add(gHist.createSDC3());
@@ -332,6 +333,17 @@ process_event()
       }
     }
 
+      { // SDC0
+	static const Int_t k_device   = gUnpacker.get_device_id("SDC0");
+	static const Int_t k_leading  = gUnpacker.get_data_id("SDC0", "leading");
+	for(Int_t l=0; l<NumOfLayersSDC0; ++l) {
+	  for(Int_t w=0; w<NumOfWireSDC0[l]; ++w) {
+	    Int_t nhit_l = gUnpacker.get_entries(k_device, l, 0, w, k_leading);
+	    hptr_array[multihit_hid]->Fill(w, nhit_l);
+	  }
+	  ++multihit_hid;
+	}
+      }
       { // SDC1
 	static const Int_t k_device   = gUnpacker.get_device_id("SDC1");
 	static const Int_t k_leading  = gUnpacker.get_data_id("SDC1", "leading");
@@ -478,7 +490,7 @@ process_event()
     static const Int_t tdc_min = gUser.GetParameter("TdcSDC0", 0);
     static const Int_t tdc_max = gUser.GetParameter("TdcSDC0", 1);
     // TOT gate range
-    static const Int_t tot_min = gUser.GetParameter("MinTotSDC1", 0);
+    static const Int_t tot_min = gUser.GetParameter("MinTotSDC0", 0);
     // static const Int_t tot_max = gUser.GetParameter("MinTotSDC1", 1);
 
     // sequential id
