@@ -31,7 +31,7 @@
 #include <DAQNode.hh>
 #include <filesystem_util.hh>
 
-#include "AftHelper.hh"
+// #include "AftHelper.hh"
 #include "ConfMan.hh"
 #include "DetectorID.hh"
 #include "DCAnalyzer.hh"
@@ -66,7 +66,7 @@ const auto& gUnpacker = GUnpacker::get_instance();
 auto&       gHist     = HistMaker::getInstance();
 auto&       gHttp     = HttpServer::GetInstance();
 auto&       gMatrix   = MatrixParamMan::GetInstance();
-const auto& gAftHelper = AftHelper::GetInstance();
+// const auto& gAftHelper = AftHelper::GetInstance();
 auto&       gMsT      = MsTParamMan::GetInstance();
 const auto& gUser     = UserParamMan::GetInstance();
 }

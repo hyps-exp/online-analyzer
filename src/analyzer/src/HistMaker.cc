@@ -23,8 +23,8 @@
 #include <Unpacker.hh>
 #include <UnpackerManager.hh>
 
-#include "TpcPadHelper.hh"
-#include "AftHelper.hh"
+// #include "TpcPadHelper.hh"
+// #include "AftHelper.hh"
 
 ClassImp(HistMaker)
 
@@ -42,7 +42,7 @@ namespace
 {
 using hddaq::unpacker::GUnpacker;
 const auto& gUnpacker  = GUnpacker::get_instance();
-      auto& gAftHelper = AftHelper::GetInstance();
+      // auto& gAftHelper = AftHelper::GetInstance();
 }
 
 // Constructor -------------------------------------------------------------

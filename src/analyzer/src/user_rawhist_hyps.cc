@@ -39,7 +39,7 @@
 #include "ProcInfo.hh"
 #include "PsMaker.hh"
 #include "SsdAnalyzer.hh"
-#include "TpcPadHelper.hh"
+// #include "TpcPadHelper.hh"
 #include "UserParamMan.hh"
 
 #define DEBUG      0
@@ -84,7 +84,7 @@ process_begin(const std::vector<std::string>& argv)
   gConfMan.InitializeParameter<MatrixParamMan>("MATRIX2D1",
 					       "MATRIX2D2",
 					       "MATRIX3D");
-  gConfMan.InitializeParameter<TpcPadHelper>("TPCPAD");
+  // gConfMan.InitializeParameter<TpcPadHelper>("TPCPAD");
   gConfMan.InitializeParameter<UserParamMan>("USER");
   if (!gConfMan.IsGood()) return -1;
   // unpacker and all the parameter managers are initialized at this stage
