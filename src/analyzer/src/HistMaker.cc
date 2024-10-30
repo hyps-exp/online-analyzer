@@ -1396,13 +1396,12 @@ TList* HistMaker::createSDC3( Bool_t flag_ps )
   return top_dir;
 }
 
-#if 0
 // -------------------------------------------------------------------------
-// createBAC
+// createSAC
 // -------------------------------------------------------------------------
-TList* HistMaker::createBAC( Bool_t flag_ps )
+TList* HistMaker::createSAC( Bool_t flag_ps )
 {
-  TString strDet = CONV_STRING(kBAC);       // Determine the detector name
+  TString strDet = CONV_STRING(kSAC);       // Determine the detector name
   name_created_detectors_.push_back(strDet);    // name list of crearted detector
   if(flag_ps) name_ps_files_.push_back(strDet); // name list which are displayed in Ps tab
 
@@ -1410,7 +1409,7 @@ TList* HistMaker::createBAC( Bool_t flag_ps )
   TList *top_dir = new TList;
   top_dir->SetName(nameDetector);
 
-  const char* name_acs[] = { "BAC1", "BAC2" };
+  const char* name_acs[] = { "SAC0", "SAC1" };
 
   // ADC ---------------------------------------------------------
   {
@@ -1419,11 +1418,11 @@ TList* HistMaker::createBAC( Bool_t flag_ps )
     TList *sub_dir = new TList;
     sub_dir->SetName( nameSubDir );
 
-    Int_t target_id = getUniqueID(kBAC, 0, kADC, 0);
-    for(Int_t i = 0; i<NumOfSegBAC; ++i){
+    Int_t target_id = getUniqueID(kSAC, 0, kADC, 0);
+    for(Int_t i = 0; i<NumOfSegSAC; ++i){
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], nameSubDir);
-      sub_dir->Add(createTH1(++target_id, title, // 1 origin
+      sub_dir->Add(createTH1(target_id + i, title,
 			     0x1000, 0, 0x1000,
 			     "ADC [ch]", ""));
     }
@@ -1437,11 +1436,11 @@ TList* HistMaker::createBAC( Bool_t flag_ps )
     TList *sub_dir = new TList;
     sub_dir->SetName( nameSubDir );
 
-    Int_t target_id = getUniqueID(kBAC, 0, kADCwTDC, 0);
-    for( Int_t i=0; i<NumOfSegBAC; ++i ){
+    Int_t target_id = getUniqueID(kSAC, 0, kADCwTDC, 0);
+    for( Int_t i=0; i<NumOfSegSAC; ++i ){
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], nameSubDir);
-      sub_dir->Add(createTH1(++target_id, title, // 1 origin
+      sub_dir->Add(createTH1(target_id + i, title,
 			     0x1000, 0, 0x1000,
 			     "ADC [ch]", ""));
     }
@@ -1455,11 +1454,11 @@ TList* HistMaker::createBAC( Bool_t flag_ps )
     TList *sub_dir = new TList;
     sub_dir->SetName(nameSubDir);
 
-    Int_t target_id = getUniqueID(kBAC, 0, kTDC, 0);
-    for(Int_t i = 0; i<NumOfSegBAC; ++i){
+    Int_t target_id = getUniqueID(kSAC, 0, kTDC, 0);
+    for(Int_t i = 0; i<NumOfSegSAC; ++i){
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], nameSubDir);
-      sub_dir->Add(createTH1(++target_id, title, // 1 origin
+      sub_dir->Add(createTH1(target_id + i, title,
 			     0x1000, 0, 0x1000,
 			     //			     0x1000, 0, 0x1000,
 			     "TDC [ch]", ""));
@@ -1468,26 +1467,26 @@ TList* HistMaker::createBAC( Bool_t flag_ps )
   }
 
   { // Hit parttern -----------------------------------------------
-    Int_t target_id = getUniqueID(kBAC, 0, kHitPat, 0);
-    top_dir->Add(createTH1(++target_id, "BAC_hit_pattern",
-			   NumOfSegBAC, 0, NumOfSegBAC,
+    Int_t target_id = getUniqueID(kSAC, 0, kHitPat, 0);
+    top_dir->Add(createTH1(target_id, "SAC_hit_pattern",
+			   NumOfSegSAC, 0, NumOfSegSAC,
 			   "Segment", ""));
   }
 
   { // Multiplicity -----------------------------------------------
-    Int_t target_id = getUniqueID(kBAC, 0, kMulti, 0);
-    for(Int_t i = 0; i<NumOfSegBAC; ++i){
+    Int_t target_id = getUniqueID(kSAC, 0, kMulti, 0);
+    for(Int_t i = 0; i<NumOfSegSAC; ++i){
     const char* title = NULL;
     title = Form("%s_%s", name_acs[i], "multiplicity");
-    top_dir->Add(createTH1(++target_id, title,
-			   NumOfSegBAC+1, 0, NumOfSegBAC+1,
+    top_dir->Add(createTH1(target_id + i, title,
+			   NumOfSegSAC+1, 0, NumOfSegSAC+1,
 			   "Multiplicity", ""));
     }
   }
 
   return top_dir;
 }
-#endif
+
 
 // -------------------------------------------------------------------------
 // createTOF
@@ -3099,13 +3098,12 @@ TList* HistMaker::createVMEEASIROC( Bool_t flag_ps )
 
 
 //###########################################################
-//                                                          #
-//            Unused or Old Detectors from here             #
-//                                                          #
+//#                                                         #
+//#            Unused or Old Detectors from here            #
+//#                                                         #
 //###########################################################
 
 #if 0
-
 //_____________________________________________________________________________
 TList*
 HistMaker::createBH1(Bool_t flag_ps)
