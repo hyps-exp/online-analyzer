@@ -23,7 +23,7 @@ enum DetectorType {
   // Detector unique ID in the S-2S system
   kAC1, kSDC1, kSDC2, kSDC3, kSDC4, kSDC5, kTOF, kSAC3, kSFV,
   // HYPS
-  kSDC0, kDC1, kDC2, kDC3,
+  kSDC0, kDC1, kDC2, kDC3, kTAG_SF, kTAG_PL, kT0, kE_Veto,
   // VMEEASIROC unique ID
   kVMEEASIROC,
   //E70
@@ -171,11 +171,35 @@ public:
 
   TString MakeDetectorName( const TString& name );
 
+  // HYPS
   TList* createCaenV792( Bool_t flag_ps=true );
   TList* createTOF_HRTDC( Bool_t flag_ps=true );
   TList* createCaenV1725( Bool_t flag_ps=true );
 
+  TList* createTAG_SF( Bool_t flag_ps=true );
+  TList* createTAG_PL( Bool_t flag_ps=true );
+  TList* createT0( Bool_t flag_ps=true );
+  TList* createSAC( Bool_t flag_ps=true );
+  TList* createSDC0( Bool_t flag_ps=true );
+  TList* createSDC1( Bool_t flag_ps=true );
+  TList* createSDC2( Bool_t flag_ps=true );
+  TList* createSDC3( Bool_t flag_ps=true );
+  TList* createE_Veto( Bool_t flag_ps=true );
+  TList* createTOF( Bool_t flag_ps=true );
+  TList* createCFT( Bool_t flag_ps=true );
+  TList* createBGO( Bool_t flag_ps=true );
+  TList* createPiID( Bool_t flag_ps=true );
   TList* createTimeStamp( Bool_t flag_ps=true );
+  TList* createVMEEASIROC( Bool_t flag_ps=true );
+  TList* createTriggerFlag( Bool_t flag_ps=true );
+  TList* createCorrelation( Bool_t flag_ps=true );
+  TList* createCorrelation_catch( Bool_t flag_ps=true );
+  TList* createDAQ( Bool_t flag_ps=true );
+  TList* createDCEff( Bool_t flag_ps=true );
+
+  //----- Unused in HYPS -----
+#if 0
+  TList* createDC1( Bool_t flag_ps=true );
   TList* createDC1( Bool_t flag_ps=true );
   TList* createDC2( Bool_t flag_ps=true );
   TList* createDC3( Bool_t flag_ps=true );
@@ -188,15 +212,9 @@ public:
   TList* createBAC( Bool_t flag_ps=true );
   TList* createFAC( Bool_t flag_ps=true );
   TList* createPVAC( Bool_t flag_ps=true );
-  TList* createVMEEASIROC( Bool_t flag_ps=true );
-  TList* createSDC0( Bool_t flag_ps=true );
-  TList* createSDC1( Bool_t flag_ps=true );
-  TList* createSDC2( Bool_t flag_ps=true );
   TList* createSCH( Bool_t flag_ps=true );
-  TList* createSDC3( Bool_t flag_ps=true );
   TList* createSDC4( Bool_t flag_ps=true );
   TList* createSDC5( Bool_t flag_ps=true );
-  TList* createTOF( Bool_t flag_ps=true );
   TList* createLAC( Bool_t flag_ps=true );
   TList* createAC1( Bool_t flag_ps=true );
   TList* createSAC3( Bool_t flag_ps=true );
@@ -207,11 +225,6 @@ public:
   TList* createHTOF( Bool_t flag_ps=true );
   TList* createTPC( Bool_t flag_ps=true );
   TList* createBVH( Bool_t flag_ps=true );
-  TList* createTriggerFlag( Bool_t flag_ps=true );
-  TList* createCorrelation( Bool_t flag_ps=true );
-  TList* createCorrelation_catch( Bool_t flag_ps=true );
-  TList* createDAQ( Bool_t flag_ps=true );
-  TList* createDCEff( Bool_t flag_ps=true );
   TList* createBTOF( Bool_t flag_ps=true );
   TList* createE72E90( Bool_t flag_ps=true );
   TList* createTF_TF( Bool_t flag_ps=true );
@@ -224,10 +237,6 @@ public:
 
   // Old functions E40
   TList* createSFT( Bool_t flag_ps=true );
-  TList* createCFT( Bool_t flag_ps=true );
-  TList* createBGO( Bool_t flag_ps=true );
-  TList* createPiID( Bool_t flag_ps=true );
-  TList* createSAC( Bool_t flag_ps=true );
   TList* createFHT1( Bool_t flag_ps=true );
   TList* createFHT2( Bool_t flag_ps=true );
   TList* createTOF_HT( Bool_t flag_ps=true );
@@ -263,6 +272,7 @@ public:
   TList* createTOFMT( Bool_t flag_ps=true );
   TList* createTriggerFlag_E07( Bool_t flag_ps=true );
   TList* createPWO_E05( Bool_t flag_ps=true );
+#endif // Unused in HYPS
 
 private:
   HistMaker( void );

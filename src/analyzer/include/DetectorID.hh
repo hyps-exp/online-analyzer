@@ -6,9 +6,19 @@
 #include <iostream>
 #include <TString.h>
 
-const Int_t NumOfSegCaenV792  = 32;
-const Int_t NumOfSegTOF_HRTDC  = 64;
-const Int_t NumOfSegCaenV1725 = 16;
+const Int_t NumOfSegCaenV792  =  32;
+const Int_t NumOfSegTOF_HRTDC =  64;
+const Int_t NumOfSegCaenV1725 =  16;
+const Int_t DetIdTAG_SF       = 777; // This value is temporarily
+const Int_t NumOfLayersTAG_SF =   2;
+const Int_t NumOfSegTAG_SF    =  55;
+const Int_t DetIdTAG_PL       = 778; // This value is temporarily
+const Int_t NumOfLayersTAG_PL =   2;
+const Int_t NumOfSegTAG_PL    =  10;
+const Int_t DetIdE_Veto       = 779; // This value is temporarily
+const Int_t NumOfSegE_Veto    =   1;
+const Int_t DetIdT0           = 780; // This value is temporarily
+const Int_t NumOfSegT0        =   1;
 
 // Counters ___________________________________________________________
 const Int_t DetIdBH1      =  1;

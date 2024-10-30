@@ -110,9 +110,9 @@ process_begin(const std::vector<std::string>& argv)
   tab_macro->Add(macro::Get("split22"));
   tab_macro->Add(macro::Get("split32"));
   tab_macro->Add(macro::Get("split33"));
-  tab_macro->Add(macro::Get("dispCaenV792"));
-  tab_macro->Add(macro::Get("dispTOF_HRTDC"));
-  tab_macro->Add(macro::Get("dispCaenV1725"));
+  // tab_macro->Add(macro::Get("dispCaenV792"));
+  // tab_macro->Add(macro::Get("dispTOF_HRTDC"));
+  // tab_macro->Add(macro::Get("dispCaenV1725"));
   // tab_macro->Add(macro::Get("dispBFT"));
   // tab_macro->Add(macro::Get("dispBH2"));
   // tab_macro->Add(macro::Get("dispSDC1"));
@@ -133,22 +133,21 @@ process_begin(const std::vector<std::string>& argv)
   //  tab_macro->Add(macro::Get("dispAcEfficiency"));
 
   // Add histograms to the Hist tab
-  // tab_hist->Add(gHist.createTAG-SF());
-  // tab_hist->Add(gHist.createTAG-PL());
-  // tab_hist->Add(gHist.createT0());
+  tab_hist->Add(gHist.createTAG_SF());
+  tab_hist->Add(gHist.createTAG_PL());
+  tab_hist->Add(gHist.createT0());
   tab_hist->Add(gHist.createSAC());
   tab_hist->Add(gHist.createSDC0());
   tab_hist->Add(gHist.createSDC1());
   tab_hist->Add(gHist.createSDC2());
   tab_hist->Add(gHist.createSDC3());
-  // tab_hist->Add(gHist.createE-Veto());
+  tab_hist->Add(gHist.createE_Veto());
   tab_hist->Add(gHist.createTOF());
   // tab_hist->Add(gHist.createCaenV792());
   // tab_hist->Add(gHist.createTOF_HRTDC());
   // tab_hist->Add(gHist.createCaenV1725());
   // tab_hist->Add(gHist.createCorrelation());
   // tab_hist->Add(gHist.createTriggerFlag());
-
 #if FLAG_DAQ
   tab_hist->Add(gHist.createDAQ());
 #endif
