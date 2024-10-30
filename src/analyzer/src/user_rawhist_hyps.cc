@@ -476,7 +476,7 @@ process_event()
 #endif
 
 
-#if 0 //SDC0
+#if 1 //SDC0
 
   // SDC0 ------------------------------------------------------------
   std::vector< std::vector<Int_t> > SDC0HitCont(6);
@@ -623,6 +623,7 @@ process_event()
 
 #endif //SDC0
 
+#if 1 //SDC1
 
   // SDC1 ------------------------------------------------------------
   std::vector< std::vector<Int_t> > SDC1HitCont(NumOfLayersSDC1);
@@ -770,6 +771,7 @@ process_event()
   std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif
 
+#endif //SDC1
 
 #if 1 //SDC2,3
 
