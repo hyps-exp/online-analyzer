@@ -207,23 +207,23 @@ process_event( void )
     static const int k_lowgain  = gUnpacker.get_data_id("VMEEASIROC", "lowgain");
 
     // SequentialID
-    int vmeeasiroc_t_2d_id    = gHist.getSequentialID(kVMEEASIROC, 0, kTDC2D,   1);
-    int vmeeasiroc_tot_2d_id  = gHist.getSequentialID(kVMEEASIROC, 0, kTOT2D,   1);
-    int vmeeasiroc_hg_2d_id   = gHist.getSequentialID(kVMEEASIROC, 0, kHighGain, 11);
-    int vmeeasiroc_chg_2d_id  = gHist.getSequentialID(kVMEEASIROC, 0, kHighGain, 101);
-    int vmeeasiroc_lg_2d_id   = gHist.getSequentialID(kVMEEASIROC, 0, kLowGain, 11);
-    int vmeeasiroc_clg_2d_id  = gHist.getSequentialID(kVMEEASIROC, 0, kLowGain, 101);
-    int vmeeasiroc_multihit_2d_id = gHist.getSequentialID(kVMEEASIROC, 0, kMultiHitTdc, 21);
-    int vmeeasiroc_hit_id     = gHist.getSequentialID(kVMEEASIROC, 0, kHitPat,   1);
-
-    int vmeeasiroc_hgvstot_2d_id  = gHist.getSequentialID(kVMEEASIROC, 0, kHighGainvsTOT, 31);
+    int vmeeasiroc_t_2d_id        = gHist.getSequentialID(kVMEEASIROC, 0, kTDC2D,          0);
+    int vmeeasiroc_tot_2d_id      = gHist.getSequentialID(kVMEEASIROC, 0, kTOT2D,          0);
+    int vmeeasiroc_hg_2d_id       = gHist.getSequentialID(kVMEEASIROC, 0, kHighGain,      10);
+    int vmeeasiroc_chg_2d_id      = gHist.getSequentialID(kVMEEASIROC, 0, kHighGain,     100);
+    int vmeeasiroc_lg_2d_id       = gHist.getSequentialID(kVMEEASIROC, 0, kLowGain,       10);
+    int vmeeasiroc_clg_2d_id      = gHist.getSequentialID(kVMEEASIROC, 0, kLowGain,      100);
+    int vmeeasiroc_multihit_2d_id = gHist.getSequentialID(kVMEEASIROC, 0, kMultiHitTdc,   20);
+    int vmeeasiroc_hit_id         = gHist.getSequentialID(kVMEEASIROC, 0, kHitPat,         0);
+    // int vmeeasiroc_hgvstot_2d_id  = gHist.getSequentialID(kVMEEASIROC, 0, kHighGainvsTOT, 30);
 
     // TDC gate range
     static const int tdc_min = gUser.GetParameter("TdcVMEEASIROC", 0);
     static const int tdc_max = gUser.GetParameter("TdcVMEEASIROC", 1);
 
     for(int l=0; l<NumOfPlaneVMEEASIROC; ++l){
-      Int_t plane = PlaneIdOfVMEEASIROC[l]-1; // 0 origin
+      // Int_t plane = PlaneIdOfVMEEASIROC[l]-1; // 0 origin
+      Int_t plane = PlaneIdOfVMEEASIROC[l];
       // Int_t tdc1st               = 0;
       // Int_t multiplicity         = 0;
       // Int_t multiplicity_wt      = 0;
@@ -305,34 +305,34 @@ process_event( void )
 	  hptr_array[vmeeasiroc_multihit_2d_id+l]->Fill(seg, nhit_l);
 	}
 
-      	{ // adc vs tot
-	  int nhit_hg = gUnpacker.get_entries(k_device, plane, seg, 0, k_highgain);
-	  int nhit_l  = gUnpacker.get_entries(k_device, plane, seg, 0, k_leading );
-	  int nhit_t  = gUnpacker.get_entries(k_device, plane, seg, 0, k_trailing );
-	  Int_t hit_l_max = 0;
-	  Int_t hit_t_max = 0;
-	  if(nhit_l != 0) hit_l_max = gUnpacker.get(k_device, plane, seg, 0, k_leading,  nhit_l - 1);
-	  if(nhit_t != 0) hit_t_max = gUnpacker.get(k_device, plane, seg, 0, k_trailing, nhit_t - 1);
-	  // tdc1st = 0;
-	  if(nhit_l == nhit_t && hit_l_max > hit_t_max){
-	    if(nhit_hg == nhit_l){
-	      for(Int_t m = 0; m<nhit_l; ++m){
-		int adc_hg = gUnpacker.get(k_device, plane, seg, 0, k_highgain, m);
-		int tdc    = gUnpacker.get(k_device, plane, seg, 0, k_leading, m);
-		int tdc_t  = gUnpacker.get(k_device, plane, seg, 0, k_trailing, m);
-		int tot = tdc - tdc_t;
-		hptr_array[vmeeasiroc_hgvstot_2d_id+l*NumOfSegVMEEASIROC+seg]->Fill(adc_hg, tot);
-		// if(tot < tot_min) continue;
-		// hptr_array[sdc3t_ctot_id + l]->Fill(tdc);
-		// hptr_array[sdc3tot_ctot_id+l]->Fill(tot);
-		// if( tdc1st<tdc ) tdc1st = tdc;
-		// if( tdc_min < tdc && tdc < tdc_max ){
-		//   flag_hit_wt_ctot = true;
-		// }
-	      }
-	    }
-	  }
-	}
+      	// { // adc vs tot
+	//   int nhit_hg = gUnpacker.get_entries(k_device, plane, seg, 0, k_highgain);
+	//   int nhit_l  = gUnpacker.get_entries(k_device, plane, seg, 0, k_leading );
+	//   int nhit_t  = gUnpacker.get_entries(k_device, plane, seg, 0, k_trailing );
+	//   Int_t hit_l_max = 0;
+	//   Int_t hit_t_max = 0;
+	//   if(nhit_l != 0) hit_l_max = gUnpacker.get(k_device, plane, seg, 0, k_leading,  nhit_l - 1);
+	//   if(nhit_t != 0) hit_t_max = gUnpacker.get(k_device, plane, seg, 0, k_trailing, nhit_t - 1);
+	//   // tdc1st = 0;
+	//   if(nhit_l == nhit_t && hit_l_max > hit_t_max){
+	//     if(nhit_hg == nhit_l){
+	//       for(Int_t m = 0; m<nhit_l; ++m){
+	// 	int adc_hg = gUnpacker.get(k_device, plane, seg, 0, k_highgain, m);
+	// 	int tdc    = gUnpacker.get(k_device, plane, seg, 0, k_leading, m);
+	// 	int tdc_t  = gUnpacker.get(k_device, plane, seg, 0, k_trailing, m);
+	// 	int tot = tdc - tdc_t;
+	// 	hptr_array[vmeeasiroc_hgvstot_2d_id+l*NumOfSegVMEEASIROC+seg]->Fill(adc_hg, tot);
+	// 	// if(tot < tot_min) continue;
+	// 	// hptr_array[sdc3t_ctot_id + l]->Fill(tdc);
+	// 	// hptr_array[sdc3tot_ctot_id+l]->Fill(tot);
+	// 	// if( tdc1st<tdc ) tdc1st = tdc;
+	// 	// if( tdc_min < tdc && tdc < tdc_max ){
+	// 	//   flag_hit_wt_ctot = true;
+	// 	// }
+	//       }
+	//     }
+	//   }
+	// }
       }
     }
 
