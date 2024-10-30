@@ -7,10 +7,9 @@
 \#*
 .\#*
 *.sw[nop]
-# backup/
 bin/*
 include/*
-param/*
+param
 src/analyzer/dict/*
 src/main/dict/*
 data
