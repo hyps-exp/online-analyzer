@@ -29,8 +29,14 @@ namespace analyzer
     std::vector<std::string> target = {
 				       // "vme01",
 				       // "vme02",
-				       "hul03sdc-1",
-				       // "hul01scr-1",
+      				       // "hul03sdc-0",
+				       // "hul03sdc-0-1",
+				       // "hul03sdc-0-2",
+				       // "hul03sdc-0-3",
+				       // "hul03sdc-1",
+				       // "hul03sdc-5",
+				       // "hul03sdc-9",
+				       "hul01scr-1",
 				       // "hul01scr-2",
 				       // "hul01scr-3",
 				       // "hul01hr-4",
@@ -52,6 +58,7 @@ process_begin(const std::vector<std::string>& argv)
 
   for( int i=0, n=target.size(); i<n; ++i ){
     int node_id = gUnpacker.get_fe_id( target.at(i) );
+    std::cout << "node_id = " << node_id << std::endl;
     Unpacker *node = gUnpacker.get_root()->get_child(node_id);
     if( !node ) continue;
     node->set_dump_mode(defines::k_hex);
@@ -108,6 +115,7 @@ process_event( void )
   // int node_id = gUnpacker.get_fe_id( target.at(0) );
   // int node_id = gUnpacker.get_fe_id( "hul04scr" );
   // gUnpacker.dump_data_fe(node_id);
+
 
   /*
     int node_id = gUnpacker.get_fe_id("k18eb"); // Event builder

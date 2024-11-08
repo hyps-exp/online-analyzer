@@ -69,24 +69,29 @@ process_begin( const std::vector<std::string>& argv )
   {
     Int_t c = 0;
     Int_t r = 0;
-    gScaler.Set( c, r++, ScalerInfo( "10M-Clock",     0, 50 ) );
-    gScaler.Set( c, r++, ScalerInfo( "Spill",         0, 49 ) );
-    gScaler.Set( c, r++, ScalerInfo( "Real-Time",     0, 53 ) );
-    gScaler.Set( c, r++, ScalerInfo( "Live-Time",     0, 54 ) );
-    gScaler.Set( c, r++, ScalerInfo( "L1-Req",        0, 55 ) );
-    gScaler.Set( c, r++, ScalerInfo( "L1-Acc",        0, 56 ) );
-    gScaler.Set( c, r++, ScalerInfo( "Mst-Acc",       0, 58 ) );
-    gScaler.Set( c, r++, ScalerInfo( "Mst-Clr",       0, 59 ) );
-    gScaler.Set( c, r++, ScalerInfo( "Clear",         0, 60 ) );
-    gScaler.Set( c, r++, ScalerInfo( "L2-Req",        0, 61 ) );
-    gScaler.Set( c, r++, ScalerInfo( "L2-Acc",        0, 62 ) );
-    gScaler.Set( c, r++, ScalerInfo( "(BH2,K)-PS",    0, 47 ) );
-    gScaler.Set( c, r++, ScalerInfo( "(BH2,TOF)-PS",  0, 42 ) );
-    gScaler.Set( c, r++, ScalerInfo( "(BH2,pi)-PS",   0, 43 ) );
-    gScaler.Set( c, r++, ScalerInfo( "(BH2,p)-PS",    0, 44 ) );
-    gScaler.Set( c, r++, ScalerInfo( "(p,BGO)-PS",    0, 45 ) );
-    gScaler.Set( c, r++, ScalerInfo( "Extra-PS",      0, 46 ) );
-    gScaler.Set( c, r++, ScalerInfo( "Beam-PS",       0, 41 ) );
+    gScaler.Set( c, r++, ScalerInfo( "1k-Clock",   0,  9 ) );
+    gScaler.Set( c, r++, ScalerInfo( "RM-L1",      0, 10 ) );
+    gScaler.Set( c, r++, ScalerInfo( "RM-L2",      0, 12 ) );
+    gScaler.Set( c, r++, ScalerInfo( "TOF-UOR",    0, 13 ) );
+    gScaler.Set( c, r++, ScalerInfo( "TOF-DOR",    0, 14 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "10M-Clock",     0, 50 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "Spill",         0, 49 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "Real-Time",     0, 53 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "Live-Time",     0, 54 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "L1-Req",        0, 55 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "L1-Acc",        0, 56 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "Mst-Acc",       0, 58 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "Mst-Clr",       0, 59 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "Clear",         0, 60 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "L2-Req",        0, 61 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "L2-Acc",        0, 62 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "(BH2,K)-PS",    0, 47 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "(BH2,TOF)-PS",  0, 42 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "(BH2,pi)-PS",   0, 43 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "(BH2,p)-PS",    0, 44 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "(p,BGO)-PS",    0, 45 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "Extra-PS",      0, 46 ) );
+    // gScaler.Set( c, r++, ScalerInfo( "Beam-PS",       0, 41 ) );
   }
 
   gScaler.PrintFlags();
