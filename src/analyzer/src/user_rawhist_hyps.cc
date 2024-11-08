@@ -119,7 +119,7 @@ process_begin(const std::vector<std::string>& argv)
   // tab_macro->Add(macro::Get("dispSDC2"));
   // tab_macro->Add(macro::Get("dispSDC3"));
   // tab_macro->Add(macro::Get("dispSDCout_hitpat"));
-  // tab_macro->Add(macro::Get("dispTOF"));
+  tab_macro->Add(macro::Get("dispTOF_ADC"));
   // tab_macro->Add(macro::Get("dispAC1"));
   // tab_macro->Add(macro::Get("dispMatrix"));
   // tab_macro->Add(macro::Get("dispTriggerFlag"));
@@ -402,6 +402,7 @@ process_event()
 
 #endif // TriggerFlag, TimeStamp, DAQ
 
+#if 0
   //------------------------------------------------------------------
   // SAC
   //------------------------------------------------------------------
@@ -466,6 +467,7 @@ process_event()
   std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif
 
+#endif
   //------------------------------------------------------------------
   // SDC0
   //------------------------------------------------------------------
