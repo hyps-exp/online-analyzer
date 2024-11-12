@@ -623,10 +623,10 @@ HistMaker::createT0(Bool_t flag_ps)
       const char* title = NULL;
       if(i < NumOfSegT0){
 	Int_t seg = i;
-	title = Form("%s_%s_%dU", nameDetector, nameSubDir, seg);
+	title = Form("%s_%s_%dL", nameDetector, nameSubDir, seg);
       }else{
 	Int_t seg = i-NumOfSegT0;
-	title = Form("%s_%s_%dD", nameDetector, nameSubDir, seg);
+	title = Form("%s_%s_%dR", nameDetector, nameSubDir, seg);
       }
       sub_dir->Add(createTH1(target_id + i, title,
 			     0x1000, 0, 0x1000,
@@ -644,10 +644,10 @@ HistMaker::createT0(Bool_t flag_ps)
       const char* title = NULL;
       if( i<NumOfSegT0 ){
 	Int_t seg = i;
-	title = Form("%s_%s_%dU", nameDetector, nameSubDir, seg);
+	title = Form("%s_%s_%dL", nameDetector, nameSubDir, seg);
       }else{
 	Int_t seg = i-NumOfSegT0;
-	title = Form("%s_%s_%dD", nameDetector, nameSubDir, seg);
+	title = Form("%s_%s_%dR", nameDetector, nameSubDir, seg);
       }
       sub_dir->Add(createTH1(target_id + i, title,
 			     0x1000, 0, 0x1000,
@@ -665,14 +665,14 @@ HistMaker::createT0(Bool_t flag_ps)
       const char* title = NULL;
       if(i < NumOfSegT0){
 	Int_t seg = i;
-	title = Form("%s_%s_%dU", nameDetector, nameSubDir, seg);
+	title = Form("%s_%s_%dL", nameDetector, nameSubDir, seg);
       }else{
 	Int_t seg = i-NumOfSegT0;
-	title = Form("%s_%s_%dD", nameDetector, nameSubDir, seg);
+	title = Form("%s_%s_%dR", nameDetector, nameSubDir, seg);
       }
       sub_dir->Add(createTH1(target_id + i, title,
-			     //			     10000, 0, 400000,
-     			     50000, 0, 2000000,
+			     10000, 0, 400000,
+     			     //50000, 0, 2000000,
 			     "TDC [ch]", ""));
     }
     top_dir->Add(sub_dir);
@@ -706,7 +706,7 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
   TList *top_dir = new TList;
   top_dir->SetName(nameDetector);
 
-  const char* name_acs[] = { "SAC0", "SAC1" };
+  const char* name_acs[] = {"SAC_sum", "SAC_0U", "SAC_0D", "SAC_1U", "SAC_1D"};
 
   // ADC ---------------------------------------------------------
   {
@@ -717,6 +717,7 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
 
     Int_t target_id = getUniqueID(kSAC, 0, kADC, 0);
     for(Int_t i = 0; i<NumOfSegSAC; ++i){
+    std::cout <<"ADChist i = " << i << std::endl;
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], nameSubDir);
       sub_dir->Add(createTH1(target_id + i, title,
@@ -735,6 +736,7 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
 
     Int_t target_id = getUniqueID(kSAC, 0, kADCwTDC, 0);
     for( Int_t i=0; i<NumOfSegSAC; ++i ){
+    std::cout <<"ADC w/TDC hist i = " << i << std::endl;
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], nameSubDir);
       sub_dir->Add(createTH1(target_id + i, title,
@@ -752,12 +754,13 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
     sub_dir->SetName(nameSubDir);
 
     Int_t target_id = getUniqueID(kSAC, 0, kTDC, 0);
-    for(Int_t i = 0; i<NumOfSegSAC; ++i){
+    for(Int_t i = 0; i<1; ++i){
+    std::cout <<"TDChist i = " << i << std::endl;
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], nameSubDir);
       sub_dir->Add(createTH1(target_id + i, title,
-			     0x1000, 0, 0x1000,
-			     //			     0x1000, 0, 0x1000,
+			     //0x1000, 0, 0x1000,
+			     10000, 0, 400000,
 			     "TDC [ch]", ""));
     }
     top_dir->Add(sub_dir);
@@ -773,11 +776,12 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
   { // Multiplicity -----------------------------------------------
     Int_t target_id = getUniqueID(kSAC, 0, kMulti, 0);
     for(Int_t i = 0; i<NumOfSegSAC; ++i){
-    const char* title = NULL;
-    title = Form("%s_%s", name_acs[i], "multiplicity");
-    top_dir->Add(createTH1(target_id + i, title,
-			   NumOfSegSAC+1, 0, NumOfSegSAC+1,
-			   "Multiplicity", ""));
+      std::cout <<"Multi i = " << i << std::endl;
+      const char* title = NULL;
+      title = Form("%s_%s", name_acs[i], "multiplicity");
+      top_dir->Add(createTH1(target_id + i, title,
+			     NumOfSegSAC+1, 0, NumOfSegSAC+1,
+			     "Multiplicity", ""));
     }
   }
 
@@ -1837,10 +1841,10 @@ TList* HistMaker::createE_Veto( Bool_t flag_ps )
       const char* title = NULL;
       if(i < NumOfSegE_Veto){
 	Int_t seg = i;
-	title = Form("%s_%s_%dU", nameDetector, nameSubDir, seg);
+	title = Form("%s_%s_%dL", nameDetector, nameSubDir, seg);
       }else{
 	Int_t seg = i-NumOfSegE_Veto;
-	title = Form("%s_%s_%dD", nameDetector, nameSubDir, seg);
+	title = Form("%s_%s_%dR", nameDetector, nameSubDir, seg);
       }
 
       sub_dir->Add(createTH1(target_id + i, title,
@@ -1866,10 +1870,10 @@ TList* HistMaker::createE_Veto( Bool_t flag_ps )
       const char* title = NULL;
       if( i<NumOfSegE_Veto ){
 	Int_t seg = i;
-	title = Form("%s_%s_%dU", nameDetector, nameSubDir, seg);
+	title = Form("%s_%s_%dL", nameDetector, nameSubDir, seg);
       }else{
 	Int_t seg = i-NumOfSegE_Veto;
-	title = Form("%s_%s_%dD", nameDetector, nameSubDir, seg);
+	title = Form("%s_%s_%dR", nameDetector, nameSubDir, seg);
       }
 
       sub_dir->Add(createTH1(target_id + i, title,
@@ -1895,14 +1899,15 @@ TList* HistMaker::createE_Veto( Bool_t flag_ps )
       const char* title = NULL;
       if(i < NumOfSegE_Veto){
 	Int_t seg = i;
-	title = Form("%s_%s_%dU", nameDetector, nameSubDir, seg);
+	title = Form("%s_%s_%dL", nameDetector, nameSubDir, seg);
       }else{
 	Int_t seg = i-NumOfSegE_Veto;
-	title = Form("%s_%s_%dD", nameDetector, nameSubDir, seg);
+	title = Form("%s_%s_%dR", nameDetector, nameSubDir, seg);
       }
 
       sub_dir->Add(createTH1(target_id + i, title,
-			     50000, 0, 2000000,
+			     10000, 0, 400000,
+			     //50000, 0, 2000000,
 			     "TDC [ch]", ""));
     }
 

@@ -14,6 +14,7 @@
 
 enum eUorD { kU, kD, kUorD };
 enum eAorT { kA, kT, kAorT };
+enum eLorR { kL, kR, kLorR };
 
 enum DetectorType {
   kDetectorZero,
