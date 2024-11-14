@@ -27,8 +27,8 @@ namespace analyzer
     //std::vector<std::string> target = { "hul01", "hul03" };
     //std::vector<std::string> target = { "vme01" };
     std::vector<std::string> target = {
-				       // "vme01",
-				       "vme02",
+				       "vme01",
+				       // "vme02",
       				       // "hul03sdc-0",
 				       // "hul03sdc-0-1",
 				       // "hul03sdc-0-2",

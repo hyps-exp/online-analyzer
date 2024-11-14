@@ -919,6 +919,7 @@ TList* HistMaker::createSDC0( Bool_t flag_ps )
                              500, 0, 500,
                              "TOT [ch]", ""));
     }
+
     // insert sub directory
     top_dir->Add(sub_dir);
   }

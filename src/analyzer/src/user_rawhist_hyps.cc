@@ -115,9 +115,10 @@ process_begin(const std::vector<std::string>& argv)
   // tab_macro->Add(macro::Get("dispCaenV1725"));
   // tab_macro->Add(macro::Get("dispBFT"));
   // tab_macro->Add(macro::Get("dispBH2"));
-  // tab_macro->Add(macro::Get("dispSDC1"));
-  // tab_macro->Add(macro::Get("dispSDC2"));
-  // tab_macro->Add(macro::Get("dispSDC3"));
+  tab_macro->Add(macro::Get("dispSDC0_hyps"));
+  tab_macro->Add(macro::Get("dispSDC1_hyps"));
+  tab_macro->Add(macro::Get("dispSDC2_hyps"));
+  tab_macro->Add(macro::Get("dispSDC3_hyps"));
   // tab_macro->Add(macro::Get("dispSDCout_hitpat"));
   tab_macro->Add(macro::Get("dispTOF_ADC"));
   // tab_macro->Add(macro::Get("dispAC1"));
