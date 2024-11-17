@@ -110,10 +110,10 @@ process_begin( const std::vector<std::string>& argv )
 
   // Add histograms to the Hist tab
   HistMaker& gHist = HistMaker::getInstance();
-  tab_hist->Add(gHist.createCFT());
+  //tab_hist->Add(gHist.createCFT());
   tab_hist->Add(gHist.createBGO());
-  tab_hist->Add(gHist.createPiID());
-  tab_hist->Add(gHist.createCorrelation_catch());
+  //tab_hist->Add(gHist.createPiID());
+  //tab_hist->Add(gHist.createCorrelation_catch());
 
   // Set histogram pointers to the vector sequentially.
   // This vector contains both TH1 and TH2.
@@ -170,13 +170,13 @@ process_event( void )
   if( flag_event_cut && event_number%event_cut_factor!=0 )
     return 0;
 
-  RawData *rawData;
-  rawData = new RawData;
+  //RawData *rawData;
+  //rawData = new RawData;
 
-  rawData->DecodeHits();
+  //rawData->DecodeHits();
 
-  HodoAnalyzer *hodoAna;
-  hodoAna = new HodoAnalyzer;
+  //HodoAnalyzer *hodoAna;
+  //hodoAna = new HodoAnalyzer;
 
 
 
@@ -237,8 +237,8 @@ process_event( void )
 //    static const int k_trailing   = gUnpacker.get_data_id("BGO", "trailing");
 
     // TDC gate range
-    static const unsigned int tdc_min = gUser.GetParameter("BGO_TDC", 0);
-    static const unsigned int tdc_max = gUser.GetParameter("BGO_TDC", 1);
+    static const unsigned int tdc_min = gUser.GetParameter("TdcBGO", 0);
+    static const unsigned int tdc_max = gUser.GetParameter("TdcBGO", 1);
 
     int bgo_fa_id   = gHist.getSequentialID(kBGO, 0, kFADC);
     int bgo_fawt_id = gHist.getSequentialID(kBGO, 0, kFADCwTDC);
@@ -251,6 +251,7 @@ process_event( void )
     int bgo_chit_id = gHist.getSequentialID(kBGO, 0, kHitPat,  2);
     int bgo_mul_id  = gHist.getSequentialID(kBGO, 0, kMulti,   1);
     int bgo_cmul_id = gHist.getSequentialID(kBGO, 0, kMulti,   2);
+
     unsigned int multiplicity  = 0;
     unsigned int cmultiplicity = 0;
     std::vector<Int_t> de_array( NumOfSegBGO );
@@ -267,10 +268,11 @@ process_event( void )
 	unsigned int fadc = gUnpacker.get(k_device, 0, seg, 0, k_fadc ,i);
 	if( fadc == 0xffff )
 	  continue;
-	if( ped == 0 )
+	if( ped == 0 && fadc>14000)
 	  ped = fadc;
 	hptr_array[bgo_fa_id + seg]->Fill( i+1, fadc);
-	de += ped - fadc;
+	if (ped>0)
+	  de += (ped - fadc);
       }
       hptr_array[bgo_a_id + seg]->Fill( de );
       hptr_array[bgo_a2d_id]->Fill( seg, de );
@@ -319,13 +321,16 @@ process_event( void )
       }
     }
 
+    /*
     for( Int_t i=0, n=de_array.size(); i<n; ++i ){
       for( Int_t j=i+1; j<n; ++j ){
 	if( de_array[i] > 0 && de_array[j] > 0 )
 	  hptr_array[bgo_a2d_id+2]->Fill( de_array[i], de_array[j] );
       }
     }
-
+    */
+    
+    /*
     for(int seg=0; seg<NumOfSegBGO_T; ++seg){
       unsigned int nhit_l = gUnpacker.get_entries(k_device, 1, seg, 0, k_leading);
       nhit_l = gUnpacker.get_entries(k_device, 1, seg, 0, k_leading);
@@ -338,7 +343,8 @@ process_event( void )
         }
       }
     }
-
+    */
+    
     hptr_array[bgo_mul_id]->Fill(multiplicity);
     hptr_array[bgo_cmul_id]->Fill(cmultiplicity); // CMulti
 
@@ -352,6 +358,7 @@ process_event( void )
   std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif
 
+#if 0  
   //------------------------------------------------------------------
   // CFT
   //------------------------------------------------------------------
@@ -729,6 +736,9 @@ process_event( void )
    }
 
   }// Correlation
+#endif
+
+
 #if DEBUG
   std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif

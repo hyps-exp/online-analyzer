@@ -568,7 +568,7 @@ const Int_t DetIdGe         = 27;
 const Int_t DetIdBGO        = 114;
 const Int_t DetIdHbxTrig    = 23;
 const Int_t NumOfSegGe      = 16;
-const Int_t NumOfSegBGO     = 48;
+const Int_t NumOfSegBGO     = 24;
 const Int_t NumOfSegHbxTrig = 4;
 
 const Int_t DetIdBC1   = 101;
