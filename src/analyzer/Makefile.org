@@ -216,7 +216,7 @@ my_tgt_ktune_e70      := $(bin_dir)/ktune_e70
 all::	$(my_tgt_skeleton) $(my_tgt_udebug) $(my_tgt_tag) \
 	$(my_tgt_rawhist_vmeeasiroc) \
 	$(my_tgt_rawhist_hyps) \
-	$(my_tgt_rawhist_catch) \	
+	$(my_tgt_rawhist_catch) \
 	$(my_tgt_scaler_daq) \
 	$(my_tgt_jsroot_hyps) \
 	$(my_tgt_jsroot_scaler) \
