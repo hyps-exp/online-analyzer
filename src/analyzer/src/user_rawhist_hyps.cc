@@ -134,6 +134,7 @@ process_begin(const std::vector<std::string>& argv)
   //  tab_macro->Add(macro::Get("dispAcEfficiency"));
 
   // Add histograms to the Hist tab
+  tab_hist->Add(gHist.createRF());
   tab_hist->Add(gHist.createTAG_SF());
   tab_hist->Add(gHist.createTAG_PL());
   tab_hist->Add(gHist.createT0());
@@ -402,6 +403,63 @@ process_event()
     return 0;
 
 #endif // TriggerFlag, TimeStamp, DAQ
+
+  //------------------------------------------------------------------
+  // RF
+  //------------------------------------------------------------------
+  std::vector<Int_t> hitseg_RF;
+  { ///// RF
+    static const auto device_id = gUnpacker.get_device_id("RF");
+    static const auto adc_id    = gUnpacker.get_data_id("RF", "adc");
+    static const auto tdc_id    = gUnpacker.get_data_id("RF", "tdc");
+    static const auto tdc_min   = gUser.GetParameter("TdcRF", 0);
+    static const auto tdc_max   = gUser.GetParameter("TdcRF", 1);
+    static const auto adc_hid   = gHist.getSequentialID(kRF, 0, kADC,     0);
+    static const auto tdc_hid   = gHist.getSequentialID(kRF, 0, kTDC,     0);
+    static const auto awt_hid   = gHist.getSequentialID(kRF, 0, kADCwTDC, 0);
+    static const auto hit_hid   = gHist.getSequentialID(kRF, 0, kHitPat,  0);
+    static const auto mul_hid   = gHist.getSequentialID(kRF, 0, kMulti,   0);
+    Int_t multiplicity = 0;
+    for(Int_t seg=0; seg<NumOfSegRF; ++seg) {
+      // ADC
+      UInt_t adc = 0;
+      auto nhit = gUnpacker.get_entries(device_id, 0, seg, 0, adc_id);
+      if (nhit != 0) {
+	adc = gUnpacker.get(device_id, 0, seg, 0, adc_id);
+	hptr_array[adc_hid + seg]->Fill(adc);
+      }
+      // TDC
+      Bool_t is_in_gate = false;
+      for(Int_t m=0, n=gUnpacker.get_entries(device_id, 0, seg, 0, tdc_id);
+	  m<n; ++m) {
+	auto tdc = gUnpacker.get(device_id, 0, seg, 0, tdc_id, m);
+	if (tdc != 0) {
+	  hptr_array[tdc_hid + seg]->Fill(tdc);
+	  if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
+	    is_in_gate = true;
+	  }
+	}
+	if (is_in_gate) {
+	  if (gUnpacker.get_entries(device_id, 0, seg, 0, adc_id)>0){
+	    Int_t adc = gUnpacker.get(device_id, 0, seg, adc_id);
+	    hptr_array[awt_hid + seg]->Fill(adc);
+	  }
+	}
+	++multiplicity;
+	hptr_array[hit_hid]->Fill(seg);
+      }
+    }
+    hptr_array[hit_hid]->Fill(multiplicity);
+
+#if 0
+    // Debug, dump data relating this detector
+    gUnpacker.dump_data_device(k_device);
+#endif
+  }
+
+#if DEBUG
+std::cout << __FILE__ << " " << __LINE__ << std::endl;
+#endif
 
   //------------------------------------------------------------------
   // T0

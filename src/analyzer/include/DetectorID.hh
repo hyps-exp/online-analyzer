@@ -19,6 +19,8 @@ const Int_t DetIdE_Veto       = 779; // This value is temporarily
 const Int_t NumOfSegE_Veto    =   1;
 const Int_t DetIdT0           = 780; // This value is temporarily
 const Int_t NumOfSegT0        =   1;
+const Int_t DetIdRF           = 781; // This value is temporarily
+const Int_t NumOfSegRF        =   1;
 
 // Counters ___________________________________________________________
 const Int_t DetIdBH1      =  1;
