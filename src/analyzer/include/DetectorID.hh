@@ -274,8 +274,14 @@ const Int_t NumOfSegAFT[4]    = {NumOfSegAFTX, NumOfSegAFTX, NumOfSegAFTY, NumOf
 
 // VMEEASIROC Board
 const Int_t DetIdVEASIROC         = 116;
-const std::vector<Int_t> PlaneIdOfVMEEASIROC = {16, 17, 31, 32, 33, 34, 49, 50, 51, 52, 53, 69, 70, 71, 72, 73, 74, 95};
-const Int_t NumOfPlaneVMEEASIROC = PlaneIdOfVMEEASIROC.size();
+const std::vector<Int_t> PlaneIdOfVMEEASIROC =
+  {16, 17, 31, 32, 33, 34, 49, 50, 51, 52, 53, 69, 70, 71, 72, 73, 74, 95,
+   19, 20, 21, 22, 35, 36, 37, 38, 54, 55, 56, 57, 58, 75, 76, 77, 78, 79, 80,
+   23, 24, 25, 26, 39, 40, 41, 42, 43, 59, 60, 61, 62, 63, 81, 82, 83, 84, 85,
+   27, 28, 29, 30, 44, 45, 46, 47, 48, 64, 65, 66, 67, 68, 86,  87, 88, 89,
+   90, 91, 92, 94, 93};
+//const Int_t NumOfPlaneVMEEASIROC = PlaneIdOfVMEEASIROC.size();
+const Int_t NumOfPlaneVMEEASIROC = 79;
 const Int_t NumOfSegVMEEASIROC    = 64;
 
 // Trigger Flag

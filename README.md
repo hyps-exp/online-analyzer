@@ -3,18 +3,15 @@
 Online-analyzer for HYPS. Originated from online-v9 of K1.8.
 
 ## Preparation
-Before installation, you have to install unpacker.
+To execute the online-analyzer, you need following softwares. Please install them according to the instructions on each.
 
-``` $ git clone git@github.com:hyps-exp/unpacker.git unpakcer ```
-
-Then, add the unpacker to your PATH.
-``` $ export PATH=$PATH:/path/to/unpacker ```
+- unpacker
+- param
 
 ## Install
-Execute following commands.
 
 ```
-$ git clone git@github.com:hyps-exp:online-analyzer online
+$ git clone git@github.com:hyps-exp:online-analyzer online-analyzer
 $ cd online
 $ ./script/copy_makefile.sh
 $ cd src
