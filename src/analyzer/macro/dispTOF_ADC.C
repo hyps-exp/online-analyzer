@@ -8,6 +8,8 @@ using namespace hddaq::gui;
 void dispTOF_ADC()
 {
   const UserParamMan& gUser = UserParamMan::GetInstance();
+
+  const Int_t seg_unit = 16;
   // You must write these lines for the thread safe
   // ----------------------------------
   if(Updater::isUpdating()){return;}
@@ -20,19 +22,19 @@ void dispTOF_ADC()
     c->Clear();
     c->Divide(4,4);
     int adc_id     = HistMaker::getUniqueID( kTOF, 0, kADC,     0);
-    int adcwtdc_id = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, 0);
-    for( int i=0; i<16; ++i ){
+    // int adcwtdc_id = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, 0);
+    for( int i=0; i<seg_unit; ++i ){
       c->cd(i+1);
       gPad->SetLogy();
       TH1 *h = (TH1*)GHist::get( adc_id + i );
       if( !h ) continue;
       h->GetXaxis()->SetRangeUser( 0, 4096 );
       h->Draw();
-      TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
-      if( !hh ) continue;
-      hh->GetXaxis()->SetRangeUser( 0, 4096 );
-      hh->SetLineColor( kRed );
-      hh->Draw("same");
+      // TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
+      // if( !hh ) continue;
+      // hh->GetXaxis()->SetRangeUser( 0, 4096 );
+      // hh->SetLineColor( kRed );
+      // hh->Draw("same");
     }
     c->Update();
   }
@@ -42,20 +44,20 @@ void dispTOF_ADC()
     TCanvas *c = (TCanvas*)gROOT->FindObject("c2");
     c->Clear();
     c->Divide(4,4);
-    int adc_id     = HistMaker::getUniqueID( kTOF, 0, kADC,     0);
-    int adcwtdc_id = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, 0);
-    for( int i=16; i<31; ++i ){
+    int adc_id     = HistMaker::getUniqueID( kTOF, 0, kADC,     0 + 16);
+    // int adcwtdc_id = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, 0 + 16);
+    for( int i=0; i<seg_unit; ++i ){
       c->cd(i+1);
       gPad->SetLogy();
       TH1 *h = (TH1*)GHist::get( adc_id + i );
       if( !h ) continue;
       h->GetXaxis()->SetRangeUser( 0, 4096 );
       h->Draw();
-      TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
-      if( !hh ) continue;
-      hh->GetXaxis()->SetRangeUser( 0, 4096 );
-      hh->SetLineColor( kRed );
-      hh->Draw("same");
+      // TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
+      // if( !hh ) continue;
+      // hh->GetXaxis()->SetRangeUser( 0, 4096 );
+      // hh->SetLineColor( kRed );
+      // hh->Draw("same");
     }
     c->Update();
   }
@@ -65,20 +67,20 @@ void dispTOF_ADC()
     TCanvas *c = (TCanvas*)gROOT->FindObject("c3");
     c->Clear();
     c->Divide(4,4);
-    int adc_id     = HistMaker::getUniqueID( kTOF, 0, kADC,     0);
-    int adcwtdc_id = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, 0);
-    for( int i=32; i<48; ++i ){
+    int adc_id     = HistMaker::getUniqueID( kTOF, 0, kADC,     0 + 32);
+    // int adcwtdc_id = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, 0 + 32);
+    for( int i=0; i<seg_unit; ++i ){
       c->cd(i+1);
       gPad->SetLogy();
       TH1 *h = (TH1*)GHist::get( adc_id + i );
       if( !h ) continue;
       h->GetXaxis()->SetRangeUser( 0, 4096 );
       h->Draw();
-      TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
-      if( !hh ) continue;
-      hh->GetXaxis()->SetRangeUser( 0, 4096 );
-      hh->SetLineColor( kRed );
-      hh->Draw("same");
+      // TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
+      // if( !hh ) continue;
+      // hh->GetXaxis()->SetRangeUser( 0, 4096 );
+      // hh->SetLineColor( kRed );
+      // hh->Draw("same");
     }
     c->Update();
   }
@@ -89,19 +91,19 @@ void dispTOF_ADC()
     c->Clear();
     c->Divide(4,4);
     int adc_id     = HistMaker::getUniqueID(kTOF, 0, kADC,     NumOfSegTOF);
-    int adcwtdc_id = HistMaker::getUniqueID(kTOF, 0, kADCwTDC, NumOfSegTOF);
-    for( int i=0; i<16; ++i ){
+    // int adcwtdc_id = HistMaker::getUniqueID(kTOF, 0, kADCwTDC, NumOfSegTOF);
+    for( int i=0; i<seg_unit; ++i ){
       c->cd(i+1);
       gPad->SetLogy();
       TH1 *h = (TH1*)GHist::get( adc_id + i );
       if( !h ) continue;
       h->GetXaxis()->SetRangeUser( 0, 4096 );
       h->Draw();
-      TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
-      if( !hh ) continue;
-      hh->GetXaxis()->SetRangeUser( 0, 4096 );
-      hh->SetLineColor( kRed );
-      hh->Draw("same");
+      // TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
+      // if( !hh ) continue;
+      // hh->GetXaxis()->SetRangeUser( 0, 4096 );
+      // hh->SetLineColor( kRed );
+      // hh->Draw("same");
     }
     c->Update();
   }
@@ -111,20 +113,20 @@ void dispTOF_ADC()
     TCanvas *c = (TCanvas*)gROOT->FindObject("c5");
     c->Clear();
     c->Divide(4,4);
-    int adc_id     = HistMaker::getUniqueID(kTOF, 0, kADC,     NumOfSegTOF);
-    int adcwtdc_id = HistMaker::getUniqueID(kTOF, 0, kADCwTDC, NumOfSegTOF);
-    for( int i=16; i<32; ++i ){
+    int adc_id     = HistMaker::getUniqueID(kTOF, 0, kADC,     NumOfSegTOF + 16);
+    // int adcwtdc_id = HistMaker::getUniqueID(kTOF, 0, kADCwTDC, NumOfSegTOF + 16);
+    for( int i=0; i<seg_unit; ++i ){
       c->cd(i+1);
       gPad->SetLogy();
       TH1 *h = (TH1*)GHist::get( adc_id + i );
       if( !h ) continue;
       h->GetXaxis()->SetRangeUser( 0, 4096 );
       h->Draw();
-      TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
-      if( !hh ) continue;
-      hh->GetXaxis()->SetRangeUser( 0, 4096 );
-      hh->SetLineColor( kRed );
-      hh->Draw("same");
+      // TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
+      // if( !hh ) continue;
+      // hh->GetXaxis()->SetRangeUser( 0, 4096 );
+      // hh->SetLineColor( kRed );
+      // hh->Draw("same");
     }
     c->Update();
   }
@@ -134,20 +136,20 @@ void dispTOF_ADC()
     TCanvas *c = (TCanvas*)gROOT->FindObject("c6");
     c->Clear();
     c->Divide(4,4);
-    int adc_id     = HistMaker::getUniqueID(kTOF, 0, kADC,     NumOfSegTOF);
-    int adcwtdc_id = HistMaker::getUniqueID(kTOF, 0, kADCwTDC, NumOfSegTOF);
-    for( int i=32; i<47; ++i ){
+    int adc_id     = HistMaker::getUniqueID(kTOF, 0, kADC,     NumOfSegTOF + 32);
+    // int adcwtdc_id = HistMaker::getUniqueID(kTOF, 0, kADCwTDC, NumOfSegTOF + 32);
+    for( int i=0; i<seg_unit; ++i ){
       c->cd(i+1);
       gPad->SetLogy();
       TH1 *h = (TH1*)GHist::get( adc_id + i );
       if( !h ) continue;
       h->GetXaxis()->SetRangeUser( 0, 4096 );
       h->Draw();
-      TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
-      if( !hh ) continue;
-      hh->GetXaxis()->SetRangeUser( 0, 4096 );
-      hh->SetLineColor( kRed );
-      hh->Draw("same");
+      // TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
+      // if( !hh ) continue;
+      // hh->GetXaxis()->SetRangeUser( 0, 4096 );
+      // hh->SetLineColor( kRed );
+      // hh->Draw("same");
     }
     c->Update();
   }
