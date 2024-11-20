@@ -3,7 +3,7 @@
 #  shell script for online/semi online analyzer
 ##
 
-. $(dirname $(readlink -f $0))/setebhost
+# . $(dirname $(readlink -f $0))/setebhost
 
 dis_port=8901
 rec_port=8902
@@ -15,14 +15,15 @@ ana_dir=$(dirname $(readlink -f $0))/..
 bin_dir=$ana_dir/bin
 
 ##### execute file
-exe_file=$bin_dir/raw_hist_e70
+exe_file=$bin_dir/raw_hist_hyps
 
 ##### data directory
 data_dir=($ana_dir/data $ana_dir/data_bench)
 
 ##### configure file
 # Do NOT change here. Change symbolic link.
-conf_file=/misc/software/param/conf/analyzer.conf
+# conf_file=/misc/software/param/conf/analyzer.conf
+conf_file=/home/sks/software/param/pro/conf/analyzer.conf
 
 #######################################################################
 if [ ! -f $exe_file ]; then
@@ -35,7 +36,8 @@ if [ ! -f $conf_file ]; then
 fi
 
 if [ $# = 0 ]; then
-    $exe_file $conf_file ${ebhost}:$port
+    # $exe_file $conf_file ${ebhost}:$port
+    $exe_file $conf_file eb-hyps:$port
     exit
 fi
 
