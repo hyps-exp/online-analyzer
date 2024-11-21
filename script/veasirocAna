@@ -36,7 +36,7 @@ fi
 
 if [ $# = 0 ]; then
     # $exe_file $conf_file ${ebhost}:$port
-    $exe_file $conf_file eb-hyp:$port
+    $exe_file $conf_file eb-hyps:$port
     exit
 fi
 
