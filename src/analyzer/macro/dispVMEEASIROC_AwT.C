@@ -20,8 +20,8 @@ dispVMEEASIROC_AwT( void )
   int drawPlane = 33;
   // draw HighGain-2D
   { //
-    int vmeeasiroc_hg_2d_id   = HistMaker::getUniqueID(kVMEEASIROC, 0, kHighGain, 11);
-    int vmeeasiroc_chg_2d_id  = HistMaker::getUniqueID(kVMEEASIROC, 0, kHighGain, 101);
+    int vmeeasiroc_hg_2d_id   = HistMaker::getUniqueID(kVMEEASIROC, 0, kHighGain, 10);
+    int vmeeasiroc_chg_2d_id  = HistMaker::getUniqueID(kVMEEASIROC, 0, kHighGain, 100);
     TH1D *h_hg[NumOfSegVMEEASIROC];
     TH1D *h_chg[NumOfSegVMEEASIROC];
     TCanvas *c;
