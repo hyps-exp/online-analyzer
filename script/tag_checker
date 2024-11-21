@@ -22,8 +22,7 @@ data_dir=$ana_dir/data
 
 ##### configure file
 # conf_file=/misc/software/param/conf/analyzer_tag.conf
-# conf_file=/home/sks/software/param/pro/conf/analyzer_tag.conf
-conf_file=/home/sks/software/param/dev/conf/analyzer_tag.conf
+conf_file=/home/sks/software/param/pro/conf/analyzer_tag.conf
 
 #######################################################################
 if [ ! -f $exe_file ]; then
