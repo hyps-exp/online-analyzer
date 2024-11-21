@@ -3,7 +3,7 @@
 #  shell script for online/semi online analyzer
 ##
 
-. $(dirname $(readlink -f $0))/setebhost
+# . $(dirname $(readlink -f $0))/setebhost
 
 dis_port=8901
 rec_port=8902
@@ -21,7 +21,8 @@ exe_file=$bin_dir/tag_checker
 data_dir=$ana_dir/data
 
 ##### configure file
-conf_file=/misc/software/param/conf/analyzer_tag.conf
+# conf_file=/misc/software/param/conf/analyzer_tag.conf
+conf_file=/home/sks/software/param/pro/conf/analyzer_tag.conf
 
 #######################################################################
 if [ ! -f $exe_file ]; then
