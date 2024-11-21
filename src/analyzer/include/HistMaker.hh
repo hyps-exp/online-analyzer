@@ -12,10 +12,17 @@
 #include <TROOT.h>
 #include <TString.h>
 
+enum ParticleType{
+// enum ParticleTyp{
+  kKaon, kPion, kAll, NParticleType
+};
+
+
 enum eUorD { kU, kD, kUorD };
 enum eAorT { kA, kT, kAorT };
 enum eLorR { kL, kR, kLorR };
 
+// enum DetectorTyp {
 enum DetectorType {
   kDetectorZero,
   // Detector unique ID in the beam line
@@ -55,6 +62,7 @@ enum DetectorType {
 };
 
 enum SubDetectorType {
+// enum SubDetectorTyp {
   kSubDetectorZero,
   // FHT Layers
   kFHT_L1, kFHT_L2,
@@ -76,6 +84,7 @@ enum SubDetectorType {
 };
 
 enum DataType {
+// enum DataTyp {
   kDataTypeZero,
   // Usual data type
   kADC,   kTDC,   kHitPat,   kMulti,
@@ -83,6 +92,8 @@ enum DataType {
   kADCwTDC, kFADC, kFADCwTDC,
   kDeltaE, kCTime, kDeltaE2D, kCTime2D,
   kChisqr,
+  // Extra data type for chamber
+  kTOTTDC2D,
   // Extra data type for CFT
   kHighGain, kLowGain, kPede,
   // Extra data type for AFT
@@ -99,10 +110,6 @@ enum DataType {
   kFlagTDC, kFlagHitPat,
   sizeDataType,
   factorDataType = 1000
-};
-
-enum ParticleType {
-  kKaon, kPion, kAll, NParticleType
 };
 
 static const TString ParticleName[NParticleType] =
