@@ -102,7 +102,7 @@ process_begin( const std::vector<std::string>& argv )
   tab_macro->Add(macro::Get("dispCFTTDC"));
   tab_macro->Add(macro::Get("dispCFTADC"));
   tab_macro->Add(macro::Get("dispCFTHitMulti"));
-  tab_macro->Add(macro::Get("dispBGO"));
+  tab_macro->Add(macro::Get("dispCatchBGO"));
   tab_macro->Add(macro::Get("dispPiID"));
   tab_macro->Add(macro::Get("dispDAQ"));
   tab_macro->Add(macro::Get("effCFT"));
@@ -110,9 +110,9 @@ process_begin( const std::vector<std::string>& argv )
 
   // Add histograms to the Hist tab
   HistMaker& gHist = HistMaker::getInstance();
-  //tab_hist->Add(gHist.createCFT());
-  tab_hist->Add(gHist.createBGO());
-  //tab_hist->Add(gHist.createPiID());
+  tab_hist->Add(gHist.createCFT());
+  tab_hist->Add(gHist.createCatchBGO());
+  tab_hist->Add(gHist.createPiID());
   //tab_hist->Add(gHist.createCorrelation_catch());
 
   // Set histogram pointers to the vector sequentially.
@@ -170,13 +170,13 @@ process_event( void )
   if( flag_event_cut && event_number%event_cut_factor!=0 )
     return 0;
 
-  //RawData *rawData;
-  //rawData = new RawData;
+  // RawData *rawData;
+  // rawData = new RawData;
 
-  //rawData->DecodeHits();
+  // rawData->DecodeHits();
 
-  //HodoAnalyzer *hodoAna;
-  //hodoAna = new HodoAnalyzer;
+  // HodoAnalyzer *hodoAna;
+  // hodoAna = new HodoAnalyzer;
 
 
 
@@ -329,7 +329,7 @@ process_event( void )
       }
     }
     */
-    
+
     /*
     for(int seg=0; seg<NumOfSegBGO_T; ++seg){
       unsigned int nhit_l = gUnpacker.get_entries(k_device, 1, seg, 0, k_leading);
@@ -344,7 +344,7 @@ process_event( void )
       }
     }
     */
-    
+
     hptr_array[bgo_mul_id]->Fill(multiplicity);
     hptr_array[bgo_cmul_id]->Fill(cmultiplicity); // CMulti
 
@@ -358,7 +358,7 @@ process_event( void )
   std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif
 
-#if 0  
+#if 1
   //------------------------------------------------------------------
   // CFT
   //------------------------------------------------------------------
@@ -370,8 +370,8 @@ process_event( void )
     static const int k_highgain = gUnpacker.get_data_id("CFT" , "highgain");
     static const int k_lowgain  = gUnpacker.get_data_id("CFT", "lowgain");
     // TDC gate range
-    static const int tdc_min = gUser.GetParameter("CFT_TDC", 0);
-    static const int tdc_max = gUser.GetParameter("CFT_TDC", 1);
+    static const int tdc_min = gUser.GetParameter("TdcCFT", 0);
+    static const int tdc_max = gUser.GetParameter("TdcCFT", 1);
 
     // SequentialID
     int cft_t_id    = gHist.getSequentialID(kCFT, 0, kTDC,     1);
@@ -526,7 +526,7 @@ process_event( void )
     hptr_array[cft_cmul_id+NumOfLayersCFT + 1]->Fill(cmultiplicity[1] + cmultiplicity[3]
 						     + cmultiplicity[5] + cmultiplicity[7]);
 
-
+#if 0
     //clustering analysis
   hodoAna->DecodeCFTHits(rawData);
   // Fiber Cluster
@@ -581,6 +581,7 @@ process_event( void )
 
   delete rawData;
   delete hodoAna;
+#endif
 
 #if 0
     // Debug, dump data relating this detector
@@ -603,8 +604,8 @@ process_event( void )
     static const int k_tdc      = gUnpacker.get_data_id("PiID", "leading");
 
     // TDC gate range
-    static const unsigned int tdc_min = gUser.GetParameter("PiID_TDC", 0);
-    static const unsigned int tdc_max = gUser.GetParameter("PiID_TDC", 1);
+    static const unsigned int tdc_min = gUser.GetParameter("TdcPiID", 0);
+    static const unsigned int tdc_max = gUser.GetParameter("TdcPiID", 1);
 
     int piidhg_id   = gHist.getSequentialID(kPiID, 0, kHighGain);
     int piidlg_id   = gHist.getSequentialID(kPiID, 0, kLowGain);

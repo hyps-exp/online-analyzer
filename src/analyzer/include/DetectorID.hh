@@ -427,7 +427,7 @@ const Int_t NumOfSegSAC     =  5; // HYPS
 const Int_t NumOfSegFBH     = 16;
 const Int_t DetIdSFT  = 111;
 const Int_t DetIdCFT  = 113;
-//const Int_t DetIdBGO  = 114;
+const Int_t DetIdBGO  = 114;
 const Int_t DetIdPiID = 115;
 const Int_t DetIdFHT1 = 131;
 const Int_t DetIdFHT2 = 132;
@@ -485,7 +485,7 @@ const Int_t    NumOfBGOInOneUnit = 2;//pair unit
 const Double_t RadiusOfBGOSurface = 100.;
 const Int_t    NumOfBGOInOneUnit2 = 1;//single unit
 const Double_t RadiusOfBGOSurface2 = 120.;
-//const Int_t NumOfSegBGO = NumOfBGOUnit*(NumOfBGOInOneUnit+NumOfBGOInOneUnit2);//24
+const Int_t NumOfSegBGO = NumOfBGOUnit*(NumOfBGOInOneUnit+NumOfBGOInOneUnit2);//24
 const Int_t NumOfSegBGO_T=   4;
 
 // PiID counter
@@ -573,10 +573,10 @@ const Int_t NumOfSegSP0    = 5;
 
 //E03 HBX detctors
 const Int_t DetIdGe         = 27;
-const Int_t DetIdBGO        = 114;
+// const Int_t DetIdBGO        = 114;
 const Int_t DetIdHbxTrig    = 23;
 const Int_t NumOfSegGe      = 16;
-const Int_t NumOfSegBGO     = 24;
+// const Int_t NumOfSegBGO     = 24;
 const Int_t NumOfSegHbxTrig = 4;
 
 const Int_t DetIdBC1   = 101;

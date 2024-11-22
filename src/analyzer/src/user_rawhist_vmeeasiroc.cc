@@ -101,7 +101,7 @@ process_begin( const std::vector<std::string>& argv )
   HistMaker& gHist = HistMaker::getInstance();
   tab_hist->Add(gHist.createVMEEASIROC());
 
-  // Set histogram pointers to the vector sequentially.
+  // set histogram pointers to the vector sequentially.
   // This vector contains both TH1 and TH2.
   // Then you need to do down cast when you use TH2.
   if(0 != gHist.setHistPtr(hptr_array)){ return -1; }

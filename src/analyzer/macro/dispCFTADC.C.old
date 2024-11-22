@@ -1,16 +1,12 @@
-// -*- C++ -*-
+#include "HistMaker.hh"
 
-#include "DetectorID.hh"
+// Updater belongs to the namespace hddaq::gui
+using namespace hddaq::gui;
 
-#include "UserParamMan.hh"
-
-using namespace hddaq::gui; // for Updater
-
-//_____________________________________________________________________________
+//_____________________________________________________________________
 void
 dispCFTADC( void )
 {
-
   // You must write these lines for the thread safe
   // ----------------------------------
   if(Updater::isUpdating()){return;}
@@ -35,7 +31,8 @@ dispCFTADC( void )
     }
   }
 
-  { // 2D
+#if 0
+  {
     std::vector<Int_t> id = { kHighGain, kLowGain, kPede };
     for( Int_t i=0, n=id.size(); i<n; ++i ){
       TCanvas *c = (TCanvas*)gROOT->FindObject( Form("c%d", i+4) );
@@ -50,10 +47,10 @@ dispCFTADC( void )
       c->Update();
     }
   }
+#endif
 
   // You must write these lines for the thread safe
   // ----------------------------------
   Updater::setUpdating(false);
   // ----------------------------------
-
 }

@@ -12,11 +12,6 @@
 #include <TROOT.h>
 #include <TString.h>
 
-enum ParticleType{
-// enum ParticleTyp{
-  kKaon, kPion, kAll, NParticleType
-};
-
 
 enum eUorD { kU, kD, kUorD };
 enum eAorT { kA, kT, kAorT };
@@ -112,6 +107,10 @@ enum DataType {
   factorDataType = 1000
 };
 
+enum ParticleType{
+  kKaon, kPion, kAll, NParticleType
+};
+
 static const TString ParticleName[NParticleType] =
   { "Kaon", "Pion", "All" };
 
@@ -197,6 +196,7 @@ public:
   TList* createTOF( Bool_t flag_ps=true );
   TList* createCFT( Bool_t flag_ps=true );
   TList* createBGO( Bool_t flag_ps=true );
+  TList* createCatchBGO( Bool_t flag_ps=true );
   TList* createPiID( Bool_t flag_ps=true );
   TList* createTimeStamp( Bool_t flag_ps=true );
   TList* createVMEEASIROC( Bool_t flag_ps=true );
