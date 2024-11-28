@@ -120,6 +120,7 @@ process_begin(const std::vector<std::string>& argv)
   tab_macro->Add(macro::Get("dispSDC3_hyps"));
   // tab_macro->Add(macro::Get("dispSDCout_hitpat"));
   tab_macro->Add(macro::Get("dispTOF_ADC"));
+  tab_macro->Add(macro::Get("dispTOF_ADC_tmp"));
   // tab_macro->Add(macro::Get("dispAC1"));
   // tab_macro->Add(macro::Get("dispMatrix"));
   // tab_macro->Add(macro::Get("dispTriggerFlag"));
@@ -127,11 +128,11 @@ process_begin(const std::vector<std::string>& argv)
   // tab_macro->Add(macro::Get("dispCorrelation"));
   // tab_macro->Add(macro::Get("effBcOut"));
   tab_macro->Add(macro::Get("effSDC_hyps"));
+  tab_macro->Add(macro::Get("effSAC_hyps"));
   // tab_macro->Add(macro::Get("effALL"));
   // tab_macro->Add(macro::Get("dispBH2Fit"));
   // tab_macro->Add(macro::Get("dispDAQ"));
   //  tab_macro->Add(macro::Get("dispAcEfficiency"));
-
   // Add histograms to the Hist tab
   tab_hist->Add(gHist.createRF());
   tab_hist->Add(gHist.createTAG_SF());
@@ -422,6 +423,128 @@ process_event()
     gUnpacker.dump_data_device(k_device);
 #endif
   }
+
+#if DEBUG
+std::cout << __FILE__ << " " << __LINE__ << std::endl;
+#endif
+
+#if 1
+  std::vector<Int_t> hitseg_SFF;
+  std::vector<Int_t> hitseg_SFB;
+  { ///// TAG_SF
+    static const auto device_id = gUnpacker.get_device_id("TAG-SF");
+    static const auto adc_id    = gUnpacker.get_data_id("TAG-SF", "adc");
+    static const auto tdc_id    = gUnpacker.get_data_id("TAG-SF", "tdc");
+    //static const auto tdc_min   = gUser.GetParameter("TdcTAG-SF", 0);
+    //static const auto tdc_max   = gUser.GetParameter("TdcTAG-SF", 1);
+    static const auto tdc_min   = 580;
+    static const auto tdc_max   = 640;
+    static const auto adc_hid   = gHist.getSequentialID(kTAG_SF, 0, kADC,     0);
+    static const auto tdc_hid   = gHist.getSequentialID(kTAG_SF, 0, kTDC,     0);
+    static const auto awt_hid   = gHist.getSequentialID(kTAG_SF, 0, kADCwTDC, 0);
+    static const auto hit_hid   = gHist.getSequentialID(kTAG_SF, 0, kHitPat,  0);
+    static const auto mul_hid   = gHist.getSequentialID(kTAG_SF, 0, kMulti,   0);
+    Int_t multiplicity = 0;
+    for(Int_t l=0; l<NumOfLayersTAG_SF;++l){
+      for(Int_t seg=0; seg<NumOfSegTAG_SF; ++seg) {
+	Int_t adc=0;
+	Int_t tdc=0;
+	// ADC
+	auto nhit = gUnpacker.get_entries(device_id, l, 0, seg, adc_id);
+	if (nhit != 0) {
+	  adc = gUnpacker.get(device_id, l, 0, seg, adc_id);
+	  hptr_array[adc_hid + l*NumOfSegTAG_SF + seg]->Fill(adc);
+	}
+	// TDC
+	Bool_t is_in_gate = false;
+	for(Int_t m=0, n=gUnpacker.get_entries(device_id, l,  0, seg, tdc_id);
+	    m<n; ++m) {
+	  tdc = gUnpacker.get(device_id, l, 0, seg, tdc_id, m);
+	  if (tdc != 0) {
+	    hptr_array[tdc_hid + l*NumOfSegTAG_SF + seg]->Fill(tdc);
+	    if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
+	      is_in_gate = true;
+	    }
+	  }
+	  if (is_in_gate) {
+	    if (gUnpacker.get_entries(device_id, l,  0, seg, adc_id)>0){
+	      Int_t adc = gUnpacker.get(device_id, l,  0, seg, adc_id);
+	      hptr_array[awt_hid + l*NumOfSegTAG_SF + seg]->Fill(adc);
+	    }
+	  }
+	  ++multiplicity;
+	  hptr_array[hit_hid + l]->Fill(seg);
+	}
+      }
+      hptr_array[mul_hid + l]->Fill(multiplicity);
+    }
+
+#if 0
+    // Debug, dump data relating this detector
+    gUnpacker.dump_data_device(k_device);
+#endif
+  }
+
+#if DEBUG
+std::cout << __FILE__ << " " << __LINE__ << std::endl;
+#endif
+
+  std::vector<Int_t> hitseg_PLF;
+  std::vector<Int_t> hitseg_PLB;
+  { ///// TAG_PL
+    static const auto device_id = gUnpacker.get_device_id("TAG-PL");
+    static const auto adc_id    = gUnpacker.get_data_id("TAG-PL", "adc");
+    static const auto tdc_id    = gUnpacker.get_data_id("TAG-PL", "tdc");
+    //static const auto tdc_min   = gUser.GetParameter("TdcTAG-PL", 0);
+    //static const auto tdc_max   = gUser.GetParameter("TdcTAG-PL", 1);
+    static const auto tdc_min   = 580;
+    static const auto tdc_max   = 640;
+    static const auto adc_hid   = gHist.getSequentialID(kTAG_PL, 0, kADC,     0);
+    static const auto tdc_hid   = gHist.getSequentialID(kTAG_PL, 0, kTDC,     0);
+    static const auto awt_hid   = gHist.getSequentialID(kTAG_PL, 0, kADCwTDC, 0);
+    static const auto hit_hid   = gHist.getSequentialID(kTAG_PL, 0, kHitPat,  0);
+    static const auto mul_hid   = gHist.getSequentialID(kTAG_PL, 0, kMulti,   0);
+    Int_t multiplicity = 0;
+    for(Int_t l=0; l<NumOfLayersTAG_PL;++l){
+      for(Int_t seg=0; seg<NumOfSegTAG_PL; ++seg) {
+	Int_t adc=0;
+	Int_t tdc=0;
+	// ADC
+	auto nhit = gUnpacker.get_entries(device_id, l, 0, seg, adc_id);
+	if (nhit != 0) {
+	  adc = gUnpacker.get(device_id, l, 0, seg, adc_id);
+	  hptr_array[adc_hid + l*NumOfSegTAG_PL + seg]->Fill(adc);
+	}
+	// TDC
+	Bool_t is_in_gate = false;
+	for(Int_t m=0, n=gUnpacker.get_entries(device_id, l,  0, seg, tdc_id);
+	    m<n; ++m) {
+	  tdc = gUnpacker.get(device_id, l, 0, seg, tdc_id, m);
+	  if (tdc != 0) {
+	    hptr_array[tdc_hid + l*NumOfSegTAG_PL + seg]->Fill(tdc);
+	    if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
+	      is_in_gate = true;
+	    }
+	  }
+	  if (is_in_gate) {
+	    if (gUnpacker.get_entries(device_id, l,  0, seg, adc_id)>0){
+	      Int_t adc = gUnpacker.get(device_id, l,  0, seg, adc_id);
+	      hptr_array[awt_hid + l*NumOfSegTAG_PL + seg]->Fill(adc);
+	    }
+	  }
+	  ++multiplicity;
+	  hptr_array[hit_hid + l]->Fill(seg);
+	}
+      }
+      hptr_array[mul_hid + l]->Fill(multiplicity);
+    }
+
+#if 0
+    // Debug, dump data relating this detector
+    gUnpacker.dump_data_device(k_device);
+#endif
+  }
+#endif
 
 #if DEBUG
 std::cout << __FILE__ << " " << __LINE__ << std::endl;
@@ -745,7 +868,6 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 
     // static const Int_t sdc1self_corr_id  = gHist.getSequentialID(kSDC1, kSelfCorr, 0, 0);
 
-
     // TDC & HitPat & Multi
     for(Int_t l=0; l<NumOfLayersSDC1; ++l) {
       Int_t tdc                  = 0;
@@ -810,7 +932,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	    tot = tdc - tdc_t;
 	    hptr_array[sdc1tot_id+l]->Fill(tot);
 	    hptr_array[sdc1tot2D_id+l]->Fill(w,tot);
-	    hptr_array[sdc1_tot_tdc2D_id+l]->Fill(tdc,tot);
+	    hptr_array[sdc1_tot_tdc2D_id+l]->Fill(tot,tdc);
 	    if (tdc1st<tdc) tdc1st = tdc;
 	    if (tot1st<tot) tot1st = tot;
 	    if (tot < tot_min) continue;
@@ -967,7 +1089,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	    tot = tdc - tdc_t;
 	    hptr_array[sdc2tot_id+l]->Fill(tot);
 	    hptr_array[sdc2tot2D_id+l]->Fill(w,tot);
-	    hptr_array[sdc2_tot_tdc2D_id+l]->Fill(tdc,tot);
+	    hptr_array[sdc2_tot_tdc2D_id+l]->Fill(tot,tdc);
 	    if (tot < tot_min) continue;
 	    hptr_array[sdc2t_ctot_id + l]->Fill(tdc);
 	    hptr_array[sdc2t2D_ctot_id + l]->Fill(w,tdc); //2D
@@ -1124,7 +1246,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	    tot = tdc - tdc_t;
 	    hptr_array[sdc3tot_id+l]->Fill(tot);
 	    hptr_array[sdc3tot2D_id+l]->Fill(w,tot);
-	    hptr_array[sdc3_tot_tdc2D_id+l]->Fill(tdc,tot);
+	    hptr_array[sdc3_tot_tdc2D_id+l]->Fill(tot,tdc);
 	    if (tot < tot_min) continue;
 	    hptr_array[sdc3t_ctot_id + l]->Fill(tdc);
 	    hptr_array[sdc3t2D_ctot_id + l]->Fill(w,tdc); //2D

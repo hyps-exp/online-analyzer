@@ -567,7 +567,8 @@ HistMaker::createTAG_SF(Bool_t flag_ps)
 	const char* title = NULL;
 	title = Form("%s_%s_%s_%d", nameDetector, nameSubDir, name_layer[i], j);
 	sub_dir->Add(createTH1(target_id + i*NumOfSegTAG_SF + j, title,
-			       50000, 0, 2000000,
+			       //		       50000, 0, 2000000,
+			       2000, 0, 2000,
 			       "TDC [ch]", ""));
       }
     }
@@ -675,7 +676,8 @@ HistMaker::createTAG_PL(Bool_t flag_ps)
 	const char* title = NULL;
 	title = Form("%s_%s_%s_%d", nameDetector, nameSubDir, name_layer[i], j);
 	sub_dir->Add(createTH1(target_id + i*NumOfSegTAG_PL + j, title,
-			       50000, 0, 2000000,
+			       //		       50000, 0, 2000000,
+			       2000, 0, 2000,
 			       "TDC [ch]", ""));
       }
     }
@@ -1317,9 +1319,9 @@ TList* HistMaker::createSDC1( Bool_t flag_ps )
       const char* title = NULL;
       title = Form("%s_%s_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
-			     NumOfWireSDC1_HYPS[i], 0, NumOfWireSDC1_HYPS[i],
 			     500, 0, 500,
-			     "TDC [ch]", "TOT [ch]"));
+			     5000, 0, 5000,
+			     "TOT [ch]", "TDC [ch]"));
     }
 
     // insert sub directory
@@ -1621,9 +1623,9 @@ TList* HistMaker::createSDC2( Bool_t flag_ps )
       const char* title = NULL;
       title = Form("%s_%s_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
-			     NumOfWireSDC2_HYPS[i], 0, NumOfWireSDC2_HYPS[i],
 			     500, 0, 500,
-			     "TDC [ch]", "TOT [ch]"));
+			     5000, 0, 5000,
+			     "TOT [ch]", "TDC [ch]"));
     }
 
     // insert sub directory
@@ -1926,9 +1928,9 @@ TList* HistMaker::createSDC3( Bool_t flag_ps )
       const char* title = NULL;
       title = Form("%s_%s_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
-			     NumOfWireSDC3_HYPS[i], 0, NumOfWireSDC3_HYPS[i],
 			     500, 0, 500,
-			     "TDC [ch]", "TOT [ch]"));
+			     5000, 0, 5000,
+			     "TOT [ch]", "TDC [ch]"));
     }
 
     // insert sub directory
