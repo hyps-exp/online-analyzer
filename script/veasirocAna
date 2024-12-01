@@ -3,7 +3,7 @@
 #  shell script for CATCH online/semi CATCH  online analyzer
 ##
 
-# . $(dirname $(readlink -f $0))/setebhost
+. $(dirname $(readlink -f $0))/setebhost
 
 dis_port=8901
 rec_port=8902
@@ -35,8 +35,7 @@ if [ ! -f $conf_file ]; then
 fi
 
 if [ $# = 0 ]; then
-    # $exe_file $conf_file ${ebhost}:$port
-    $exe_file $conf_file eb-hyps:$port
+    $exe_file $conf_file ${ebhost}:$port
     exit
 fi
 

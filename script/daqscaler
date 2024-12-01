@@ -21,7 +21,8 @@ exe_file=$bin_dir/scaler_daq
 data_dir=$ana_dir/data
 
 ##### configure file
-conf_file=/param/conf/analyzer_scaler.conf
+# conf_file=/param/conf/analyzer_scaler.conf
+conf_file=/home/sks/software/param/pro/conf/analyzer_scaler.conf
 
 #######################################################################
 if [ ! -f $exe_file ]; then

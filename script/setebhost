@@ -1,7 +1,9 @@
 #!/bin/sh
 
-if [ -z "${HDDAQ_EBHOST+x}" ]; then
-    ebhost=geteb1
-else
-    ebhost=$HDDAQ_EBHOST
-fi
+ebhost=eb-hyps
+
+# if [ -z "${HDDAQ_EBHOST+x}" ]; then
+#     ebhost=geteb1
+# else
+#     ebhost=$HDDAQ_EBHOST
+# fi
