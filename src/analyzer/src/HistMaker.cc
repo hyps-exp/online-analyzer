@@ -3062,7 +3062,7 @@ TList* HistMaker::createCatchBGO( Bool_t flag_ps )
       Int_t seg = i+1;
       TString title = Form("%s_%s_%d", nameDetector, nameSubDir, seg);
       sub_dir->Add(createTH2(target_id + i+1, title,
-			     280, 0, 280,
+			     480, 0, 480,
 			     19000/20, -1000, 18000,
 			     "Sampling", "ADC [ch]"));
     }
