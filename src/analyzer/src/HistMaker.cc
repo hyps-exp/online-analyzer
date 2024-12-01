@@ -482,7 +482,7 @@ TList* HistMaker::createRF( Bool_t flag_ps )
 
   // Hit parttern -----------------------------------------------
   {
-    const char* title = "TOF_hit_pattern";
+    const char* title = "RF_hit_pattern";
     Int_t target_id = getUniqueID(kRF, 0, kHitPat, 0);
     // Add to the top directory
     top_dir->Add(createTH1(target_id, title,
@@ -496,7 +496,8 @@ TList* HistMaker::createRF( Bool_t flag_ps )
     Int_t target_id = getUniqueID(kRF, 0, kMulti, 0);
     // Add to the top directory
     top_dir->Add(createTH1(target_id, title,
-			   NumOfSegRF, 0, NumOfSegRF,
+			   //			   NumOfSegRF, 0, NumOfSegRF,
+			   10, 0, 10        ,
 			   "Multiplicity", ""));
   }
 
