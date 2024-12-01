@@ -443,68 +443,132 @@ ScalerAnalyzer::Print(Option_t*) const
 
   Int_t event_number = gUnpacker.get_event_number();
   if (GetFlag(kScalerDaq) || GetFlag(kScalerE42)){
-    m_ost << std::left  << std::setw(16) << "RUN"
-	  << std::right << std::setw(16) << SeparateComma(m_run_number) << std::endl
-	  << std::left  << std::setw(16) << "Event Number"
-	  << std::right << std::setw(16) << SeparateComma(event_number) << std::endl
-	  << std::left  << std::setw(16) << ""
-	  << std::right << std::setw(16) << end_mark << std::endl;
+    m_ost << std::left  << std::setw(20) << "RUN"
+	  << std::right << std::setw(20) << SeparateComma(m_run_number) << std::endl
+	  << std::left  << std::setw(20) << "Event Number"
+	  << std::right << std::setw(20) << SeparateComma(event_number) << std::endl
+	  << std::left  << std::setw(20) << ""
+	  << std::right << std::setw(20) << end_mark << std::endl;
     for (Int_t i=0; i<MaxRow; ++i){
       if (!m_info[kLeft][i].name.Contains("n/a")){
-	m_ost << std::left  << std::setw(16) << m_info[kLeft][i].name
-	      << std::right << std::setw(16) << SeparateComma(m_info[kLeft][i].data)
+	m_ost << std::left  << std::setw(20) << m_info[kLeft][i].name
+	      << std::right << std::setw(20) << SeparateComma(m_info[kLeft][i].data)
 	      << std::endl;
       }
     }
     if (GetFlag(kScalerDaq)){
       m_ost << std::endl  << std::setprecision(6) << std::fixed
-	    << std::left  << std::setw(16) << "Live/Real"
-	    << std::right << std::setw(16) << Fraction("Live-Time","Real-Time") << std::endl
-	    << std::left  << std::setw(16) << "DAQ-Eff"
-	    << std::right << std::setw(16) << Fraction("L1-Acc","L1-Req") << std::endl
-	    << std::left  << std::setw(16) << "L2-Eff"
-	    << std::right << std::setw(16) << Fraction("L2-Acc","L1-Acc") << std::endl
-	    << std::left  << std::setw(16) << "Duty-Factor"
-	    << std::right << std::setw(16) << Duty() << std::endl;
+	    << std::left  << std::setw(20) << "Live/Real"
+	    << std::right << std::setw(20) << Fraction("Live-Time","Real-Time") << std::endl
+	    << std::left  << std::setw(20) << "DAQ-Eff"
+	    << std::right << std::setw(20) << Fraction("L1-Acc","L1-Req") << std::endl
+	    << std::left  << std::setw(20) << "L2-Eff"
+	    << std::right << std::setw(20) << Fraction("L2-Acc","L1-Acc") << std::endl
+	    << std::left  << std::setw(20) << "Duty-Factor"
+	    << std::right << std::setw(20) << Duty() << std::endl;
     }
   } else {
-    m_ost << std::left  << std::setw(16) << "RUN"
-	  << std::right << std::setw(16) << SeparateComma(m_run_number) << " : "
-	  << std::left  << std::setw(16) << "Event Number"
-	  << std::right << std::setw(16) << SeparateComma(event_number);
+    m_ost << std::left  << std::setw(20) << "RUN"
+	  << std::right << std::setw(20) << SeparateComma(m_run_number) << " : "
+	  << std::left  << std::setw(20) << "Event Number"
+	  << std::right << std::setw(20) << SeparateComma(event_number);
     m_ost << " : "
-	  << std::left  << std::setw(16) << ""
-	  << std::right << std::setw(16) << end_mark
+	  << std::left  << std::setw(20) << ""
+	  << std::right << std::setw(20) << end_mark
 	  << std::endl << std::endl;
     for (Int_t i=0; i<MaxRow; ++i){
       if (m_info[kLeft][i].name.Contains("n/a"))
         continue;
-      m_ost << std::left  << std::setw(16) << m_info[kLeft][i].name
-	    << std::right << std::setw(16) << SeparateComma(m_info[kLeft][i].data)
+      m_ost << std::left  << std::setw(20) << m_info[kLeft][i].name
+	    << std::right << std::setw(20) << SeparateComma(m_info[kLeft][i].data)
 	    << " : "
-	    << std::left  << std::setw(16) << m_info[kCenter][i].name
-	    << std::right << std::setw(16) << SeparateComma(m_info[kCenter][i].data) << " : "
-	    << std::left  << std::setw(16) << m_info[kRight][i].name
-	    << std::right << std::setw(16) << SeparateComma(m_info[kRight][i].data)
+	    << std::left  << std::setw(20) << m_info[kCenter][i].name
+	    << std::right << std::setw(20) << SeparateComma(m_info[kCenter][i].data) << " : "
+	    << std::left  << std::setw(20) << m_info[kRight][i].name
+	    << std::right << std::setw(20) << SeparateComma(m_info[kRight][i].data)
 	    <<std::endl;
     }
     if (!GetFlag(kScalerSch) && !GetFlag(kScalerE42) && !GetFlag(kScalerHBX)){
       m_ost << std::endl  << std::setprecision(6) << std::fixed
-	    << std::left  << std::setw(16) << "BH2/TM"
-	    << std::right << std::setw(16) << Fraction("BH2", "TM") << " : "
-	    << std::left  << std::setw(16) << "Live/Real"
-	    << std::right << std::setw(16) << Fraction("Live-Time","Real-Time") << " : "
-	    << std::left  << std::setw(16) << "DAQ-Eff"
-	    << std::right << std::setw(16) << Fraction("L1-Acc","L1-Req") << std::endl
-	    << std::left  << std::setw(16) << "L1Req/BH2"
-	    << std::right << std::setw(16) << Fraction("L1-Req", "BH2") << " : "
-	    << std::left  << std::setw(16) << "L2-Eff"
-	    << std::right << std::setw(16) << Fraction("L2-Acc","L1-Acc") << " : "
-	    << std::left  << std::setw(16) << "Duty-Factor"
-	    << std::right << std::setw(16) << Duty() << std::endl
+	    << std::left  << std::setw(20) << "BH2/TM"
+	    << std::right << std::setw(20) << Fraction("BH2", "TM") << " : "
+	    << std::left  << std::setw(20) << "Live/Real"
+	    << std::right << std::setw(20) << Fraction("Live-Time","Real-Time") << " : "
+	    << std::left  << std::setw(20) << "DAQ-Eff"
+	    << std::right << std::setw(20) << Fraction("L1-Acc","L1-Req") << std::endl
+	    << std::left  << std::setw(20) << "L1Req/BH2"
+	    << std::right << std::setw(20) << Fraction("L1-Req", "BH2") << " : "
+	    << std::left  << std::setw(20) << "L2-Eff"
+	    << std::right << std::setw(20) << Fraction("L2-Acc","L1-Acc") << " : "
+	    << std::left  << std::setw(20) << "Duty-Factor"
+	    << std::right << std::setw(20) << Duty() << std::endl
 	    << std::endl;
     }
   }
+
+  // if (GetFlag(kScalerDaq) || GetFlag(kScalerE42)){
+  //   m_ost << std::left  << std::setw(16) << "RUN"
+  // 	  << std::right << std::setw(16) << SeparateComma(m_run_number) << std::endl
+  // 	  << std::left  << std::setw(16) << "Event Number"
+  // 	  << std::right << std::setw(16) << SeparateComma(event_number) << std::endl
+  // 	  << std::left  << std::setw(16) << ""
+  // 	  << std::right << std::setw(16) << end_mark << std::endl;
+  //   for (Int_t i=0; i<MaxRow; ++i){
+  //     if (!m_info[kLeft][i].name.Contains("n/a")){
+  // 	m_ost << std::left  << std::setw(16) << m_info[kLeft][i].name
+  // 	      << std::right << std::setw(16) << SeparateComma(m_info[kLeft][i].data)
+  // 	      << std::endl;
+  //     }
+  //   }
+  //   if (GetFlag(kScalerDaq)){
+  //     m_ost << std::endl  << std::setprecision(6) << std::fixed
+  // 	    << std::left  << std::setw(16) << "Live/Real"
+  // 	    << std::right << std::setw(16) << Fraction("Live-Time","Real-Time") << std::endl
+  // 	    << std::left  << std::setw(16) << "DAQ-Eff"
+  // 	    << std::right << std::setw(16) << Fraction("L1-Acc","L1-Req") << std::endl
+  // 	    << std::left  << std::setw(16) << "L2-Eff"
+  // 	    << std::right << std::setw(16) << Fraction("L2-Acc","L1-Acc") << std::endl
+  // 	    << std::left  << std::setw(16) << "Duty-Factor"
+  // 	    << std::right << std::setw(16) << Duty() << std::endl;
+  //   }
+  // } else {
+  //   m_ost << std::left  << std::setw(16) << "RUN"
+  // 	  << std::right << std::setw(16) << SeparateComma(m_run_number) << " : "
+  // 	  << std::left  << std::setw(16) << "Event Number"
+  // 	  << std::right << std::setw(16) << SeparateComma(event_number);
+  //   m_ost << " : "
+  // 	  << std::left  << std::setw(16) << ""
+  // 	  << std::right << std::setw(16) << end_mark
+  // 	  << std::endl << std::endl;
+  //   for (Int_t i=0; i<MaxRow; ++i){
+  //     if (m_info[kLeft][i].name.Contains("n/a"))
+  //       continue;
+  //     m_ost << std::left  << std::setw(16) << m_info[kLeft][i].name
+  // 	    << std::right << std::setw(16) << SeparateComma(m_info[kLeft][i].data)
+  // 	    << " : "
+  // 	    << std::left  << std::setw(16) << m_info[kCenter][i].name
+  // 	    << std::right << std::setw(16) << SeparateComma(m_info[kCenter][i].data) << " : "
+  // 	    << std::left  << std::setw(16) << m_info[kRight][i].name
+  // 	    << std::right << std::setw(16) << SeparateComma(m_info[kRight][i].data)
+  // 	    <<std::endl;
+  //   }
+  //   if (!GetFlag(kScalerSch) && !GetFlag(kScalerE42) && !GetFlag(kScalerHBX)){
+  //     m_ost << std::endl  << std::setprecision(6) << std::fixed
+  // 	    << std::left  << std::setw(16) << "BH2/TM"
+  // 	    << std::right << std::setw(16) << Fraction("BH2", "TM") << " : "
+  // 	    << std::left  << std::setw(16) << "Live/Real"
+  // 	    << std::right << std::setw(16) << Fraction("Live-Time","Real-Time") << " : "
+  // 	    << std::left  << std::setw(16) << "DAQ-Eff"
+  // 	    << std::right << std::setw(16) << Fraction("L1-Acc","L1-Req") << std::endl
+  // 	    << std::left  << std::setw(16) << "L1Req/BH2"
+  // 	    << std::right << std::setw(16) << Fraction("L1-Req", "BH2") << " : "
+  // 	    << std::left  << std::setw(16) << "L2-Eff"
+  // 	    << std::right << std::setw(16) << Fraction("L2-Acc","L1-Acc") << " : "
+  // 	    << std::left  << std::setw(16) << "Duty-Factor"
+  // 	    << std::right << std::setw(16) << Duty() << std::endl
+  // 	    << std::endl;
+  //   }
+  // }
 }
 
 //______________________________________________________________________________
