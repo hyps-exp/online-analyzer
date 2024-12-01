@@ -416,7 +416,7 @@ process_event()
 	hptr_array[hit_hid]->Fill(seg);
       }
     }
-    hptr_array[hit_hid]->Fill(multiplicity);
+    hptr_array[mul_hid]->Fill(multiplicity);
 
 #if 0
     // Debug, dump data relating this detector
@@ -703,7 +703,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     static const Int_t sdc0t1st_id  = gHist.getSequentialID(kSDC0, 0, kTDC2D,  0);
     static const Int_t sdc0hit_id   = gHist.getSequentialID(kSDC0, 0, kHitPat, 0);
     static const Int_t sdc0mul_id   = gHist.getSequentialID(kSDC0, 0, kMulti,  0);
-    static const Int_t sdc0mulwt_id = gHist.getSequentialID(kSDC0, 0, kMulti, NumOfLayersSDC0);
+    static const Int_t sdc0mulwt_id = gHist.getSequentialID(kSDC0, 0, kMulti,  NumOfLayersSDC0);
 
     static const Int_t sdc0t_wide_id    = gHist.getSequentialID(kSDC0, 0, kTDC,    10);
     static const Int_t sdc0t_ctot_id    = gHist.getSequentialID(kSDC0, 0, kTDC,    kTOTcutOffset);
@@ -1390,8 +1390,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	  hptr_array[adc_hid + ud*NumOfSegTOF + seg]->Fill(adc);
 	}
 	// TDC
-	for(Int_t m=0, n=gUnpacker.get_entries(device_id, 0, seg, ud, tdc_id);
-	    m<n; ++m) {
+	for(Int_t m=0, n=gUnpacker.get_entries(device_id, 0, seg, ud, tdc_id); m<n; ++m) {
 	  auto tdc = gUnpacker.get(device_id, 0, seg, ud, tdc_id, m);
 	  if (tdc != 0) {
 	    hptr_array[tdc_hid + ud*NumOfSegTOF + seg]->Fill(tdc);

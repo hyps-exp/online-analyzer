@@ -101,11 +101,11 @@ process_begin( const std::vector<std::string>& argv )
   tab_macro->Add(macro::Get("split33"));
   tab_macro->Add(macro::Get("dispCFTTDC"));
   tab_macro->Add(macro::Get("dispCFTADC"));
-  tab_macro->Add(macro::Get("dispCFTHitMulti"));
+  //tab_macro->Add(macro::Get("dispCFTHitMulti"));
   tab_macro->Add(macro::Get("dispCatchBGO"));
-  tab_macro->Add(macro::Get("dispPiID"));
-  tab_macro->Add(macro::Get("dispDAQ"));
-  tab_macro->Add(macro::Get("effCFT"));
+  //tab_macro->Add(macro::Get("dispPiID"));
+  //tab_macro->Add(macro::Get("dispDAQ"));
+  //tab_macro->Add(macro::Get("effCFT"));
   // tab_macro->Add(macro::Get("auto_monitor_all"));
 
   // Add histograms to the Hist tab
