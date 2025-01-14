@@ -1139,8 +1139,29 @@ TList* HistMaker::createSDC0( Bool_t flag_ps )
                              NumOfWireSDC0_HYPS[i], 0, NumOfWireSDC0_HYPS[i],
                              "Multiplicity", ""));
     }
+    // insert sub directory
+    top_dir->Add(sub_dir);
+  }
 
+  //pair plane correlation ----------------------------------------
+  {
+    TString strSubDir  = CONV_STRING(kCorr);
+    const char* nameSubDir = "correlation";
+    TList *sub_dir = new TList;
+    sub_dir->SetName(nameSubDir);
+    const char* each_layer[NumOfLayersSDC0] = {"X Wire Number", "XP wire Number", "U Wire Number", "UP wire Number"};
 
+    Int_t target_id = getUniqueID(kSDC0, 0, kCorr, 20);
+    for(Int_t l=0; l<2; ++l){
+      const char* title = NULL;
+      title = Form("%s_%s_%s", nameDetector, nameSubDir, name_Selflayer[l]);
+      sub_dir->Add(createTH2(target_id + l, title, 
+                             //                      20, 0, 20,
+                             // 128, 0, 128,
+                             NumOfWireSDC0_HYPS[2*l], 0, NumOfWireSDC0_HYPS[2*l],
+			     NumOfWireSDC0_HYPS[2*l+1], 0, NumOfWireSDC0_HYPS[2*l+1],
+                             each_layer[2*l], each_layer[2*l+1]));
+    }
     // insert sub directory
     top_dir->Add(sub_dir);
   }
@@ -1362,30 +1383,6 @@ TList* HistMaker::createSDC1( Bool_t flag_ps )
     top_dir->Add(sub_dir);
   }
 
-  // // Self Correlation ----------------------------------------------
-  // {
-  //   // Declaration of the sub-directory
-  //   TString strSubDir  = CONV_STRING(kSelfCorr);
-  //   const char* nameSubDir = strSubDir.Data();
-  //   TList *sub_dir = new TList;
-  //   sub_dir->SetName(nameSubDir);
-
-  //   // Make histogram and add it
-  //   for(int i=0; i<NumOfDimSDC1; i++){
-  //     Int_t target_id = getUniqueID(kSDC1, kSelfCorr, 0, i);
-  //     const char* title = NULL;
-  //     title = Form("%s_%s_%s", nameDetector, nameSubDir, name_Selflayer[i]);
-  //     sub_dir->Add(createTH2(target_id, title,
-  //         		     NumOfWireSDC1_HYPS[i], 0, NumOfWireSDC1_HYPS[i],
-  //         		     NumOfWireSDC1_HYPS[i], 0, NumOfWireSDC1_HYPS[i],
-  //         		     Form("%s",name_layer[2*i]),Form("%s",name_layer[2*i+1])));
-  //   }
-
-
-  //   // insert sub directory
-  //   top_dir->Add(sub_dir);
-  // }
-
   // Multiplicity -----------------------------------------------
   {
     // Declaration of the sub-directory
@@ -1444,8 +1441,29 @@ TList* HistMaker::createSDC1( Bool_t flag_ps )
 			     NumOfWireSDC1_HYPS[i], 0, NumOfWireSDC1_HYPS[i],
 			     "Multiplicity", ""));
     }
+    // insert sub directory
+    top_dir->Add(sub_dir);
+  }
+    
+  //pair plane correlation ----------------------------------------
+  {
+    TString strSubDir  = CONV_STRING(kCorr);
+    const char* nameSubDir = "correlation";
+    TList *sub_dir = new TList;
+    sub_dir->SetName(nameSubDir);
+    const char* each_layer[NumOfLayersSDC1] = {"UP Wire Number", "U wire Number", "XP Wire Number", "X wire Number"};
 
-
+    Int_t target_id = getUniqueID(kSDC1, 0, kCorr, 20);
+    for(Int_t l=0; l<2; ++l){
+      const char* title = NULL;
+      title = Form("%s_%s_%s", nameDetector, nameSubDir, name_Selflayer[l+2]);
+      sub_dir->Add(createTH2(target_id + l, title,
+                             //                      20, 0, 20,
+                             // 128, 0, 128,
+                             NumOfWireSDC1_HYPS[2*l+2], 0, NumOfWireSDC1_HYPS[2*l+2],
+                             NumOfWireSDC1_HYPS[2*l+3], 0, NumOfWireSDC1_HYPS[2*l+3],
+                             each_layer[2*l], each_layer[2*l+1]));
+    }
     // insert sub directory
     top_dir->Add(sub_dir);
   }
@@ -1667,30 +1685,6 @@ TList* HistMaker::createSDC2( Bool_t flag_ps )
     top_dir->Add(sub_dir);
   }
 
-  // // Self Correlation ----------------------------------------------
-  // {
-  //   // Declaration of the sub-directory
-  //   TString strSubDir  = CONV_STRING(kSelfCorr);
-  //   const char* nameSubDir = strSubDir.Data();
-  //   TList *sub_dir = new TList;
-  //   sub_dir->SetName(nameSubDir);
-
-  //   // Make histogram and add it
-  //   for(int i=0; i<NumOfDimSDC2; i++){
-  //     Int_t target_id = getUniqueID(kSDC2, kSelfCorr, 0, i);
-  //     const char* title = NULL;
-  //     title = Form("%s_%s_%s", nameDetector, nameSubDir, name_Selflayer[i]);
-  //     sub_dir->Add(createTH2(target_id, title,
-  //         		     NumOfWireSDC2_HYPS[i], 0, NumOfWireSDC2_HYPS[i],
-  //         		     NumOfWireSDC2_HYPS[i], 0, NumOfWireSDC2_HYPS[i],
-  //         		     Form("%s",name_layer[2*i]),Form("%s",name_layer[2*i+1])));
-  //   }
-
-
-  //   // insert sub directory
-  //   top_dir->Add(sub_dir);
-  // }
-
   // Multiplicity -----------------------------------------------
   {
     // Declaration of the sub-directory
@@ -1749,8 +1743,29 @@ TList* HistMaker::createSDC2( Bool_t flag_ps )
 			     NumOfWireSDC2_HYPS[i], 0, NumOfWireSDC2_HYPS[i],
 			     "Multiplicity", ""));
     }
+    // insert sub directory
+    top_dir->Add(sub_dir);
+  }
 
+  //pair plane correlation ----------------------------------------
+  {
+    TString strSubDir  = CONV_STRING(kCorr);
+    const char* nameSubDir = "correlation";
+    TList *sub_dir = new TList;
+    sub_dir->SetName(nameSubDir);
+    const char* each_layer[NumOfLayersSDC2] = {"UP Wire Number", "U wire Number", "XP Wire Number", "X wire Number"};
 
+    Int_t target_id = getUniqueID(kSDC2, 0, kCorr, 20);
+    for(Int_t l=0; l<2; ++l){
+      const char* title = NULL;
+      title = Form("%s_%s_%s", nameDetector, nameSubDir, name_Selflayer[l+1]);
+      sub_dir->Add(createTH2(target_id + l, title,
+                             //                      20, 0, 20,
+                             // 128, 0, 128,
+                             NumOfWireSDC2_HYPS[2*l+1], 0, NumOfWireSDC2_HYPS[2*l+1],
+                             NumOfWireSDC2_HYPS[2*l+2], 0, NumOfWireSDC2_HYPS[2*l+2],
+                             each_layer[2*l], each_layer[2*l+1]));
+    }
     // insert sub directory
     top_dir->Add(sub_dir);
   }
@@ -1971,30 +1986,6 @@ TList* HistMaker::createSDC3( Bool_t flag_ps )
     top_dir->Add(sub_dir);
   }
 
-  // // Self Correlation ----------------------------------------------
-  // {
-  //   // Declaration of the sub-directory
-  //   TString strSubDir  = CONV_STRING(kSelfCorr);
-  //   const char* nameSubDir = strSubDir.Data();
-  //   TList *sub_dir = new TList;
-  //   sub_dir->SetName(nameSubDir);
-
-  //   // Make histogram and add it
-  //   for(int i=0; i<NumOfDimSDC3; i++){
-  //     Int_t target_id = getUniqueID(kSDC3, kSelfCorr, 0, i);
-  //     const char* title = NULL;
-  //     title = Form("%s_%s_%s", nameDetector, nameSubDir, name_Selflayer[i]);
-  //     sub_dir->Add(createTH2(target_id, title,
-  //         		     NumOfWireSDC3_HYPS[i], 0, NumOfWireSDC3_HYPS[i],
-  //         		     NumOfWireSDC3_HYPS[i], 0, NumOfWireSDC3_HYPS[i],
-  //         		     Form("%s",name_layer[2*i]),Form("%s",name_layer[2*i+1])));
-  //   }
-
-
-  //   // insert sub directory
-  //   top_dir->Add(sub_dir);
-  // }
-
   // Multiplicity -----------------------------------------------
   {
     // Declaration of the sub-directory
@@ -2053,8 +2044,29 @@ TList* HistMaker::createSDC3( Bool_t flag_ps )
 			     NumOfWireSDC3_HYPS[i], 0, NumOfWireSDC3_HYPS[i],
 			     "Multiplicity", ""));
     }
+    // insert sub directory
+    top_dir->Add(sub_dir);
+  }
 
+  //pair plane correlation ----------------------------------------
+  {
+    TString strSubDir  = CONV_STRING(kCorr);
+    const char* nameSubDir = "correlation";
+    TList *sub_dir = new TList;
+    sub_dir->SetName(nameSubDir);
+    const char* each_layer[NumOfLayersSDC3] = {"UP Wire Number", "U wire Number", "XP Wire Number", "X wire Number"};
 
+    Int_t target_id = getUniqueID(kSDC3, 0, kCorr, 20);
+    for(Int_t l=0; l<2; ++l){
+      const char* title = NULL;
+      title = Form("%s_%s_%s", nameDetector, nameSubDir, name_Selflayer[l+1]);
+      sub_dir->Add(createTH2(target_id + l, title,
+                             //                      20, 0, 20,
+                             // 128, 0, 128,
+                             NumOfWireSDC3_HYPS[2*l+1], 0, NumOfWireSDC3_HYPS[2*l+1],
+                             NumOfWireSDC3_HYPS[2*l+2], 0, NumOfWireSDC3_HYPS[2*l+2],
+                             each_layer[2*l], each_layer[2*l+1]));
+    }
     // insert sub directory
     top_dir->Add(sub_dir);
   }

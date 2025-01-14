@@ -715,8 +715,9 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     static const Int_t sdc0mul_ctot_id  = gHist.getSequentialID(kSDC0, 0, kMulti,  kTOTcutOffset);
     static const Int_t sdc0mulwt_ctot_id
       = gHist.getSequentialID(kSDC0, 0, kMulti, NumOfLayersSDC0 + kTOTcutOffset);
+    static const Int_t sdc0layer_correlation_id
+      = gHist.getSequentialID(kSDC0, 0, kCorr,  20);    
     // static const Int_t sdc0self_corr_id  = gHist.getSequentialID(kSDC0, kSelfCorr, 0, 0);
-
 
     // TDC & HitPat & Multi
     for(Int_t l=0; l<NumOfLayersSDC0; ++l) {
@@ -803,7 +804,19 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
       hptr_array[sdc0mulwt_ctot_id + l]->Fill(multiplicity_wt_ctot);
     }
 
+    for(Int_t l=0; l<2; ++l){
+      for(Int_t w=0; w<NumOfWireSDC0; ++w) {
+        Int_t nhit_l_1 = gUnpacker.get_entries(k_device, 2*l, 0, w, k_leading);
+	if (nhit_l_1 == 0) continue;
+	for(Int_t x=0; x<NumOfWireSDC0; ++x) {
+	  Int_t nhit_l_2 = gUnpacker.get_entries(k_device, 2*l+1, 0, x, k_leading);
+	  if (nhit_l_2 == 0) continue;
+	  hptr_array[sdc0layer_correlation_id + l]->Fill(w,x);
+	}
+      }	
+    }
 
+   
     // for(Int_t s=0; s<NumOfDimSDC0 ;s++) {
     //   Int_t corr=2*s;
     //   for(UInt_t i=0; i<SDC0HitCont[corr].size() ;i++) {
@@ -865,6 +878,9 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     static const Int_t sdc1mul_ctot_id  = gHist.getSequentialID(kSDC1, 0, kMulti,  kTOTcutOffset);
     static const Int_t sdc1mulwt_ctot_id
       = gHist.getSequentialID(kSDC1, 0, kMulti, NumOfLayersSDC1 + kTOTcutOffset);
+    static const Int_t sdc1layer_correlation_id
+      = gHist.getSequentialID(kSDC1, 0, kCorr,  20);
+
 
     // static const Int_t sdc1self_corr_id  = gHist.getSequentialID(kSDC1, kSelfCorr, 0, 0);
 
@@ -960,6 +976,17 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
       hptr_array[sdc1mulwt_ctot_id + l]->Fill(multiplicity_wt_ctot);
     }
 
+    for(Int_t l=0; l<2; ++l){
+      for(Int_t w=0; w<NumOfWireSDC1; ++w) {
+        Int_t nhit_l_1 = gUnpacker.get_entries(k_device, 2*l+2, 0, w, k_leading);
+        if (nhit_l_1 == 0) continue;
+        for(Int_t x=0; x<NumOfWireSDC1; ++x) {
+          Int_t nhit_l_2 = gUnpacker.get_entries(k_device, 2*l+3, 0, x, k_leading);
+          if (nhit_l_2 == 0) continue;
+          hptr_array[sdc1layer_correlation_id + l]->Fill(w,x);
+        }
+      }
+    }
 
     // for(Int_t s=0; s<NumOfDimSDC1 ;s++) {
     //   Int_t corr=2*s;
@@ -1023,6 +1050,8 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     static const Int_t sdc2mul_ctot_id  = gHist.getSequentialID(kSDC2, 0, kMulti,  kTOTcutOffset);
     static const Int_t sdc2mulwt_ctot_id
       = gHist.getSequentialID(kSDC2, 0, kMulti, NumOfLayersSDC2 + kTOTcutOffset);
+    static const Int_t sdc2layer_correlation_id
+      = gHist.getSequentialID(kSDC2, 0, kCorr,  20);    
     // static const Int_t sdc2self_corr_id  = gHist.getSequentialID(kSDC2, kSelfCorr, 0, 0);
 
 
@@ -1117,6 +1146,17 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
       hptr_array[sdc2mul_ctot_id   + l]->Fill(multiplicity_ctot);
       hptr_array[sdc2mulwt_ctot_id + l]->Fill(multiplicity_wt_ctot);
     }
+    for(Int_t l=0; l<2; ++l){
+      for(Int_t w=0; w<NumOfWireSDC2_HYPS[2*l+1]; ++w) {
+        Int_t nhit_l_1 = gUnpacker.get_entries(k_device, 2*l+1, 0, w, k_leading);
+        if (nhit_l_1 == 0) continue;
+        for(Int_t x=0; x<NumOfWireSDC2_HYPS[2*l+2]; ++x) {
+          Int_t nhit_l_2 = gUnpacker.get_entries(k_device, 2*l+2, 0, x, k_leading);
+          if (nhit_l_2 == 0) continue;
+          hptr_array[sdc2layer_correlation_id + l]->Fill(w,x);
+        }
+      }
+    }
 
 
     // for(Int_t s=0; s<NumOfDimSDC2 ;s++) {
@@ -1180,6 +1220,8 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     static const Int_t sdc3mul_ctot_id  = gHist.getSequentialID(kSDC3, 0, kMulti,  kTOTcutOffset);
     static const Int_t sdc3mulwt_ctot_id
       = gHist.getSequentialID(kSDC3, 0, kMulti, NumOfLayersSDC3 + kTOTcutOffset);
+    static const Int_t sdc3layer_correlation_id
+      = gHist.getSequentialID(kSDC3, 0, kCorr,  20);
     // static const Int_t sdc3self_corr_id  = gHist.getSequentialID(kSDC3, kSelfCorr, 0, 0);
 
 
@@ -1275,6 +1317,17 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
       hptr_array[sdc3mulwt_ctot_id + l]->Fill(multiplicity_wt_ctot);
     }
 
+    for(Int_t l=0; l<2; ++l){
+      for(Int_t w=0; w<NumOfWireSDC3_HYPS[2*l+1]; ++w) {
+        Int_t nhit_l_1 = gUnpacker.get_entries(k_device, 2*l+1, 0, w, k_leading);
+        if (nhit_l_1 == 0) continue;
+        for(Int_t x=0; x<NumOfWireSDC3_HYPS[2*l+2]; ++x) {
+          Int_t nhit_l_2 = gUnpacker.get_entries(k_device, 2*l+2, 0, x, k_leading);
+          if (nhit_l_2 == 0) continue;
+          hptr_array[sdc3layer_correlation_id + l]->Fill(w,x);
+        }
+      }
+    }
 
     // for(Int_t s=0; s<NumOfDimSDC3 ;s++) {
     //   Int_t corr=2*s;

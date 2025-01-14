@@ -88,7 +88,7 @@ enum DataType {
   kDeltaE, kCTime, kDeltaE2D, kCTime2D,
   kChisqr,
   // Extra data type for chamber
-  kTOTTDC2D,
+  kTOTTDC2D, kCorr,
   // Extra data type for CFT
   kHighGain, kLowGain, kPede,
   // Extra data type for AFT
