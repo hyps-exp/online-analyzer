@@ -521,7 +521,7 @@ HistMaker::createTAG_SF(Bool_t flag_ps)
   top_dir->SetName(nameDetector);
 
   // layer configuration
-  const char* name_layer[NumOfLayersTAG_SF] = {"X", "XP"};
+  const char* name_layer[NumOfLayersTAG_SF] = {"SFF", "SFB"};
 
   { ///// ADC
     TString strSubDir  = CONV_STRING(kADC);
@@ -630,22 +630,18 @@ HistMaker::createTAG_PL(Bool_t flag_ps)
   TList *top_dir = new TList;
   top_dir->SetName(nameDetector);
 
-  // layer configuration
-  const char* name_layer[NumOfLayersTAG_PL] = {"X", "XP"};
   { ///// ADC
     TString strSubDir  = CONV_STRING(kADC);
     const char* nameSubDir = strSubDir.Data();
     TList *sub_dir = new TList;
     sub_dir->SetName(nameSubDir);
     Int_t target_id = getUniqueID(kTAG_PL, 0, kADC, 0);
-    for(Int_t i = 0; i<NumOfLayersTAG_PL; ++i){
-      for(Int_t j = 0; j<NumOfSegTAG_PL; ++j){
-	const char* title = NULL;
-	title = Form("%s_%s_%s_%d", nameDetector, nameSubDir, name_layer[i], j);
-	sub_dir->Add(createTH1(target_id + i*NumOfSegTAG_PL + j, title,
-			       0x1000, 0, 0x1000,
-			       "ADC [ch]", ""));
-      }
+    for(Int_t j = 0; j<NumOfSegTAG_PL; ++j){
+      const char* title = NULL;
+      title = Form("%s_%s_%d", nameDetector, nameSubDir, j);
+      sub_dir->Add(createTH1(target_id + j, title,
+			     0x1000, 0, 0x1000,
+			     "ADC [ch]", ""));
     }
     top_dir->Add(sub_dir);
   }
@@ -655,15 +651,13 @@ HistMaker::createTAG_PL(Bool_t flag_ps)
     TList *sub_dir = new TList;
     sub_dir->SetName(nameSubDir);
     Int_t target_id = getUniqueID(kTAG_PL, 0, kADCwTDC, 0);
-    for(Int_t i = 0; i<NumOfLayersTAG_PL; ++i){
-      for(Int_t j = 0; j<NumOfSegTAG_PL; ++j){
-	const char* title = NULL;
-	title = Form("%s_%s_%s_%d", nameDetector, nameSubDir, name_layer[i], j);
-	sub_dir->Add(createTH1(target_id + i*NumOfSegTAG_PL + j, title,
-			       0x1000, 0, 0x1000,
-			       "ADC [ch]", ""));
-      }
-    }
+    for(Int_t j = 0; j<NumOfSegTAG_PL; ++j){
+      const char* title = NULL;
+      title = Form("%s_%s_%d", nameDetector, nameSubDir, j);
+      sub_dir->Add(createTH1(target_id + j, title,
+			     0x1000, 0, 0x1000,
+			     "ADC [ch]", ""));
+    }    
     top_dir->Add(sub_dir);
   }
   { ///// TDC
@@ -672,16 +666,14 @@ HistMaker::createTAG_PL(Bool_t flag_ps)
     TList *sub_dir = new TList;
     sub_dir->SetName(nameSubDir);
     Int_t target_id = getUniqueID(kTAG_PL, 0, kTDC, 0);
-    for(Int_t i = 0; i<NumOfLayersTAG_PL; ++i){
-      for(Int_t j = 0; j<NumOfSegTAG_PL; ++j){
-	const char* title = NULL;
-	title = Form("%s_%s_%s_%d", nameDetector, nameSubDir, name_layer[i], j);
-	sub_dir->Add(createTH1(target_id + i*NumOfSegTAG_PL + j, title,
-			       //		       50000, 0, 2000000,
-			       2000, 0, 2000,
-			       "TDC [ch]", ""));
-      }
-    }
+    for(Int_t j = 0; j<NumOfSegTAG_PL; ++j){
+      const char* title = NULL;
+      title = Form("%s_%s_%d", nameDetector, nameSubDir, j);
+      sub_dir->Add(createTH1(target_id + j, title,
+			     //		       50000, 0, 2000000,
+			     2000, 0, 2000,
+			     "TDC [ch]", ""));
+    }    
     top_dir->Add(sub_dir);
   }
   {
@@ -693,13 +685,11 @@ HistMaker::createTAG_PL(Bool_t flag_ps)
 
     // Make histogram and add it
     Int_t target_id = getUniqueID(kTAG_PL, 0, kHitPat, 0);
-    for(Int_t i = 0; i<NumOfLayersTAG_PL; ++i){
-      const char* title = NULL;
-      title = Form("%s_%s_%s", nameDetector, nameSubDir, name_layer[i]);
-      sub_dir->Add(createTH1(target_id + i, title,
-			     NumOfSegTAG_PL, 0, NumOfSegTAG_PL,
-			     "Segment", ""));
-    }
+    const char* title = NULL;
+    title = Form("%s_%s", nameDetector, nameSubDir);
+    sub_dir->Add(createTH1(target_id, title,
+			   NumOfSegTAG_PL, 0, NumOfSegTAG_PL,
+			   "Segment", ""));    
     top_dir->Add(sub_dir);
   }
   {
@@ -711,13 +701,11 @@ HistMaker::createTAG_PL(Bool_t flag_ps)
 
     // Make histogram and add it
     Int_t target_id = getUniqueID(kTAG_PL, 0, kMulti, 0);
-    for(Int_t i = 0; i<NumOfLayersTAG_PL; ++i){
-      const char* title = NULL;
-      title = Form("%s_%s_%s", nameDetector, nameSubDir, name_layer[i]);
-      sub_dir->Add(createTH1(target_id + i, title,
-			     NumOfSegTAG_PL, 0, NumOfSegTAG_PL,
-			     "Multiplicity", ""));
-    }
+    const char* title = NULL;
+    title = Form("%s_%s", nameDetector, nameSubDir);
+    sub_dir->Add(createTH1(target_id, title,
+			   NumOfSegTAG_PL, 0, NumOfSegTAG_PL,
+			   "Multiplicity", ""));
     top_dir->Add(sub_dir);
   }
   return top_dir;

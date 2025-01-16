@@ -95,7 +95,6 @@ process_begin(const std::vector<std::string>& argv)
     std::cout << "#D Event cut flag on : factor="
 	      << event_cut_factor << std::endl;
   }
-
   // Make tabs
   hddaq::gui::Controller& gCon = hddaq::gui::Controller::getInstance();
   TGFileBrowser *tab_hist  = gCon.makeFileBrowser("Hist");
@@ -137,6 +136,7 @@ process_begin(const std::vector<std::string>& argv)
   tab_hist->Add(gHist.createRF());
   tab_hist->Add(gHist.createTAG_SF());
   tab_hist->Add(gHist.createTAG_PL());
+  //  std::cout << "OK!OK!" << std::endl;
   tab_hist->Add(gHist.createT0());
   tab_hist->Add(gHist.createSAC());
   tab_hist->Add(gHist.createSDC0());
@@ -450,16 +450,16 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	Int_t adc=0;
 	Int_t tdc=0;
 	// ADC
-	auto nhit = gUnpacker.get_entries(device_id, l, 0, seg, adc_id);
+	auto nhit = gUnpacker.get_entries(device_id, l, seg, 0, adc_id);
 	if (nhit != 0) {
-	  adc = gUnpacker.get(device_id, l, 0, seg, adc_id);
+	  adc = gUnpacker.get(device_id, l, seg, 0, adc_id);
 	  hptr_array[adc_hid + l*NumOfSegTAG_SF + seg]->Fill(adc);
 	}
 	// TDC
 	Bool_t is_in_gate = false;
-	for(Int_t m=0, n=gUnpacker.get_entries(device_id, l,  0, seg, tdc_id);
+	for(Int_t m=0, n=gUnpacker.get_entries(device_id, l, seg, 0, tdc_id);
 	    m<n; ++m) {
-	  tdc = gUnpacker.get(device_id, l, 0, seg, tdc_id, m);
+	  tdc = gUnpacker.get(device_id, l, seg, 0, tdc_id, m);
 	  if (tdc != 0) {
 	    hptr_array[tdc_hid + l*NumOfSegTAG_SF + seg]->Fill(tdc);
 	    if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
@@ -467,8 +467,8 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	    }
 	  }
 	  if (is_in_gate) {
-	    if (gUnpacker.get_entries(device_id, l,  0, seg, adc_id)>0){
-	      Int_t adc = gUnpacker.get(device_id, l,  0, seg, adc_id);
+	    if (gUnpacker.get_entries(device_id, l, seg, 0, adc_id)>0){
+	      Int_t adc = gUnpacker.get(device_id, l, seg, 0, adc_id);
 	      hptr_array[awt_hid + l*NumOfSegTAG_SF + seg]->Fill(adc);
 	    }
 	  }
@@ -505,39 +505,38 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     static const auto hit_hid   = gHist.getSequentialID(kTAG_PL, 0, kHitPat,  0);
     static const auto mul_hid   = gHist.getSequentialID(kTAG_PL, 0, kMulti,   0);
     Int_t multiplicity = 0;
-    for(Int_t l=0; l<NumOfLayersTAG_PL;++l){
-      for(Int_t seg=0; seg<NumOfSegTAG_PL; ++seg) {
-	Int_t adc=0;
-	Int_t tdc=0;
-	// ADC
-	auto nhit = gUnpacker.get_entries(device_id, l, 0, seg, adc_id);
-	if (nhit != 0) {
-	  adc = gUnpacker.get(device_id, l, 0, seg, adc_id);
-	  hptr_array[adc_hid + l*NumOfSegTAG_PL + seg]->Fill(adc);
-	}
-	// TDC
-	Bool_t is_in_gate = false;
-	for(Int_t m=0, n=gUnpacker.get_entries(device_id, l,  0, seg, tdc_id);
-	    m<n; ++m) {
-	  tdc = gUnpacker.get(device_id, l, 0, seg, tdc_id, m);
-	  if (tdc != 0) {
-	    hptr_array[tdc_hid + l*NumOfSegTAG_PL + seg]->Fill(tdc);
-	    if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
-	      is_in_gate = true;
-	    }
-	  }
-	  if (is_in_gate) {
-	    if (gUnpacker.get_entries(device_id, l,  0, seg, adc_id)>0){
-	      Int_t adc = gUnpacker.get(device_id, l,  0, seg, adc_id);
-	      hptr_array[awt_hid + l*NumOfSegTAG_PL + seg]->Fill(adc);
-	    }
-	  }
-	  ++multiplicity;
-	  hptr_array[hit_hid + l]->Fill(seg);
-	}
+    for(Int_t seg=0; seg<NumOfSegTAG_PL; ++seg) {
+      Int_t adc=0;
+      Int_t tdc=0;
+      // ADC
+      auto nhit = gUnpacker.get_entries(device_id, 0, seg, 0, adc_id);
+      if (nhit != 0) {
+	adc = gUnpacker.get(device_id, 0, seg, 0, adc_id);
+	hptr_array[adc_hid + seg]->Fill(adc);
       }
-      hptr_array[mul_hid + l]->Fill(multiplicity);
+      // TDC
+      Bool_t is_in_gate = false;
+      for(Int_t m=0, n=gUnpacker.get_entries(device_id, 0, seg, 0, tdc_id);
+	  m<n; ++m) {
+	tdc = gUnpacker.get(device_id, 0, seg, 0, tdc_id, m);
+	if (tdc != 0) {
+	  hptr_array[tdc_hid + seg]->Fill(tdc);
+	  if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
+	    is_in_gate = true;
+	  }
+	}
+	if (is_in_gate) {
+	  if (gUnpacker.get_entries(device_id, 0, seg, 0, adc_id)>0){
+	    Int_t adc = gUnpacker.get(device_id, 0, seg, 0, adc_id);
+	    hptr_array[awt_hid + seg]->Fill(adc);
+	  }
+	}
+	++multiplicity;
+	hptr_array[hit_hid]->Fill(seg);
+      }
     }
+    hptr_array[mul_hid]->Fill(multiplicity);
+    
 
 #if 0
     // Debug, dump data relating this detector
