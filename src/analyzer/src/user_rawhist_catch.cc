@@ -232,10 +232,10 @@ process_event( void )
     static const int k_device   = gUnpacker.get_device_id("BGO");
     //    static const int k_adc      = gUnpacker.get_data_id("BGO", "adc");
     //    static const int k_tdc      = gUnpacker.get_data_id("BGO", "tdc");
-    static const int k_fadc      = gUnpacker.get_data_id("BGO", "fadc");
-    static const int k_leading   = gUnpacker.get_data_id("BGO", "leading");
+    static const int k_fadc      = gUnpacker.get_data_id("BGO", "adc");
+    static const int k_leading   = gUnpacker.get_data_id("BGO", "tdc");
 //    static const int k_trailing   = gUnpacker.get_data_id("BGO", "trailing");
-
+    
     // TDC gate range
     static const unsigned int tdc_min = gUser.GetParameter("TdcBGO", 0);
     static const unsigned int tdc_max = gUser.GetParameter("TdcBGO", 1);
@@ -288,6 +288,7 @@ process_event( void )
 //      if(nhit_t != 0){
 //        hit_t_max = gUnpacker.get(k_device, 0, seg, 0, k_trailing, nhit_t - 1);
 //      }
+
 
       if(nhit_l!=0){
 	// ADC wTDC
@@ -347,13 +348,14 @@ process_event( void )
 
     hptr_array[bgo_mul_id]->Fill(multiplicity);
     hptr_array[bgo_cmul_id]->Fill(cmultiplicity); // CMulti
-
+    
 #if 0
     // Debug, dump data relating this detector
     gUnpacker.dump_data_device(k_device);
 #endif
   }// BGO
 
+  
 #if DEBUG
   std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif
@@ -696,7 +698,7 @@ process_event( void )
     static const int k_device_piid   = gUnpacker.get_device_id("PiID");
     static const int k_leading  = gUnpacker.get_data_id("CFT" , "leading");
 //    static const int k_fadc      = gUnpacker.get_data_id("BGO", "fadc");
-    static const int k_BGOleading      = gUnpacker.get_data_id("BGO", "leading");
+    static const int k_BGOleading      = gUnpacker.get_data_id("BGO", "tdc");
     static const int k_PiIDleading      = gUnpacker.get_data_id("PiID", "leading");
 //    int BGO_Vth = 1000;
 //    static const int BGO_Vth = gUser.GetParameter("BGO_Vth", 0);
