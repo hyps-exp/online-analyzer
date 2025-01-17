@@ -58,11 +58,16 @@ void dispSDC2_hyps( void )
     c->Divide(3,2);
     int base_id = HistMaker::getUniqueID(kSDC2, 0, kADC, 0);
     int base_id_ctot = HistMaker::getUniqueID(kSDC2, 0, kADC, kTOTcutOffset);
+    int base_id_tot1st = HistMaker::getUniqueID(kSDC2, 0, kTDC2D,  10+kTOTcutOffset);
     for( int i=0; i<n_layer; ++i ){
       c->cd(i+1);
       TH1 *h = (TH1*)GHist::get(base_id + i);;
       if( !h ) continue;
       h->Draw();
+      TH1 *h1st = (TH1*)GHist::get(base_id_tot1st);
+      if( !h1st ) continue;
+      h1st->SetLineColor( kGreen );
+      h1st->Draw("same");
       TH1 *hh = (TH1*)GHist::get( base_id_ctot + i );
       if( !hh ) continue;
       hh->SetLineColor( kRed );

@@ -904,7 +904,7 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
 
 
 // -------------------------------------------------------------------------
-// createSDC0
+// creatSeDC0
 // -------------------------------------------------------------------------
 TList* HistMaker::createSDC0( Bool_t flag_ps )
 {
@@ -1032,6 +1032,48 @@ TList* HistMaker::createSDC0( Bool_t flag_ps )
       sub_dir->Add(createTH1(target_id + i, title,
                              500, 0, 500,
                              "TOT [ch]", ""));
+    }
+
+    // TOT1st----------------------------------------------------
+    target_id = getUniqueID(kSDC0, 0, kTDC2D,  10+kTOTcutOffset);
+    for(Int_t i = 0; i<NumOfLayersSDC0; ++i){
+      const char* title = NULL;
+      title = Form("%s_%s1st_%s", nameDetector, nameSubDir, name_layer[i]);
+      sub_dir->Add(createTH1(target_id + i, title,
+			     500, 0, 500,
+			     "TOT [ch]", ""));
+    }
+
+    // TOT2D---------------------------------------------------
+    target_id = getUniqueID(kSDC0, 0, kTDC2D,  40+kTOTcutOffset);
+    for(Int_t i = 0; i<NumOfLayersSDC0; ++i){
+      const char* title = NULL;
+      title = Form("%s_%s2D_%s", nameDetector, nameSubDir, name_layer[i]);
+      sub_dir->Add(createTH2(target_id + i, title,
+			     NumOfWireSDC0_HYPS[i], 0, NumOfWireSDC0_HYPS[i],
+			     500, 0, 500,
+			     "Wire Number", "TOT [ch]"));
+    }
+
+    // insert sub directory
+    top_dir->Add(sub_dir);
+  }
+
+  // TOT_TDC2D
+  {
+    TString strSubDir  = CONV_STRING(kTOTTDC2D);
+    const char* nameSubDir = strSubDir.Data();
+    TList *sub_dir = new TList;
+    sub_dir->SetName(nameSubDir);
+
+    Int_t target_id = getUniqueID(kSDC0, 0, kTOTTDC2D,  kTOTcutOffset);
+    for(Int_t i = 0; i<NumOfLayersSDC0; ++i){
+      const char* title = NULL;
+      title = Form("%s_%s_%s", nameDetector, nameSubDir, name_layer[i]);
+      sub_dir->Add(createTH2(target_id + i, title,
+			     500, 0, 500,
+			     5000, 0, 5000,
+			     "TOT [ch]", "TDC [ch]"));
     }
 
     // insert sub directory
