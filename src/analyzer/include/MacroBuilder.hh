@@ -98,11 +98,11 @@ TCanvas* BcOutSdcInMultiHit();
 void     UpdateTOTPeakFitting();
 
 // BeamProfile
-TCanvas* BeamProfileX(ParticleType p);
-TCanvas* BeamProfileY(ParticleType p);
-TCanvas* BeamProfileXY(ParticleType p);
-TCanvas* BeamProfileFF();
-TCanvas* BeamEnvelope(ParticleType p);
+// TCanvas* BeamProfileX(ParticleType p);
+// TCanvas* BeamProfileY(ParticleType p);
+// TCanvas* BeamProfileXY(ParticleType p);
+// TCanvas* BeamProfileFF();
+// TCanvas* BeamEnvelope(ParticleType p);
 
 // E42
 TCanvas* TPC();
@@ -225,7 +225,7 @@ void     UpdateAFTEfficiency();
 void     UpdateSSDEfficiency();
 void     UpdateT0PeakFitting();
 void     UpdateTOTPeakFittingE40();
-void     UpdateBeamProfile(ParticleType p);
+  //void     UpdateBeamProfile(ParticleType p);
 }
 
 };

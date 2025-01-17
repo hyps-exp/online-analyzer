@@ -708,8 +708,12 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     static const Int_t sdc0t_ctot_id    = gHist.getSequentialID(kSDC0, 0, kTDC,    kTOTcutOffset);
     static const Int_t sdc0tot_ctot_id  = gHist.getSequentialID(kSDC0, 0, kADC,    kTOTcutOffset);
     static const Int_t sdc0t1st_ctot_id = gHist.getSequentialID(kSDC0, 0, kTDC2D,  kTOTcutOffset);
+    static const Int_t sdc0tot1st_id    = gHist.getSequentialID(kSDC0, 0, kTDC2D,  10+kTOTcutOffset);
     static const Int_t sdc0t2D_id       = gHist.getSequentialID(kSDC0, 0, kTDC2D,  20+kTOTcutOffset);
     static const Int_t sdc0t2D_ctot_id  = gHist.getSequentialID(kSDC0, 0, kTDC2D,  30+kTOTcutOffset);
+    static const Int_t sdc0tot2D_id     = gHist.getSequentialID(kSDC0, 0, kTDC2D,  40+kTOTcutOffset);
+    static const Int_t sdc0_tot_tdc2D_id
+      = gHist.getSequentialID(kSDC0, 0, kTOTTDC2D,  kTOTcutOffset);
     static const Int_t sdc0hit_ctot_id  = gHist.getSequentialID(kSDC0, 0, kHitPat, kTOTcutOffset);
     static const Int_t sdc0mul_ctot_id  = gHist.getSequentialID(kSDC0, 0, kMulti,  kTOTcutOffset);
     static const Int_t sdc0mulwt_ctot_id
@@ -724,6 +728,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
       Int_t tdc_t                = 0;
       Int_t tot                  = 0;
       Int_t tdc1st               = 0;
+      Int_t tot1st               = 0;
       Int_t multiplicity         = 0;
       Int_t multiplicity_wt      = 0;
       Int_t multiplicity_ctot    = 0;
@@ -771,6 +776,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	}
 
 	tdc1st = 0;
+	tot1st = 0;
 	if (nhit_l == nhit_t && hit_l_max > hit_t_max) {
 	  ++multiplicity_ctot;
 	  for(Int_t m = 0; m<nhit_l; ++m) {
@@ -778,11 +784,14 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	    tdc_t = gUnpacker.get(k_device, l, 0, w, k_trailing, m);
 	    tot = tdc - tdc_t;
 	    hptr_array[sdc0tot_id+l]->Fill(tot);
-	    if (tot < tot_min) continue;
+	    hptr_array[sdc0tot2D_id+l]->Fill(w,tot);
+            hptr_array[sdc0_tot_tdc2D_id+l]->Fill(tot,tdc);
+            if (tot1st<tot) tot1st = tot;
+            if (tot < tot_min) continue;
 	    hptr_array[sdc0t_ctot_id + l]->Fill(tdc);
 	    hptr_array[sdc0t2D_ctot_id + l]->Fill(w,tdc); //2D
 	    hptr_array[sdc0tot_ctot_id+l]->Fill(tot);
-	    if (tdc1st<tdc) tdc1st = tdc;
+            if (tdc1st<tdc) tdc1st = tdc;
 	    if (tdc_min < tdc && tdc < tdc_max) {
 	      flag_hit_wt_ctot = true;
 	    }
@@ -790,6 +799,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	}
 
 	if (tdc1st!=0) hptr_array[sdc0t1st_ctot_id +l]->Fill(tdc1st);
+        if (tot1st!=0) hptr_array[sdc0tot1st_id +l]->Fill(tot);
 	if (flag_hit_wt_ctot) {
 	  ++multiplicity_wt_ctot;
 	  hptr_array[sdc0hit_ctot_id + l]->Fill(w);
@@ -948,12 +958,12 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	    hptr_array[sdc1tot_id+l]->Fill(tot);
 	    hptr_array[sdc1tot2D_id+l]->Fill(w,tot);
 	    hptr_array[sdc1_tot_tdc2D_id+l]->Fill(tot,tdc);
-	    if (tdc1st<tdc) tdc1st = tdc;
 	    if (tot1st<tot) tot1st = tot;
 	    if (tot < tot_min) continue;
 	    hptr_array[sdc1t_ctot_id + l]->Fill(tdc);
 	    hptr_array[sdc1t2D_ctot_id + l]->Fill(w,tdc); //2D
 	    hptr_array[sdc1tot_ctot_id+l]->Fill(tot);
+	    if (tdc1st<tdc) tdc1st = tdc;
 	    if (tdc_min < tdc && tdc < tdc_max) {
 	      flag_hit_wt_ctot = true;
 	    }

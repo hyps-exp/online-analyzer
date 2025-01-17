@@ -3333,92 +3333,92 @@ FHTTOT()
 }
 
 //_____________________________________________________________________________
-TCanvas*
-BeamProfileX(ParticleType p)
-{
-  TCanvas *c1 = new TCanvas(__func__+ParticleName[p],
-			    __func__+ParticleName[p]);
-  c1->Divide(5, 2);
-  Int_t id = HistMaker::getUniqueID(kMisc, p, kHitPat);
-  for(Int_t i=0; i<NProfile*2; ++i){
-    c1->cd(i+1);
-    TH1 *h = GHist::get(id + i);
-    if(!h) continue;
-    h->Draw();
-  }
-  return c1;
-}
+// TCanvas*
+// BeamProfileX(ParticleType p)
+// {
+//   TCanvas *c1 = new TCanvas(__func__+ParticleName[p],
+// 			    __func__+ParticleName[p]);
+//   c1->Divide(5, 2);
+//   Int_t id = HistMaker::getUniqueID(kMisc, p, kHitPat);
+//   for(Int_t i=0; i<NProfile*2; ++i){
+//     c1->cd(i+1);
+//     TH1 *h = GHist::get(id + i);
+//     if(!h) continue;
+//     h->Draw();
+//   }
+//   return c1;
+// }
 
-//_____________________________________________________________________________
-TCanvas*
-BeamProfileY(ParticleType p)
-{
-  TCanvas *c1 = new TCanvas(__func__+ParticleName[p],
-			    __func__+ParticleName[p]);
-  c1->Divide(5, 2);
-  Int_t id = HistMaker::getUniqueID(kMisc, p, kHitPat);
-  for(Int_t i=0; i<NProfile*2; ++i){
-    c1->cd(i + 1);
-    TH1 *h = GHist::get(id + i + NProfile*2);
-    if(!h) continue;
-    h->Draw();
-  }
-  return c1;
-}
+// //_____________________________________________________________________________
+// TCanvas*
+// BeamProfileY(ParticleType p)
+// {
+//   TCanvas *c1 = new TCanvas(__func__+ParticleName[p],
+// 			    __func__+ParticleName[p]);
+//   c1->Divide(5, 2);
+//   Int_t id = HistMaker::getUniqueID(kMisc, p, kHitPat);
+//   for(Int_t i=0; i<NProfile*2; ++i){
+//     c1->cd(i + 1);
+//     TH1 *h = GHist::get(id + i + NProfile*2);
+//     if(!h) continue;
+//     h->Draw();
+//   }
+//   return c1;
+// }
 
-//_____________________________________________________________________________
-TCanvas*
-BeamProfileXY(ParticleType p)
-{
-  TCanvas *c1 = new TCanvas(__func__+ParticleName[p],
-			    __func__+ParticleName[p]);
-  c1->Divide(3, 2);
-  Int_t id = HistMaker::getUniqueID(kMisc, p, kHitPat);
-  for(Int_t i=0; i<NProfile; ++i){
-    c1->cd(i + 1);
-    TH1 *h = GHist::get(id + i + NProfile*4);
-    if(!h) continue;
-    h->Draw("colz");
-  }
-  return c1;
-}
+// //_____________________________________________________________________________
+// TCanvas*
+// BeamProfileXY(ParticleType p)
+// {
+//   TCanvas *c1 = new TCanvas(__func__+ParticleName[p],
+// 			    __func__+ParticleName[p]);
+//   c1->Divide(3, 2);
+//   Int_t id = HistMaker::getUniqueID(kMisc, p, kHitPat);
+//   for(Int_t i=0; i<NProfile; ++i){
+//     c1->cd(i + 1);
+//     TH1 *h = GHist::get(id + i + NProfile*4);
+//     if(!h) continue;
+//     h->Draw("colz");
+//   }
+//   return c1;
+// }
 
-//_____________________________________________________________________________
-TCanvas*
-BeamProfileFF()
-{
-  TCanvas *c1 = new TCanvas(__func__, __func__);
-  c1->Divide(2, 2);
-  for(ParticleType ip : { kAll, kKaon, kPion }){
-    c1->cd(1);
-    Int_t id = HistMaker::getUniqueID(kMisc, ip, kHitPat);
-    TH1 *h = GHist::get(id + FF0);
-    if(!h) continue;
-    h->Draw(ip == kAll ? "" : "same");
-    c1->cd(2);
-    h = GHist::get(id + FF0 + NProfile*2);
-    if(!h) continue;
-    h->Draw(ip == kAll ? "" : "same");
-    c1->cd(3);
-    h = GHist::get(id + FF0 + NProfile*4);
-    if(!h) continue;
-    h->Draw(ip == kAll ? "box" : "box same");
-    c1->cd(4);
-    h = GHist::get(id + NProfile*5);
-    if(!h) continue;
-    h->Draw(ip == kAll ? "box" : "box same");
-  }
-  return c1;
-}
+// //_____________________________________________________________________________
+// TCanvas*
+// BeamProfileFF()
+// {
+//   TCanvas *c1 = new TCanvas(__func__, __func__);
+//   c1->Divide(2, 2);
+//   for(ParticleType ip : { kAll, kKaon, kPion }){
+//     c1->cd(1);
+//     Int_t id = HistMaker::getUniqueID(kMisc, ip, kHitPat);
+//     TH1 *h = GHist::get(id + FF0);
+//     if(!h) continue;
+//     h->Draw(ip == kAll ? "" : "same");
+//     c1->cd(2);
+//     h = GHist::get(id + FF0 + NProfile*2);
+//     if(!h) continue;
+//     h->Draw(ip == kAll ? "" : "same");
+//     c1->cd(3);
+//     h = GHist::get(id + FF0 + NProfile*4);
+//     if(!h) continue;
+//     h->Draw(ip == kAll ? "box" : "box same");
+//     c1->cd(4);
+//     h = GHist::get(id + NProfile*5);
+//     if(!h) continue;
+//     h->Draw(ip == kAll ? "box" : "box same");
+//   }
+//   return c1;
+// }
 
-//_____________________________________________________________________________
-TCanvas*
-BeamEnvelope(ParticleType p)
-{
-  TCanvas* c1 = new TCanvas(__func__, __func__);
-  c1->Divide(2, 2);
-  return c1;
-}
+// //_____________________________________________________________________________
+// TCanvas*
+// BeamEnvelope(ParticleType p)
+// {
+//   TCanvas* c1 = new TCanvas(__func__, __func__);
+//   c1->Divide(2, 2);
+//   return c1;
+// }
 
 //_____________________________________________________________________________
 TCanvas*
@@ -4387,168 +4387,168 @@ UpdateTOTPeakFittingE40()
 }
 
 //_____________________________________________________________________________
-void
-UpdateBeamProfile(ParticleType p)
-{
-  static std::vector<TLatex*> title1_raw(NParticleType*200 + NProfile*2);
-  static std::vector<TLatex*> title2_raw(NParticleType*200 + NProfile*2);
-  static std::vector<TLatex*> title1_fit(NParticleType*200 + NProfile*2);
-  static std::vector<TLatex*> title2_fit(NParticleType*200 + NProfile*2);
-  static std::vector<TLatex*> tex1_raw(NParticleType*200 + NProfile*2);
-  static std::vector<TLatex*> tex2_raw(NParticleType*200 + NProfile*2);
-  static std::vector<TLatex*> tex1_fit(NParticleType*200 + NProfile*2);
-  static std::vector<TLatex*> tex2_fit(NParticleType*200 + NProfile*2);
-  {
-    TCanvas *c1 = (TCanvas*)gROOT->FindObject("BeamProfileX" +
-					      ParticleName[p]);
-    for(Int_t i=0; i<NProfile; ++i){
-      // raw
-      c1->cd(i + 1);
-      TString n1 = Form("BeamProfile FF %d X (%s)",
-			(Int_t)Profiles[i], ParticleName[p].Data());
-      TH1 *h1 = (TH1*)gPad->FindObject(n1);
-      Int_t it = p*200 + i;
-      if(!h1) continue;
-      if(!title1_raw[it]){
-	title1_raw[it] = new TLatex(0.180, 0.830, "Mean");
-	SetText(title1_raw[it], 12, 0.060);
-	title1_raw[it]->Draw();
-      }
-      if(!title2_raw[it]){
-	title2_raw[it] = new TLatex(0.180, 0.700, "StdDev");
-	SetText(title2_raw[it], 12, 0.060);
-	title2_raw[it]->Draw();
-      }
-      Double_t p1 = h1->GetMean();
-      Double_t p2  = h1->GetStdDev();
-      if (p == kAll) {
-        envelope_x_mean[i] = p1;
-        envelope_x_rms[i] = p2;
-      }
-      if(tex1_raw[it]) delete tex1_raw[it];
-      tex1_raw[it] = new TLatex(0.400, 0.770, Form("%.1f", p1));
-      SetText(tex1_raw[it], 32, 0.080);
-      tex1_raw[it]->Draw();
-      if(tex2_raw[it]) delete tex2_raw[it];
-      tex2_raw[it] = new TLatex(0.400, 0.640, Form("%.1f", p2));
-      SetText(tex2_raw[it], 32, 0.080);
-      tex2_raw[it]->Draw();
-      // fit
-      c1->cd(i + 1 + NProfile);
-      TString n2 = Form("BeamProfile FF %d X Fit (%s)",
-			(Int_t)Profiles[i], ParticleName[p].Data());
-      TH1 *h2 = (TH1*)gPad->FindObject(n2);
-      if(!h2) continue;
-      if(!title1_fit[it]){
-	title1_fit[it] = new TLatex(0.180, 0.830, "Mean");
-	SetText(title1_fit[it], 12, 0.060);
-	title1_fit[it]->Draw();
-      }
-      if(!title2_fit[it]){
-	title2_fit[it] = new TLatex(0.180, 0.700, "Sigma");
-	SetText(title2_fit[it], 12, 0.060);
-	title2_fit[it]->Draw();
-      }
-      if(h2->GetEntries() == 0)
-	continue;
-      TF1 f("f", "gaus");
-      p1 = h2->GetBinCenter(h2->GetMaximumBin());
-      p2 = h2->GetStdDev();
-      for(Int_t ifit=0; ifit<3; ++ifit){
-	h2->Fit("f", "Q", "", p1-2*p2, p1+2*p2);
-	p1 = f.GetParameter(1);
-	p2 = f.GetParameter(2);
-      }
-      if (p == kAll) {
-        envelope_xfit_mean[i] = p1;
-        envelope_xfit_sigma[i] = p2;
-      }
-      if(tex1_fit[it]) delete tex1_fit[it];
-      tex1_fit[it] = new TLatex(0.400, 0.770, Form("%.1f", p1));
-      SetText(tex1_fit[it], 32, 0.080);
-      tex1_fit[it]->Draw();
-      if(tex2_fit[it]) delete tex2_fit[it];
-      tex2_fit[it] = new TLatex(0.400, 0.640, Form("%.1f", p2));
-      SetText(tex2_fit[it], 32, 0.080);
-      tex2_fit[it]->Draw();
-    }
-  }
-  {
-    TCanvas *c1 = (TCanvas*)gROOT->FindObject("BeamProfileY" +
-					      ParticleName[p]);
-    for(Int_t i=0; i<NProfile; ++i){
-      // raw
-      c1->cd(i + 1);
-      TString n1 = Form("BeamProfile FF %d Y (%s)",
-			(Int_t)Profiles[i], ParticleName[p].Data());
-      TH1 *h1 = (TH1*)gPad->FindObject(n1);
-      Int_t it = p*200 + 100 + i;
-      if(!h1) continue;
-      if(!title1_raw[it]){
-	title1_raw[it] = new TLatex(0.180, 0.830, "Mean");
-	SetText(title1_raw[it], 12, 0.060);
-	title1_raw[it]->Draw();
-      }
-      if(!title2_raw[it]){
-	title2_raw[it] = new TLatex(0.180, 0.700, "StdDev");
-	SetText(title2_raw[it], 12, 0.060);
-	title2_raw[it]->Draw();
-      }
-      Double_t p1 = h1->GetMean();
-      Double_t p2  = h1->GetStdDev();
-      if (p == kAll) {
-        envelope_y_mean[i] = p1;
-        envelope_y_rms[i] = p2;
-      }
-      if(tex1_raw[it]) delete tex1_raw[it];
-      tex1_raw[it] = new TLatex(0.440, 0.770, Form("%.1f", p1));
-      SetText(tex1_raw[it], 32, 0.080);
-      tex1_raw[it]->Draw();
-      if(tex2_raw[it]) delete tex2_raw[it];
-      tex2_raw[it] = new TLatex(0.440, 0.640, Form("%.1f", p2));
-      SetText(tex2_raw[it], 32, 0.080);
-      tex2_raw[it]->Draw();
-      // fit
-      c1->cd(i + 1 + NProfile);
-      TString n2 = Form("BeamProfile FF %d Y Fit (%s)",
-			(Int_t)Profiles[i], ParticleName[p].Data());
-      TH1 *h2 = (TH1*)gPad->FindObject(n2);
-      if(!h2) continue;
-      if(!title1_fit[it]){
-	title1_fit[it] = new TLatex(0.180, 0.830, "Mean");
-	SetText(title1_fit[it], 12, 0.060);
-	title1_fit[it]->Draw();
-      }
-      if(!title2_fit[it]){
-	title2_fit[it] = new TLatex(0.180, 0.700, "Sigma");
-	SetText(title2_fit[it], 12, 0.060);
-	title2_fit[it]->Draw();
-      }
-      if(h2->GetEntries() == 0)
-	continue;
-      TF1 f("f", "gaus");
-      p1 = h2->GetBinCenter(h2->GetMaximumBin());
-      p2 = h2->GetStdDev();
-      for(Int_t ifit=0; ifit<3; ++ifit){
-	h2->Fit("f", "Q", "", p1-2*p2, p1+2*p2);
-	p1 = f.GetParameter(1);
-	p2 = f.GetParameter(2);
-      }
-      if (p == kAll) {
-        envelope_yfit_mean[i] = p1;
-        envelope_yfit_sigma[i] = p2;
-      }
-      if(tex1_fit[it]) delete tex1_fit[it];
-      tex1_fit[it] = new TLatex(0.440, 0.770, Form("%.1f", p1));
-      SetText(tex1_fit[it], 32, 0.080);
-      tex1_fit[it]->Draw();
-      if(tex2_fit[it]) delete tex2_fit[it];
-      tex2_fit[it] = new TLatex(0.440, 0.640, Form("%.1f", p2));
-      SetText(tex2_fit[it], 32, 0.080);
-      tex2_fit[it]->Draw();
-    }
-  }
-}
+// void
+// UpdateBeamProfile(ParticleType p)
+// {
+//   static std::vector<TLatex*> title1_raw(NParticleType*200 + NProfile*2);
+//   static std::vector<TLatex*> title2_raw(NParticleType*200 + NProfile*2);
+//   static std::vector<TLatex*> title1_fit(NParticleType*200 + NProfile*2);
+//   static std::vector<TLatex*> title2_fit(NParticleType*200 + NProfile*2);
+//   static std::vector<TLatex*> tex1_raw(NParticleType*200 + NProfile*2);
+//   static std::vector<TLatex*> tex2_raw(NParticleType*200 + NProfile*2);
+//   static std::vector<TLatex*> tex1_fit(NParticleType*200 + NProfile*2);
+//   static std::vector<TLatex*> tex2_fit(NParticleType*200 + NProfile*2);
+//   {
+//     TCanvas *c1 = (TCanvas*)gROOT->FindObject("BeamProfileX" +
+// 					      ParticleName[p]);
+//     for(Int_t i=0; i<NProfile; ++i){
+//       // raw
+//       c1->cd(i + 1);
+//       TString n1 = Form("BeamProfile FF %d X (%s)",
+// 			(Int_t)Profiles[i], ParticleName[p].Data());
+//       TH1 *h1 = (TH1*)gPad->FindObject(n1);
+//       Int_t it = p*200 + i;
+//       if(!h1) continue;
+//       if(!title1_raw[it]){
+// 	title1_raw[it] = new TLatex(0.180, 0.830, "Mean");
+// 	SetText(title1_raw[it], 12, 0.060);
+// 	title1_raw[it]->Draw();
+//       }
+//       if(!title2_raw[it]){
+// 	title2_raw[it] = new TLatex(0.180, 0.700, "StdDev");
+// 	SetText(title2_raw[it], 12, 0.060);
+// 	title2_raw[it]->Draw();
+//       }
+//       Double_t p1 = h1->GetMean();
+//       Double_t p2  = h1->GetStdDev();
+//       if (p == kAll) {
+//         envelope_x_mean[i] = p1;
+//         envelope_x_rms[i] = p2;
+//       }
+//       if(tex1_raw[it]) delete tex1_raw[it];
+//       tex1_raw[it] = new TLatex(0.400, 0.770, Form("%.1f", p1));
+//       SetText(tex1_raw[it], 32, 0.080);
+//       tex1_raw[it]->Draw();
+//       if(tex2_raw[it]) delete tex2_raw[it];
+//       tex2_raw[it] = new TLatex(0.400, 0.640, Form("%.1f", p2));
+//       SetText(tex2_raw[it], 32, 0.080);
+//       tex2_raw[it]->Draw();
+//       // fit
+//       c1->cd(i + 1 + NProfile);
+//       TString n2 = Form("BeamProfile FF %d X Fit (%s)",
+// 			(Int_t)Profiles[i], ParticleName[p].Data());
+//       TH1 *h2 = (TH1*)gPad->FindObject(n2);
+//       if(!h2) continue;
+//       if(!title1_fit[it]){
+// 	title1_fit[it] = new TLatex(0.180, 0.830, "Mean");
+// 	SetText(title1_fit[it], 12, 0.060);
+// 	title1_fit[it]->Draw();
+//       }
+//       if(!title2_fit[it]){
+// 	title2_fit[it] = new TLatex(0.180, 0.700, "Sigma");
+// 	SetText(title2_fit[it], 12, 0.060);
+// 	title2_fit[it]->Draw();
+//       }
+//       if(h2->GetEntries() == 0)
+// 	continue;
+//       TF1 f("f", "gaus");
+//       p1 = h2->GetBinCenter(h2->GetMaximumBin());
+//       p2 = h2->GetStdDev();
+//       for(Int_t ifit=0; ifit<3; ++ifit){
+// 	h2->Fit("f", "Q", "", p1-2*p2, p1+2*p2);
+// 	p1 = f.GetParameter(1);
+// 	p2 = f.GetParameter(2);
+//       }
+//       if (p == kAll) {
+//         envelope_xfit_mean[i] = p1;
+//         envelope_xfit_sigma[i] = p2;
+//       }
+//       if(tex1_fit[it]) delete tex1_fit[it];
+//       tex1_fit[it] = new TLatex(0.400, 0.770, Form("%.1f", p1));
+//       SetText(tex1_fit[it], 32, 0.080);
+//       tex1_fit[it]->Draw();
+//       if(tex2_fit[it]) delete tex2_fit[it];
+//       tex2_fit[it] = new TLatex(0.400, 0.640, Form("%.1f", p2));
+//       SetText(tex2_fit[it], 32, 0.080);
+//       tex2_fit[it]->Draw();
+//     }
+//   }
+//   {
+//     TCanvas *c1 = (TCanvas*)gROOT->FindObject("BeamProfileY" +
+// 					      ParticleName[p]);
+//     for(Int_t i=0; i<NProfile; ++i){
+//       // raw
+//       c1->cd(i + 1);
+//       TString n1 = Form("BeamProfile FF %d Y (%s)",
+// 			(Int_t)Profiles[i], ParticleName[p].Data());
+//       TH1 *h1 = (TH1*)gPad->FindObject(n1);
+//       Int_t it = p*200 + 100 + i;
+//       if(!h1) continue;
+//       if(!title1_raw[it]){
+// 	title1_raw[it] = new TLatex(0.180, 0.830, "Mean");
+// 	SetText(title1_raw[it], 12, 0.060);
+// 	title1_raw[it]->Draw();
+//       }
+//       if(!title2_raw[it]){
+// 	title2_raw[it] = new TLatex(0.180, 0.700, "StdDev");
+// 	SetText(title2_raw[it], 12, 0.060);
+// 	title2_raw[it]->Draw();
+//       }
+//       Double_t p1 = h1->GetMean();
+//       Double_t p2  = h1->GetStdDev();
+//       if (p == kAll) {
+//         envelope_y_mean[i] = p1;
+//         envelope_y_rms[i] = p2;
+//       }
+//       if(tex1_raw[it]) delete tex1_raw[it];
+//       tex1_raw[it] = new TLatex(0.440, 0.770, Form("%.1f", p1));
+//       SetText(tex1_raw[it], 32, 0.080);
+//       tex1_raw[it]->Draw();
+//       if(tex2_raw[it]) delete tex2_raw[it];
+//       tex2_raw[it] = new TLatex(0.440, 0.640, Form("%.1f", p2));
+//       SetText(tex2_raw[it], 32, 0.080);
+//       tex2_raw[it]->Draw();
+//       // fit
+//       c1->cd(i + 1 + NProfile);
+//       TString n2 = Form("BeamProfile FF %d Y Fit (%s)",
+// 			(Int_t)Profiles[i], ParticleName[p].Data());
+//       TH1 *h2 = (TH1*)gPad->FindObject(n2);
+//       if(!h2) continue;
+//       if(!title1_fit[it]){
+// 	title1_fit[it] = new TLatex(0.180, 0.830, "Mean");
+// 	SetText(title1_fit[it], 12, 0.060);
+// 	title1_fit[it]->Draw();
+//       }
+//       if(!title2_fit[it]){
+// 	title2_fit[it] = new TLatex(0.180, 0.700, "Sigma");
+// 	SetText(title2_fit[it], 12, 0.060);
+// 	title2_fit[it]->Draw();
+//       }
+//       if(h2->GetEntries() == 0)
+// 	continue;
+//       TF1 f("f", "gaus");
+//       p1 = h2->GetBinCenter(h2->GetMaximumBin());
+//       p2 = h2->GetStdDev();
+//       for(Int_t ifit=0; ifit<3; ++ifit){
+// 	h2->Fit("f", "Q", "", p1-2*p2, p1+2*p2);
+// 	p1 = f.GetParameter(1);
+// 	p2 = f.GetParameter(2);
+//       }
+//       if (p == kAll) {
+//         envelope_yfit_mean[i] = p1;
+//         envelope_yfit_sigma[i] = p2;
+//       }
+//       if(tex1_fit[it]) delete tex1_fit[it];
+//       tex1_fit[it] = new TLatex(0.440, 0.770, Form("%.1f", p1));
+//       SetText(tex1_fit[it], 32, 0.080);
+//       tex1_fit[it]->Draw();
+//       if(tex2_fit[it]) delete tex2_fit[it];
+//       tex2_fit[it] = new TLatex(0.440, 0.640, Form("%.1f", p2));
+//       SetText(tex2_fit[it], 32, 0.080);
+//       tex2_fit[it]->Draw();
+//     }
+//   }
+// }
 
 } // namespace http
 
