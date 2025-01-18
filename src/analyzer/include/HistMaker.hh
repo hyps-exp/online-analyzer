@@ -23,10 +23,12 @@ enum DetectorType {
   // Detector unique ID in the beam line
   kBH1, kBFT, kBC3, kBC4, kBH2, kBAC, kBH2MT,
   kMsT, kMsT_T0, kMtx3D,
-  // Detector unique ID in the S-2S system
-  kAC1, kSDC1, kSDC2, kSDC3, kSDC4, kSDC5, kTOF, kSAC3, kSFV,
+  // // Detector unique ID in the S-2S system
+  // kAC1, kSDC1, kSDC2, kSDC3, kSDC4, kSDC5, kTOF, kSAC3, kSFV,
   // HYPS
-  kSDC0, kDC1, kDC2, kDC3, kTAG_SF, kTAG_PL, kT0, kE_Veto, kRF,
+  kSDC0, kSDC1, kSDC2, kSDC3, kTAG_SF, kTAG_PL, kU_Veto,  kT0, kE_Veto, kTOF, kRF,
+  // Old detectors E40
+  kCFT,kBGO,kPiID,kSFT,kFHT1,kFHT2,kLC,kSAC,kTOF_HT,
   // VMEEASIROC unique ID
   kVMEEASIROC,
   //E70
@@ -42,8 +44,6 @@ enum DetectorType {
   kPVAC, kFAC, kSCH, kLAC,
   // Old detectors E07
   kFBH, kSSDT, kSSD1, kSSD2, kEMC,
-  // Old detectors E40
-  kCFT,kBGO,kPiID,kSFT,kFHT1,kFHT2,kLC,kSAC,kTOF_HT,
   // Old detectors
   kBMW, kBAC_SAC, kSFV_SAC3, kGe, kPWO, kSP0,
   kBH2_E07, kBAC_E07, kSSD0, kSAC1, kKFAC,
@@ -186,6 +186,7 @@ public:
   TList* createRF( Bool_t flag_ps=true );
   TList* createTAG_SF( Bool_t flag_ps=true );
   TList* createTAG_PL( Bool_t flag_ps=true );
+  TList* createU_Veto( Bool_t flag_ps=true );
   TList* createT0( Bool_t flag_ps=true );
   TList* createSAC( Bool_t flag_ps=true );
   TList* createSDC0( Bool_t flag_ps=true );
