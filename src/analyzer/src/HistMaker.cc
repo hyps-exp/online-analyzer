@@ -3711,7 +3711,7 @@ TList* HistMaker::createDAQ( Bool_t flag_ps )
   // }
 
   { //___ VEASIROC
-    auto h = createTH2(getUniqueID(kDAQ, kVMEEASIROC, kHitPat2D),
+    auto h = createTH2(getUniqueID(kDAQ, kVEASIROC, kHitPat2D),
 		       "Data size VME EASIROC nodes",
 		       vea0c_fe_id.size(), 0, vea0c_fe_id.size(),
 		       100, 0, 1000,
