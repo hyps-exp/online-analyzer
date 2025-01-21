@@ -438,8 +438,8 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     static const auto tdc_id    = gUnpacker.get_data_id("TAG-SF", "tdc");
     //static const auto tdc_min   = gUser.GetParameter("TdcTAG-SF", 0);
     //static const auto tdc_max   = gUser.GetParameter("TdcTAG-SF", 1);
-    static const auto tdc_min   = 580;
-    static const auto tdc_max   = 640;
+    static const auto tdc_min   = 600;
+    static const auto tdc_max   = 700;
     static const auto adc_hid   = gHist.getSequentialID(kTAG_SF, 0, kADC,     0);
     static const auto tdc_hid   = gHist.getSequentialID(kTAG_SF, 0, kTDC,     0);
     static const auto awt_hid   = gHist.getSequentialID(kTAG_SF, 0, kADCwTDC, 0);
@@ -457,13 +457,13 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	  hptr_array[adc_hid + l*NumOfSegTAG_SF + seg]->Fill(adc);
 	}
 	// TDC
-	Bool_t is_in_gate = false;
 	for(Int_t m=0, n=gUnpacker.get_entries(device_id, l, seg, 0, tdc_id);
 	    m<n; ++m) {
+	  Bool_t is_in_gate = false;
 	  tdc = gUnpacker.get(device_id, l, seg, 0, tdc_id, m);
 	  if (tdc != 0) {
 	    hptr_array[tdc_hid + l*NumOfSegTAG_SF + seg]->Fill(tdc);
-	    if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
+	    if (tdc_min<tdc && tdc<tdc_max) {
 	      is_in_gate = true;
 	    }
 	  }
@@ -472,9 +472,9 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	      Int_t adc = gUnpacker.get(device_id, l, seg, 0, adc_id);
 	      hptr_array[awt_hid + l*NumOfSegTAG_SF + seg]->Fill(adc);
 	    }
+	    ++multiplicity;
+	    hptr_array[hit_hid + l]->Fill(seg);
 	  }
-	  ++multiplicity;
-	  hptr_array[hit_hid + l]->Fill(seg);
 	}
       }
       hptr_array[mul_hid + l]->Fill(multiplicity);
@@ -516,9 +516,9 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	hptr_array[adc_hid + seg]->Fill(adc);
       }
       // TDC
-      Bool_t is_in_gate = false;
       for(Int_t m=0, n=gUnpacker.get_entries(device_id, 0, seg, 0, tdc_id);
 	  m<n; ++m) {
+	Bool_t is_in_gate = false;	
 	tdc = gUnpacker.get(device_id, 0, seg, 0, tdc_id, m);
 	if (tdc != 0) {
 	  hptr_array[tdc_hid + seg]->Fill(tdc);
@@ -531,9 +531,9 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	    Int_t adc = gUnpacker.get(device_id, 0, seg, 0, adc_id);
 	    hptr_array[awt_hid + seg]->Fill(adc);
 	  }
+	  ++multiplicity;
+	  hptr_array[hit_hid]->Fill(seg);
 	}
-	++multiplicity;
-	hptr_array[hit_hid]->Fill(seg);
       }
     }
     hptr_array[mul_hid]->Fill(multiplicity);
