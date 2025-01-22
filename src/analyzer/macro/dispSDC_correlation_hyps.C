@@ -52,5 +52,8 @@ void dispSDC_correlation_hyps( void )
     }
     c->Update();
   }
-
+  // You must write these lines for the thread safe
+  // ----------------------------------
+  Updater::setUpdating(false);
+  // ----------------------------------
 }
