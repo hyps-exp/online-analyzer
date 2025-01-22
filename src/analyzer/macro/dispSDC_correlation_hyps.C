@@ -24,11 +24,13 @@ void dispSDC_correlation_hyps( void )
       c->cd(i+1);
       TH1 *h = (TH1*)GHist::get(sdc0_id + i);
       h->Draw();
+      gStyle->SetStatY(0.6);
     }
     for( int i=0; i<NumOfPairPlane; ++i ){
       c->cd(i+3);
       TH1 *hh = (TH1*)GHist::get(sdc1_id + i);
       hh->Draw();
+      gStyle->SetStatY(0.6);
     }
     c->Update();
   }
@@ -44,11 +46,13 @@ void dispSDC_correlation_hyps( void )
       c->cd(i+1);
       TH1 *h = (TH1*)GHist::get(sdc2_id + i);
       h->Draw();
+      gStyle->SetStatY(0.6);
     }
     for( int i=0; i<NumOfPairPlane; ++i ){
       c->cd(i+3);
       TH1 *hh = (TH1*)GHist::get(sdc3_id + i);
       hh->Draw();
+      gStyle->SetStatY(0.6);
     }
     c->Update();
   }
