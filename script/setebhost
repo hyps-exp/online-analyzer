@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ebhost=eb-hyps
+ebhost=eb-hyps.monitor.hypsnet
 
 # if [ -z "${HDDAQ_EBHOST+x}" ]; then
 #     ebhost=geteb1

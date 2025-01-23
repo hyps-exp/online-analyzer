@@ -56,6 +56,9 @@ void dispSDC_correlation_hyps( void )
     }
     c->Update();
   }
+  
+  gStyle->SetStatY(1.0);
+
   // You must write these lines for the thread safe
   // ----------------------------------
   Updater::setUpdating(false);
