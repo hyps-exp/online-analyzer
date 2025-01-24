@@ -75,10 +75,11 @@ process_begin( const std::vector<std::string>& argv )
     gScaler.Set( c, r++, ScalerInfo( "L1-Req",              2,  1 ) );
     gScaler.Set( c, r++, ScalerInfo( "L1-Acc",              2,  2 ) );
     gScaler.Set( c, r++, ScalerInfo( "L2-Acc",              2,  3 ) );
-    gScaler.Set( c, r++, ScalerInfo( "T0xTOFx/E-Veto",  2,  8 ) );
+    //gScaler.Set( c, r++, ScalerInfo( "T0xTOFx/E-Veto",  2,  8 ) );
     gScaler.Set( c, r++, ScalerInfo( "RF",                       1,  81 ) );
     gScaler.Set( c, r++, ScalerInfo( "Tagger-COIN-All",              1,  82 ) );
     gScaler.Set( c, r++, ScalerInfo( "T0",                  2,  4 ) );
+    gScaler.Set( c, r++, ScalerInfo( "UpVeto",  2,  8 ) );
     gScaler.Set( c, r++, ScalerInfo( "SAC-Sum",             2,  6 ) );
     gScaler.Set( c, r++, ScalerInfo( "E-Veto",              2,  7 ) );
     gScaler.Set( c, r++, ScalerInfo( "TOFOR",              2,  5 ) );
@@ -152,7 +153,9 @@ process_event( void )
   }
 
   if( en_disp ){
-    gScaler.Print();
+    if(gScaler.Get("CLK 1MHz") >5900000){
+      gScaler.Print();
+    }
     en_disp = false;
   }
 
