@@ -1,6 +1,6 @@
 #!/bin/sh
 ##
-#  shell script for CATCH online/semi CATCH  online analyzer
+#  shell script for online/semi online analyzer (raw_hist_hyps)
 ##
 
 . $(dirname $(readlink -f $0))/setebhost
@@ -15,13 +15,15 @@ ana_dir=$(dirname $(readlink -f $0))/..
 bin_dir=$ana_dir/bin
 
 ##### execute file
-exe_file=$bin_dir/raw_hist_catch
+exe_file=$bin_dir/raw_hist_hyps
 
 ##### data directory
-data_dir=$ana_dir/data
+data_dir=($ana_dir/data $ana_dir/data_bench)
 
 ##### configure file
-conf_file=/param/conf/analyzer_catch.conf
+# Do NOT change here. Change symbolic link.
+# conf_file=/misc/software/param/conf/analyzer.conf
+conf_file=/home/sks/software/param/pro/conf/analyzer.conf
 
 #######################################################################
 if [ ! -f $exe_file ]; then
