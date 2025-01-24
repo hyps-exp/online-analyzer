@@ -2356,7 +2356,7 @@ TList* HistMaker::createTOF( Bool_t flag_ps )
       }
 
       sub_dir->Add(createTH1(target_id + i, title,
-			     0x1000, 0, 0x1000,
+			     4000, 0, 4000,
 			     "ADC [ch]", ""));
     }
 
