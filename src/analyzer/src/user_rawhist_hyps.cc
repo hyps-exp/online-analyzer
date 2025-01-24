@@ -119,6 +119,7 @@ process_begin(const std::vector<std::string>& argv)
   tab_macro->Add(macro::Get("dispSDC3_hyps"));
   tab_macro->Add(macro::Get("dispSDC_correlation_hyps"));
   tab_macro->Add(macro::Get("dispTOF_ADC"));
+  tab_macro->Add(macro::Get("dispCounter_TDC"));
   //  tab_macro->Add(macro::Get("dispTOF_ADC_tmp"));
   // tab_macro->Add(macro::Get("dispAC1"));
   // tab_macro->Add(macro::Get("dispMatrix"));
