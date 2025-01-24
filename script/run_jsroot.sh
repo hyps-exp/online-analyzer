@@ -1,7 +1,7 @@
 #!/bin/sh
 
 . $(dirname $(readlink -f $0))/setebhost
-program=jsroot_e70
+program=jsroot_hyps
 
 #_______________________________________________________________________________
 # if [ -z $ROOTSYS ]; then
@@ -14,11 +14,11 @@ program=jsroot_e70
 top_dir=$(dirname $(readlink -f $0))/..
 server=$top_dir/bin/$program
 
-conf=/param/conf/analyzer.conf
+conf=/misc/software/param/pro/conf/analyzer_hyps_jsroot.conf
 if [ -z "$1" ]; then
     data=${ebhost}:8901
 else
-    data=$top_dir/data/run$1.dat.gz
+    data=$top_dir/data/run$1.dat
 fi
 
 # if [ -z "$1" ]; then
@@ -37,7 +37,7 @@ fi
 #     sh -c ". $thisroot_sh && while true; do $server $conf $data; done"
 # screen -AmdS K18OnlineServer \
 #     sh -c "while true; do $server $conf $data 2>/dev/null; done"
-name=jsroot_e70
+name=$program
 session=`tmux ls | grep $name`
 if [ -z "$session" ]; then
     echo "create new session $name"

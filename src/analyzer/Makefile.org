@@ -215,11 +215,11 @@ my_tgt_ktune_e70      := $(bin_dir)/ktune_e70
 #______________________________________________________________________________
 all::	$(my_tgt_skeleton) $(my_tgt_udebug) $(my_tgt_tag) \
 	$(my_tgt_rawhist_vmeeasiroc) \
-	$(my_tgt_rawhist_hyps) \
 	$(my_tgt_rawhist_catch) \
+	$(my_tgt_rawhist_hyps) \
 	$(my_tgt_scaler_daq) \
-	$(my_tgt_jsroot_hyps) \
-	$(my_tgt_jsroot_scaler) \
+	$(my_tgt_jsroot_hyps)
+#	$(my_tgt_jsroot_scaler) \
 	$(my_tgt_vme01debug) \
 	$(core_dict_lib)
 #	$(my_old_tgt)
@@ -241,7 +241,6 @@ my_old_tgt	:= $(my_tgt_rawhist_e13) $(my_tgt_beamprofile_e13) \
 	$(my_tgt_beamprofile_e07) \
 	$(my_tgt_beamprofile_e42) \
         $(my_tgt_mstmonitor_e40) \
-	$(my_tgt_rawhist_catch) \
 	$(my_tgt_scaler_e40) \
 	$(my_tgt_beamprofile_e40) \
         $(my_tgt_mstmonitorjs_e40) \
