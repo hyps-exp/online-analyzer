@@ -278,8 +278,8 @@ process_event()
 	 event_number > 1 && curr_time - prev_time > 5){
 	std::cout << "exec alert sound!" << std::endl;
 	gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/alarm_sound.wav\" &");
+	prev_time = curr_time;
       }
-      prev_time = curr_time;
       std::cout << "[Warning] Tagger rate is decreasing. "
 		<< tagger_rate << " " << prev_time << " " << curr_time << std::endl;
     }
