@@ -2530,8 +2530,8 @@ ing");
        event_number > 1 && curr_time - prev_time > 3){
       std::cout << "exec tagslip sound!" << std::endl;
       gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/tagslip.wav\" &");
+      prev_time = curr_time;
     }
-    prev_time = curr_time;
   }
 
   gSystem->ProcessEvents();
