@@ -52,6 +52,7 @@ TCanvas* TOF_ADCU1();
 TCanvas* TOF_ADCU2();
 TCanvas* TOF_ADCD1();
 TCanvas* TOF_ADCD2();
+TCanvas* DAQ();
 TCanvas* CFTTDC();
 TCanvas* CFTTDC2D();
 TCanvas* CFTTOT();
