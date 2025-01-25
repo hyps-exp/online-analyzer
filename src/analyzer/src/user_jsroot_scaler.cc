@@ -39,6 +39,7 @@
 #include "ConfMan.hh"
 #include "DetectorID.hh"
 #include "HttpServer.hh"
+#include "RMAnalyzer.hh"
 #include "ScalerAnalyzer.hh"
 
 namespace analyzer
@@ -49,6 +50,7 @@ using namespace hddaq;
 namespace
 {
 HttpServer& gHttp = HttpServer::GetInstance();
+auto& gRM = RMAnalyzer::GetInstance();
 ScalerAnalyzer gScaler;
 const std::chrono::milliseconds flush_interval(100);
 const Int_t alert_interval = 10;
@@ -155,6 +157,9 @@ process_event()
   Int_t run_number = root->get_run_number();
   Int_t event_number = gUnpacker.get_event_number();
 
+  gRM.Decode();
+  Int_t spill_number = gRM.SpillNumber();
+
   std::stringstream ss;
 
   // Tag
@@ -207,15 +212,17 @@ process_event()
     ss << "<div style='color: white; background-color: black;"
        << "width: 100%; height: 100%;'>";
     ss << "<table border=\"0\" width=\"700\" cellpadding=\"0\">";
-    TString end_mark = gScaler.IsSpillEnd() ? "Spill End" : "";
+    // TString end_mark = gScaler.IsSpillEnd() ? "Spill End" : "";
+    auto end_mark = gScaler.SeparateComma(spill_number);
     ss << "<tr><td width=\"100\">RUN</td><td align=\"right\" width=\"100\">"
        << gScaler.SeparateComma(run_number) << "</td><td width=\"100\">"
        << " : Event Number" << "</td><td align=\"right\">"
        << gScaler.SeparateComma(event_number) << "</td>"
-       << "<td width=\"100\">" << " : " << "</td>"
+       << "<td width=\"100\">" << " : Spill Number" << "</td>"
        << "<td align=\"right\" width=\"100\">" << end_mark << "</td>"
        << "<tr><td></td><td></td><td></td></tr>";
     ofs << Form("%-20s", "Run") << run_number << std::endl
+	<< Form("%-20s", "Spill") << spill_number << std::endl
 	<< Form("%-20s", "Event") << event_number << std::endl;
     for(Int_t j=0; j<MaxDispRow; ++j){
       ss << "<tr>";
