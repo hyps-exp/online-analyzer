@@ -235,7 +235,7 @@ process_event( void )
     static const int k_fadc      = gUnpacker.get_data_id("BGO", "adc");
     static const int k_leading   = gUnpacker.get_data_id("BGO", "tdc");
 //    static const int k_trailing   = gUnpacker.get_data_id("BGO", "trailing");
-    
+
     // TDC gate range
     static const unsigned int tdc_min = gUser.GetParameter("TdcBGO", 0);
     static const unsigned int tdc_max = gUser.GetParameter("TdcBGO", 1);
@@ -348,14 +348,14 @@ process_event( void )
 
     hptr_array[bgo_mul_id]->Fill(multiplicity);
     hptr_array[bgo_cmul_id]->Fill(cmultiplicity); // CMulti
-    
+
 #if 0
     // Debug, dump data relating this detector
     gUnpacker.dump_data_device(k_device);
 #endif
   }// BGO
 
-  
+
 #if DEBUG
   std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif

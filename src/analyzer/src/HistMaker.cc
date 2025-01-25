@@ -657,7 +657,7 @@ HistMaker::createTAG_PL(Bool_t flag_ps)
       sub_dir->Add(createTH1(target_id + j, title,
 			     0x1000, 0, 0x1000,
 			     "ADC [ch]", ""));
-    }    
+    }
     top_dir->Add(sub_dir);
   }
   { ///// TDC
@@ -673,7 +673,7 @@ HistMaker::createTAG_PL(Bool_t flag_ps)
 			     //		       50000, 0, 2000000,
 			     2000, 0, 2000,
 			     "TDC [ch]", ""));
-    }    
+    }
     top_dir->Add(sub_dir);
   }
   {
@@ -689,7 +689,7 @@ HistMaker::createTAG_PL(Bool_t flag_ps)
     title = Form("%s_%s", nameDetector, nameSubDir);
     sub_dir->Add(createTH1(target_id, title,
 			   NumOfSegTAG_PL, 0, NumOfSegTAG_PL,
-			   "Segment", ""));    
+			   "Segment", ""));
     top_dir->Add(sub_dir);
   }
   {
@@ -1064,7 +1064,7 @@ TList* HistMaker::createSDC0( Bool_t flag_ps )
       title = Form("%s_%s2D_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
 			     NumOfWireSDC0_HYPS[i], 0, NumOfWireSDC0_HYPS[i],
-			     5000, 0, 5000,
+			     1500, 0, 1500,
 			     "Wire Number","TDC [ch]"));
     }
 
@@ -1075,7 +1075,7 @@ TList* HistMaker::createSDC0( Bool_t flag_ps )
       title = Form("%s_C%s2D_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
                              NumOfWireSDC0_HYPS[i], 0, NumOfWireSDC0_HYPS[i],
-                             5000, 0, 5000,
+                             1500, 0, 1500,
                              "Wire Number","TDC [ch]"));
     }
 
@@ -1261,7 +1261,7 @@ TList* HistMaker::createSDC0( Bool_t flag_ps )
     for(Int_t l=0; l<2; ++l){
       const char* title = NULL;
       title = Form("%s_%s_%s", nameDetector, nameSubDir, name_Selflayer[l]);
-      sub_dir->Add(createTH2(target_id + l, title, 
+      sub_dir->Add(createTH2(target_id + l, title,
                              //                      20, 0, 20,
                              // 128, 0, 128,
                              NumOfWireSDC0_HYPS[2*l], 0, NumOfWireSDC0_HYPS[2*l],
@@ -1364,7 +1364,7 @@ TList* HistMaker::createSDC1( Bool_t flag_ps )
       title = Form("%s_%s2D_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
 			     NumOfWireSDC1_HYPS[i], 0, NumOfWireSDC1_HYPS[i],
-			     5000, 0, 5000,
+			     1500, 0, 1500,
 			     "Wire Number","TDC [ch]"));
     }
 
@@ -1375,7 +1375,7 @@ TList* HistMaker::createSDC1( Bool_t flag_ps )
       title = Form("%s_C%s2D_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
 			     NumOfWireSDC1_HYPS[i], 0, NumOfWireSDC1_HYPS[i],
-			     5000, 0, 5000,
+			     1500, 0, 1500,
 			     "Wire Number","TDC [ch]"));
     }
 
@@ -1550,7 +1550,7 @@ TList* HistMaker::createSDC1( Bool_t flag_ps )
     // insert sub directory
     top_dir->Add(sub_dir);
   }
-    
+
   //pair plane correlation ----------------------------------------
   {
     TString strSubDir  = CONV_STRING(kCorr);
@@ -1665,7 +1665,7 @@ TList* HistMaker::createSDC2( Bool_t flag_ps )
       title = Form("%s_%s2D_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
 			     NumOfWireSDC2_HYPS[i], 0, NumOfWireSDC2_HYPS[i],
-			     5000, 0, 5000,
+			     1500, 0, 1500,
 			     "Wire Number","TDC [ch]"));
     }
 
@@ -1676,7 +1676,7 @@ TList* HistMaker::createSDC2( Bool_t flag_ps )
       title = Form("%s_C%s2D_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
 			     NumOfWireSDC2_HYPS[i], 0, NumOfWireSDC2_HYPS[i],
-			     5000, 0, 5000,
+			     1500, 0, 1500,
 			     "Wire Number","TDC [ch]"));
     }
 
@@ -1967,7 +1967,7 @@ TList* HistMaker::createSDC3( Bool_t flag_ps )
       title = Form("%s_%s2D_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
 			     NumOfWireSDC3_HYPS[i], 0, NumOfWireSDC3_HYPS[i],
-			     5000, 0, 5000,
+			     1500, 0, 1500,
 			     "Wire Number","TDC [ch]"));
     }
 
@@ -1978,7 +1978,7 @@ TList* HistMaker::createSDC3( Bool_t flag_ps )
       title = Form("%s_C%s2D_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
 			     NumOfWireSDC3_HYPS[i], 0, NumOfWireSDC3_HYPS[i],
-			     5000, 0, 5000,
+			     1500, 0, 1500,
 			     "Wire Number","TDC [ch]"));
     }
 
