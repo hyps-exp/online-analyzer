@@ -51,6 +51,8 @@ namespace
 HttpServer& gHttp = HttpServer::GetInstance();
 ScalerAnalyzer gScaler;
 const std::chrono::milliseconds flush_interval(100);
+const Int_t alert_interval = 10;
+Scaler tagger_rate_threshold = 0;
 }
 
 //____________________________________________________________________________
@@ -124,6 +126,12 @@ process_begin(const std::vector<std::string>& argv)
   }
 
   gScaler.PrintFlags();
+
+  std::ifstream ifs("/misc/subdata/scaler/tagger_rate_threshold.txt");
+  TString line;
+  if(ifs.is_open() && line.ReadLine(ifs)){
+    tagger_rate_threshold = line.Atof();
+  }
 
   return 0;
 }
@@ -270,12 +278,12 @@ process_event()
     // gSystem->Sleep(2000);
     auto tagger_rate = 1.e6 * gScaler.Get("TAG-All") / gScaler.Get("CLK-1MHz");
 
-    if(tagger_rate < 1.5e6){
+    if(tagger_rate < tagger_rate_threshold){
       static const TString host(gSystem->Getenv("HOSTNAME"));
       static auto prev_time = std::time(0);
       auto        curr_time = std::time(0);
       if(host.Contains("online") &&
-	 event_number > 1 && curr_time - prev_time > 5){
+	 event_number > 1 && curr_time - prev_time > alert_interval){
 	std::cout << "exec alert sound!" << std::endl;
 	gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/alarm_sound.wav\" &");
 	prev_time = curr_time;
