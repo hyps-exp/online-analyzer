@@ -12,7 +12,7 @@ void dispSDC_correlation_hyps( void )
   gStyle->SetOptStat(1111110);
   gStyle->SetOptLogz(1);
   Int_t NumOfPairPlane = 2;
-  
+
   // draw SDCIn
   {
     TCanvas *c = (TCanvas*)gROOT->FindObject("c1");
@@ -56,7 +56,7 @@ void dispSDC_correlation_hyps( void )
     }
     c->Update();
   }
-  
+
   gStyle->SetStatY(1.0);
 
   // You must write these lines for the thread safe

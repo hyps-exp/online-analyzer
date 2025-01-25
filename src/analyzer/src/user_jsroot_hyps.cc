@@ -133,24 +133,26 @@ process_begin(const std::vector<std::string>& argv)
   if(0 != gHist.setHistPtr(hptr_array)){ return -1; }
 
   //___ Macro for HttpServer
-  // gHttp.Register(http::SDC1TDCTOT());
-  // gHttp.Register(http::SDC1HitMulti());
-  // gHttp.Register(http::SDC2TDCTOT());
-  // gHttp.Register(http::SDC2HitMulti());
-  // gHttp.Register(http::SDC3TDCTOT());
-  // gHttp.Register(http::SDC3HitMulti());
-  // gHttp.Register(http::TOFADCU());
-  // gHttp.Register(http::TOFADCD());
-  // gHttp.Register(http::TOFTDCU());
-  // gHttp.Register(http::TOFTDCD());
-  // gHttp.Register(http::TriggerFlagU());
-  // gHttp.Register(http::TriggerFlagD());
-  // gHttp.Register(http::TriggerFlagHitPat());
-  // gHttp.Register(http::HitPatternBeam());
-  // gHttp.Register(http::HitPatternScat());
-  // gHttp.Register(http::BcOutEfficiency());
-  // gHttp.Register(http::SdcInOutEfficiency());
-  // gHttp.Register(http::Correlation());
+  gHttp.Register(http::Counter_TDC());
+  gHttp.Register(http::SDCIn_TDC());
+  gHttp.Register(http::SDCIn_TDC1st());
+  gHttp.Register(http::SDCIn_TOT());
+  gHttp.Register(http::SDCIn_HitPat());
+  gHttp.Register(http::SDCIn_Multi());
+  gHttp.Register(http::SDCIn_TDC2D());
+  gHttp.Register(http::SDCIn_TDC2DC());
+  gHttp.Register(http::SDCOut_TDC());
+  gHttp.Register(http::SDCOut_TDC1st());
+  gHttp.Register(http::SDCOut_TOT());
+  gHttp.Register(http::SDCOut_HitPat());
+  gHttp.Register(http::SDCOut_Multi());
+  gHttp.Register(http::SDCOut_TDC2D());
+  gHttp.Register(http::SDCOut_TDC2DC());
+  gHttp.Register(http::SDC_Correlation());
+  gHttp.Register(http::TOF_ADCU1());
+  gHttp.Register(http::TOF_ADCU2());
+  gHttp.Register(http::TOF_ADCD1());
+  gHttp.Register(http::TOF_ADCD2());
   gHttp.Register(http::DAQ());
 
   for(Int_t i=0, n=hptr_array.size(); i<n; ++i){
@@ -318,30 +320,30 @@ process_event(void)
         hptr_array[vea0c_hid]->Fill(i, data_size);
       }
     }
-    { //___ MultiHitTdc
-      { // SDC1
-	static const Int_t k_device   = gUnpacker.get_device_id("SDC1");
-	static const Int_t k_leading  = gUnpacker.get_data_id("SDC1", "leading");
-	for(Int_t l=0; l<NumOfLayersSDC1; ++l) {
-	  for(Int_t w=0; w<NumOfWireSDC1; ++w) {
-	    Int_t nhit_l = gUnpacker.get_entries(k_device, l, 0, w, k_leading);
-	    hptr_array[multihit_hid]->Fill(w, nhit_l);
-	  }
-	  ++multihit_hid;
-	}
-      }
-      { // SDC2
-	static const Int_t k_device   = gUnpacker.get_device_id("SDC2");
-	static const Int_t k_leading  = gUnpacker.get_data_id("SDC2", "leading");
-	for(Int_t l=0; l<NumOfLayersSDC2; ++l) {
-	  for(Int_t w=0; w<NumOfWireSDC2; ++w) {
-	    Int_t nhit_l = gUnpacker.get_entries(k_device, l, 0, w, k_leading);
-	    hptr_array[multihit_hid]->Fill(w, nhit_l);
-	  }
-	  ++multihit_hid;
-	}
-      }
-    }
+    // { //___ MultiHitTdc
+    //   { // SDC1
+    // 	static const Int_t k_device   = gUnpacker.get_device_id("SDC1");
+    // 	static const Int_t k_leading  = gUnpacker.get_data_id("SDC1", "leading");
+    // 	for(Int_t l=0; l<NumOfLayersSDC1; ++l) {
+    // 	  for(Int_t w=0; w<NumOfWireSDC1; ++w) {
+    // 	    Int_t nhit_l = gUnpacker.get_entries(k_device, l, 0, w, k_leading);
+    // 	    hptr_array[multihit_hid]->Fill(w, nhit_l);
+    // 	  }
+    // 	  ++multihit_hid;
+    // 	}
+    //   }
+    //   { // SDC2
+    // 	static const Int_t k_device   = gUnpacker.get_device_id("SDC2");
+    // 	static const Int_t k_leading  = gUnpacker.get_data_id("SDC2", "leading");
+    // 	for(Int_t l=0; l<NumOfLayersSDC2; ++l) {
+    // 	  for(Int_t w=0; w<NumOfWireSDC2; ++w) {
+    // 	    Int_t nhit_l = gUnpacker.get_entries(k_device, l, 0, w, k_leading);
+    // 	    hptr_array[multihit_hid]->Fill(w, nhit_l);
+    // 	  }
+    // 	  ++multihit_hid;
+    // 	}
+    //   }
+    // }
   }
 
 #endif
