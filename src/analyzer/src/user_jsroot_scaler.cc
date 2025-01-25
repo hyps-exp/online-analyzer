@@ -41,8 +41,6 @@
 #include "HttpServer.hh"
 #include "ScalerAnalyzer.hh"
 
-#define CFT 0
-
 namespace analyzer
 {
 using namespace hddaq::unpacker;
@@ -51,8 +49,7 @@ using namespace hddaq;
 namespace
 {
 HttpServer& gHttp = HttpServer::GetInstance();
-ScalerAnalyzer scaler_on;
-ScalerAnalyzer scaler_off;
+ScalerAnalyzer gScaler;
 const std::chrono::milliseconds flush_interval(100);
 }
 
@@ -67,12 +64,10 @@ process_begin(const std::vector<std::string>& argv)
   gHttp.SetPort(9091);
   gHttp.Open();
   gHttp.SetItemField("/", "_monitoring", "100");
-  gHttp.SetItemField("/", "_layout", "vert3");
-  gHttp.SetItemField("/", "_drawitem", "[ScalerOn,ScalerOff,Tag]");
+  gHttp.SetItemField("/", "_layout", "vert2");
+  gHttp.SetItemField("/", "_drawitem", "[ScalerOn,Tag]");
   gHttp.CreateItem("/ScalerOn", "DAQ Scaler On");
   gHttp.SetItemField("/ScalerOn", "_kind", "Text");
-  gHttp.CreateItem("/ScalerOff", "DAQ Scaler Off");
-  gHttp.SetItemField("/ScalerOff", "_kind", "Text");
   gHttp.CreateItem("/Tag", "Tag Check");
   gHttp.SetItemField("/Tag", "_kind", "Text");
   std::stringstream ss;
@@ -82,13 +77,9 @@ process_begin(const std::vector<std::string>& argv)
   gHttp.SetItemField("/Tag", "value", ss.str().c_str());
   gHttp.Hide("/Reset");
 
-  scaler_on.SetFlag(ScalerAnalyzer::kSeparateComma);
-  scaler_on.SetFlag(ScalerAnalyzer::kSpillBySpill);
-  scaler_on.SetFlag(ScalerAnalyzer::kSpillOn);
-
-  scaler_off.SetFlag(ScalerAnalyzer::kSeparateComma);
-  scaler_off.SetFlag(ScalerAnalyzer::kSpillBySpill);
-  scaler_off.SetFlag(ScalerAnalyzer::kSpillOff);
+  gScaler.SetFlag(ScalerAnalyzer::kSeparateComma);
+  gScaler.SetFlag(ScalerAnalyzer::kSemiOnline);
+  gScaler.SetFlag(ScalerAnalyzer::kSpillBySpill);
 
   //////////////////// Set Channels
   // ScalerAnalylzer::Set(Int_t column,
@@ -96,52 +87,43 @@ process_begin(const std::vector<std::string>& argv)
   //                       ScalerInfo(name, module, channel));
   // scaler information is defined from here.
   // please do not use a white space character.
-  {
-    Int_t c = ScalerAnalyzer::kLeft;
+  for(Int_t c=ScalerAnalyzer::kLeft; c<ScalerAnalyzer::kRight;
+      ++c){
     Int_t r = 0;
-    scaler_on.Set(c, r++, ScalerInfo("CLK 1MHz",            2,  0));
-    scaler_on.Set(c, r++, ScalerInfo("Real-Time",           2,  0));
-    scaler_on.Set(c, r++, ScalerInfo("Live-Time",           2,  14));
-    scaler_on.Set(c, r++, ScalerInfo("L1-Req",              2,  1));
-    scaler_on.Set(c, r++, ScalerInfo("L1-Acc",              2,  2));
-    scaler_on.Set(c, r++, ScalerInfo("L2-Acc",              2,  3));
-    //scaler_on.Set(c, r++, ScalerInfo("T0xTOFx/E-Veto",  2,  8));
-    scaler_on.Set(c, r++, ScalerInfo("RF",                       1,  81));
-    scaler_on.Set(c, r++, ScalerInfo("Tagger-COIN-All",              1,  82));
-    scaler_on.Set(c, r++, ScalerInfo("T0",                  2,  4));
-    scaler_on.Set(c, r++, ScalerInfo("UpVeto",  2,  8));
-    scaler_on.Set(c, r++, ScalerInfo("SAC-Sum",             2,  6));
-    scaler_on.Set(c, r++, ScalerInfo("E-Veto",              2,  7));
-    scaler_on.Set(c, r++, ScalerInfo("TOFOR",              2,  5));
-
-    scaler_on.Set(c, r++, ScalerInfo("Tagger-COIN1",                 1,  94));
-    scaler_on.Set(c, r++, ScalerInfo("Tagger-COIN2",                 1,  95));
-    scaler_on.Set(c, r++, ScalerInfo("T0-MT",                  1,  90));
-    scaler_on.Set(c, r++, ScalerInfo("T0(L)",                    1,  83));
-    scaler_on.Set(c, r++, ScalerInfo("T0(R)",                    1,  84));
-    scaler_on.Set(c, r++, ScalerInfo("SAC-Sum(in-hatch)",                  1,  85));
-    scaler_on.Set(c, r++, ScalerInfo("E-Veto-MT",              1,  91));
-    scaler_on.Set(c, r++, ScalerInfo("E-Veto(L)",                1,  86));
-    scaler_on.Set(c, r++, ScalerInfo("E-Veto(R)",                1,  87));
-    scaler_on.Set(c, r++, ScalerInfo("TOF-MT(UOR-1,DOR-1)",  1,  88));
-    scaler_on.Set(c, r++, ScalerInfo("TOF-MT(UOR-2,DOR-2)",  1,  89));
-    scaler_on.Set(c, r++, ScalerInfo("CFT Phi1 OR",         2,  10));
-    scaler_on.Set(c, r++, ScalerInfo("CFT Phi2 OR",         2,  11));
-    scaler_on.Set(c, r++, ScalerInfo("CFT Phi3 OR",         2,  12));
-    scaler_on.Set(c, r++, ScalerInfo("CFT Phi4 OR",         2,  13));
-    scaler_on.Set(c, r++, ScalerInfo("BGO",                 2,  9));
-    scaler_on.Set(c, r++, ScalerInfo("BGO-OR1",                 1,  92));
-    scaler_on.Set(c, r++, ScalerInfo("BGO-OR2",                 1,  93));
+    gScaler.Set(c, r++, ScalerInfo("CLK-1MHz",    2,  0));
+    gScaler.Set(c, r++, ScalerInfo("Real-Time",   2,  0));
+    gScaler.Set(c, r++, ScalerInfo("Live-Time",   2,  14));
+    gScaler.Set(c, r++, ScalerInfo("L1-Req",      2,  1));
+    gScaler.Set(c, r++, ScalerInfo("L1-Acc",      2,  2));
+    gScaler.Set(c, r++, ScalerInfo("L2-Acc",      2,  3));
+    gScaler.Set(c, r++, ScalerInfo("RF",          1,  81));
+    gScaler.Set(c, r++, ScalerInfo("TAG-All",     1,  82));
+    gScaler.Set(c, r++, ScalerInfo("T0",          2,  4));
+    gScaler.Set(c, r++, ScalerInfo("U-Veto",      2,  8));
+    gScaler.Set(c, r++, ScalerInfo("SAC",         2,  6));
+    gScaler.Set(c, r++, ScalerInfo("E-Veto",      2,  7));
+    gScaler.Set(c, r++, ScalerInfo("TOF",         2,  5));
+    gScaler.Set(c, r++, ScalerInfo("TAG-S",       1,  94));
+    gScaler.Set(c, r++, ScalerInfo("TAG-F",       1,  95));
+    gScaler.Set(c, r++, ScalerInfo("T0",          1,  90));
+    gScaler.Set(c, r++, ScalerInfo("T0-L",        1,  83));
+    gScaler.Set(c, r++, ScalerInfo("T0-R",        1,  84));
+    gScaler.Set(c, r++, ScalerInfo("AC",          1,  85));
+    gScaler.Set(c, r++, ScalerInfo("E-Veto-MT",   1,  91));
+    gScaler.Set(c, r++, ScalerInfo("E-Veto-L",    1,  86));
+    gScaler.Set(c, r++, ScalerInfo("E-Veto-R",    1,  87));
+    gScaler.Set(c, r++, ScalerInfo("TOF-MT-1",    1,  88));
+    gScaler.Set(c, r++, ScalerInfo("TOF-MT-2",    1,  89));
+    gScaler.Set(c, r++, ScalerInfo("CFT-Phi1-OR", 2,  10));
+    gScaler.Set(c, r++, ScalerInfo("CFT-Phi2-OR", 2,  11));
+    gScaler.Set(c, r++, ScalerInfo("CFT-Phi3-OR", 2,  12));
+    gScaler.Set(c, r++, ScalerInfo("CFT-Phi4-OR", 2,  13));
+    gScaler.Set(c, r++, ScalerInfo("BGO",         2,  9));
+    gScaler.Set(c, r++, ScalerInfo("BGO-OR1",     1,  92));
+    gScaler.Set(c, r++, ScalerInfo("BGO-OR2",     1,  93));
   }
 
-  for(Int_t i=0; i<ScalerAnalyzer::MaxColumn; ++i){
-    for(Int_t j=0; j<ScalerAnalyzer::MaxRow; ++j){
-      scaler_off.Set(i, j, scaler_on.GetScalerInfo(i, j));
-    }
-  }
-
-  scaler_on.PrintFlags();
-  scaler_off.PrintFlags();
+  gScaler.PrintFlags();
 
   return 0;
 }
@@ -200,138 +182,107 @@ process_event()
   auto now = std::chrono::duration_cast<std::chrono::milliseconds>
     (std::chrono::system_clock::now().time_since_epoch());
   static auto prev_flush = now;
-  Bool_t flush_flag = true;//(now - prev_flush) > flush_interval;
-  prev_flush = now;
+  // Bool_t flush_flag = true;//(now - prev_flush) > flush_interval;
+  // prev_flush = now;
 
-  if(scaler_on.Decode()){
-    if(flush_flag && !scaler_on.IsSpillEnd())
-      // if(!scaler_on.IsSpillEnd())
-      return 0;
+  gScaler.Decode();
 
+  Bool_t flush_flag = (gScaler.Get("CLK-1MHz") > 5.9e6);
+
+  if(flush_flag){
+    std::ofstream ofs("/misc/subdata/scaler/spill.txt");
+    TTimeStamp ts;
+    ts.Add(-TTimeStamp::GetZoneOffset());
+    ofs << ts.AsString("s") << std::endl;
+    // if(!gScaler.IsSpillEnd())
     ss.str("");
     ss << "<div style='color: white; background-color: black;"
        << "width: 100%; height: 100%;'>";
     ss << "<table border=\"0\" width=\"700\" cellpadding=\"0\">";
-    TString end_mark = scaler_on.IsSpillEnd() ? "Spill End" : "";
+    TString end_mark = gScaler.IsSpillEnd() ? "Spill End" : "";
     ss << "<tr><td width=\"100\">RUN</td><td align=\"right\" width=\"100\">"
-       << scaler_on.SeparateComma(run_number) << "</td><td width=\"100\">"
+       << gScaler.SeparateComma(run_number) << "</td><td width=\"100\">"
        << " : Event Number" << "</td><td align=\"right\">"
-       << scaler_on.SeparateComma(event_number) << "</td>"
+       << gScaler.SeparateComma(event_number) << "</td>"
        << "<td width=\"100\">" << " : " << "</td>"
        << "<td align=\"right\" width=\"100\">" << end_mark << "</td>"
        << "<tr><td></td><td></td><td></td></tr>";
+    ofs << Form("%-20s", "Run") << run_number << std::endl
+	<< Form("%-20s", "Event") << event_number << std::endl;
     for(Int_t j=0; j<MaxDispRow; ++j){
       ss << "<tr>";
       for(Int_t i=0; i<ScalerAnalyzer::MaxColumn; ++i){
 	// for(Int_t i=0; i<ScalerAnalyzer::MaxColumn; ++i){
-        TString n = scaler_on.GetScalerName(i, j);
-        // if(n.Contains("n/a"))
-        //   continue;
+	TString n = gScaler.GetScalerName(i, j);
 	ss << "<td>";
 	if(i != 0)
 	  ss << " : ";
+	auto val = gScaler.Get(i, j);
+	if(i == ScalerAnalyzer::kCenter){
+	  n += "-Hz";
+	  val = 1.e6 * val / gScaler.Get("CLK-1MHz");
+	}
 	ss << n << "</td>"
 	   << "<td align=\"right\">"
-           << scaler_on.SeparateComma(scaler_on.Get(i, j)) << "</td>";
+	   << gScaler.SeparateComma(val) << "</td>";
+	if(n.Contains("n/a"))
+	  continue;
+	ofs << Form("%-20s", n.Data()) << val << std::endl;
       }
       ss << "</tr>";
     }
     ss << "<tr><td></td><td></td><td></td></tr>"
-       << "<tr><td>K-Beam/TM</td>"
+       << "<tr><td>T0/TAG-All</td>"
        << "<td align=\"right\">"
-       << Form("%.6f", scaler_on.Fraction("K-Beam", "TM"))
+       << Form("%.6f", gScaler.Fraction("T0", "TAG-All"))
        << "</td>"
        << "<td> : Live/Real</td>"
        << "<td align=\"right\">"
-       << Form("%.6f", scaler_on.Fraction("Live-Time", "Real-Time"))
+       << Form("%.6f", gScaler.Fraction("Live-Time", "Real-Time"))
        << "</td>"
        << "<td> : DAQ-Eff</td>"
        << "<td align=\"right\">"
-       << Form("%.6f", scaler_on.Fraction("L1-Acc", "L1-Req"))
+       << Form("%.6f", gScaler.Fraction("L1-Acc", "L1-Req"))
        << "</td>"
        << "</tr></tr>"
-       << "<td>L1Req/K-Beam</td>"
+       << "<td>L1Req/TAG-All</td>"
        << "<td align=\"right\">"
-       << Form("%.6f", scaler_on.Fraction("L1-Req", "K-Beam"))
+       << Form("%.6f", gScaler.Fraction("L1-Req", "TAG-All"))
        << "</td>"
        << "<td> : L2-Eff</td>"
        << "<td align=\"right\">"
-       << Form("%.6f", scaler_on.Fraction("L2-Acc", "L1-Acc"))
+       << Form("%.6f", gScaler.Fraction("L2-Acc", "L1-Acc"))
        << "</td>"
        << "<td> : Duty-Factor</td>"
        << "<td align=\"right\">"
-       << Form("%.6f", scaler_on.Duty())
+       << Form("%.6f", gScaler.Duty())
        << "</td>"
        << "</tr>";
     ss << "</table>";
     ss << "</div>";
     gHttp.SetItemField("/ScalerOn", "value", ss.str().c_str());
-  }
+    ofs << std::endl
+	<< Form("%-20s", "T0/TAG-All") << Form("%.6f", gScaler.Fraction("T0", "TAG-All")) << std::endl
+	<< Form("%-20s", "Live/Real") << Form("%.6f", gScaler.Fraction("Live-Time", "Real-Time")) << std::endl
+	<< Form("%-20s", "DAQ-Eff") << Form("%.6f", gScaler.Fraction("L1-Acc", "L1-Req")) << std::endl
+	<< Form("%-20s", "L2-Eff") << Form("%.6f", gScaler.Fraction("L2-Acc", "L1-Acc")) << std::endl
+	<< Form("%-20s", "Duty") << Form("%.6f", gScaler.Duty()) << std::endl;
+    // gSystem->Sleep(2000);
+    auto tagger_rate = 1.e6 * gScaler.Get("TAG-All") / gScaler.Get("CLK-1MHz");
 
-  // Scaler Spill Off
-  if(scaler_off.Decode()){
-    if(flush_flag && !scaler_off.IsSpillEnd())
-      // if(!scaler_off.IsSpillEnd())
-      return 0;
-
-    ss.str("");
-    ss << "<div style='color: white; background-color: black;"
-       << "width: 100%; height: 100%;'>";
-    ss << "<table border=\"0\" width=\"700\" cellpadding=\"0\">";
-    TString end_mark = scaler_off.IsSpillEnd() ? "Spill End" : "";
-    ss << "<tr><td width=\"100\">RUN</td><td align=\"right\" width=\"100\">"
-       << scaler_off.SeparateComma(run_number) << "</td><td width=\"100\">"
-       << " : Event Number" << "</td><td align=\"right\">"
-       << scaler_off.SeparateComma(event_number) << "</td>"
-       << "<td width=\"100\">" << " : " << "</td>"
-       << "<td align=\"right\" width=\"100\">" << end_mark << "</td>"
-       << "<tr><td></td><td></td><td></td></tr>";
-    for(Int_t j=0; j<MaxDispRow; ++j){
-      // for(Int_t j=0; j<ScalerAnalyzer::MaxRow; ++j){
-      ss << "<tr>";
-      for(Int_t i=0; i<ScalerAnalyzer::MaxColumn; ++i){
-        TString n = scaler_off.GetScalerName(i, j);
-        // if(n.Contains("n/a"))
-        //   continue;
-	ss << "<td>";
-	if(i != 0)
-	  ss << " : ";
-	ss << n << "</td>"
-	   << "<td align=\"right\">"
-           << scaler_off.SeparateComma(scaler_off.Get(i, j)) << "</td>";
+    if(tagger_rate < 1.5e6){
+      static const TString host(gSystem->Getenv("HOSTNAME"));
+      static auto prev_time = std::time(0);
+      auto        curr_time = std::time(0);
+      if(host.Contains("online") &&
+	 event_number > 1 && curr_time - prev_time > 5){
+	std::cout << "exec alert sound!" << std::endl;
+	gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/alarm_sound.wav\" &");
       }
-      ss << "</tr>";
+      prev_time = curr_time;
+      std::cout << "[Warning] Tagger rate is decreasing. "
+		<< tagger_rate << " " << prev_time << " " << curr_time << std::endl;
     }
-    ss << "<tr><td></td><td></td><td></td></tr>"
-       << "<tr><td>K-Beam/TM</td>"
-       << "<td align=\"right\">"
-       << Form("%.6f", scaler_off.Fraction("K-Beam", "TM"))
-       << "</td>"
-       << "<td> : Live/Real</td>"
-       << "<td align=\"right\">"
-       << Form("%.6f", scaler_off.Fraction("Live-Time", "Real-Time"))
-       << "</td>"
-       << "<td> : DAQ-Eff</td>"
-       << "<td align=\"right\">"
-       << Form("%.6f", scaler_off.Fraction("L1-Acc", "L1-Req"))
-       << "</td>"
-       << "</tr></tr>"
-       << "<td>L1Req/K-Beam</td>"
-       << "<td align=\"right\">"
-       << Form("%.6f", scaler_off.Fraction("L1-Req", "K-Beam"))
-       << "</td>"
-       << "<td> : L2-Eff</td>"
-       << "<td align=\"right\">"
-       << Form("%.6f", scaler_off.Fraction("L2-Acc", "L1-Acc"))
-       << "</td>"
-       << "<td> : Duty-Factor</td>"
-       << "<td align=\"right\">"
-       << Form("%.6f", scaler_off.Duty())
-       << "</td>"
-       << "</tr>";
-    ss << "</table>";
-    ss << "</div>";
-    gHttp.SetItemField("/ScalerOff", "value", ss.str().c_str());
   }
 
   { ///// Tag Checker
@@ -364,7 +315,7 @@ process_event()
     }
   }
 
-  if(scaler_on.IsSpillEnd() || scaler_off.IsSpillEnd()){
+  if(gScaler.IsSpillEnd()){
     gSystem->Sleep(150);
     gSystem->ProcessEvents();
   }
