@@ -31,6 +31,8 @@ enum DetectorType {
   kCFT,kBGO,kPiID,kSFT,kFHT1,kFHT2,kLC,kSAC,kTOF_HT,
   // VMEEASIROC unique ID
   kVMEEASIROC,
+  //test
+  kCorrelation_catch,
   //E70
   kAFT,
   // E72E90
@@ -50,7 +52,7 @@ enum DetectorType {
   kKIC, kHDC, kTOFMT,
   // Others
   kTriggerFlag, kDAQ, kCorrelation,
-  kCorrelation_catch, kMisc, kCaenV792, kTOF_HRTDC, kCaenV1725,
+  kMisc, kCaenV792, kTOF_HRTDC, kCaenV1725,
   kTimeStamp, kDCEff,
   sizeDetectorType,
   factorDetectorType = 10000000

@@ -3866,7 +3866,7 @@ TList* HistMaker::createCorrelation( Bool_t flag_ps )
   return top_dir;
 }
 
-/*
+
 // -------------------------------------------------------------------------
 // createCorrelatio_CATCH
 // -------------------------------------------------------------------------
@@ -3885,37 +3885,37 @@ name_ps_files_.push_back(strDet);
 // Declaration of the directory
 // Just type conversion from TString to char*
 const char* nameDetector = strDet.Data();
-TList *top_dir = new TList;
-top_dir->SetName(nameDetector);
+ TList *top_dir = new TList;
+ top_dir->SetName(nameDetector);
 
-const char* name_Layer[] = { "UV1" ,"PHI1", "UV2", "PHI2",
-"UV3" ,"PHI3", "UV4", "PHI4",
-"UV_ALL" ,"PHI_ALL"};
+ const char* name_Layer[] = { "UV1" ,"PHI1", "UV2", "PHI2",
+   "UV3" ,"PHI3", "UV4", "PHI4",
+   "UV_ALL" ,"PHI_ALL"};
 
-{
-Int_t target_id = getUniqueID(kCorrelation_catch, 0, 0, 0);
-for(Int_t l=0; l<NumOfLayersCFT - 4; ++l){
-const char* title = NULL;
-title = Form("BGO_CFT_%s", name_Layer[l*2+1] );
-top_dir->Add(createTH2(++target_id, title, // 1 origin
-NumOfSegCFT[l*2+1], 0, NumOfSegCFT[l*2+1],
-NumOfSegBGO, 0, NumOfSegBGO,
-"CFT seg", "BGO seg"));
-}
+ {
+   Int_t target_id = getUniqueID(kCorrelation_catch, 0, 0, 0);
+   for(Int_t l=0; l<NumOfLayersCFT - 4; ++l){
+     const char* title = NULL;
+     title = Form("BGO_CFT_%s", name_Layer[l*2+1] );
+     top_dir->Add(createTH2(++target_id, title, // 1 origin
+			    NumOfSegCFT[l*2+1], 0, NumOfSegCFT[l*2+1],
+			    NumOfSegBGO, 0, NumOfSegBGO,
+			    "CFT seg", "BGO seg"));
+   }
+ }
+
+ {
+   Int_t target_id = getUniqueID(kCorrelation_catch, 1, 0, 0);
+   const char* title = "BGO_PiID";
+   top_dir->Add(createTH2(++target_id, title, // 1 origin
+			  NumOfSegBGO, 0, NumOfSegBGO,
+			  NumOfSegPiID, 0, NumOfSegPiID,
+			  "BGO seg", "PiID seg"));
+ }
+
+ return top_dir;
 }
 
-{
-Int_t target_id = getUniqueID(kCorrelation_catch, 1, 0, 0);
-const char* title = "BGO_PiID";
-top_dir->Add(createTH2(++target_id, title, // 1 origin
-NumOfSegBGO, 0, NumOfSegBGO,
-NumOfSegPiID, 0, NumOfSegPiID,
-"BGO seg", "PiID seg"));
-}
-
-return top_dir;
-}
-*/
 
 
 // -------------------------------------------------------------------------

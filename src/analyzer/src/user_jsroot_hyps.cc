@@ -132,7 +132,7 @@ process_begin(const std::vector<std::string>& argv)
   gHttp.Register(gHist.createCFT());
   gHttp.Register(gHist.createCatchBGO());
   gHttp.Register(gHist.createPiID());
-  //gHttp.Register(gHist.createCorrelation_catch());
+  gHttp.Register(gHist.createCorrelation_catch());
   gHttp.Register(gHist.createDAQ());
 
   if(0 != gHist.setHistPtr(hptr_array)){ return -1; }
@@ -2439,7 +2439,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #if DEBUG
   std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif
-#if 0
+#if 1
   // Correlation (2D histograms) -------------------------------------
   {
     static const int k_device_cft   = gUnpacker.get_device_id("CFT");
@@ -2456,7 +2456,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     int cor_id= gHist.getSequentialID(kCorrelation_catch, 0, 0, 1);
 
     // CFT vs BGO
-    for(int l = 0; l<NumOfLayersCFT-4; ++l){
+    for(int l = 0; l<NumOfLayersCFT-4; l++){
         for(int seg1 = 0; seg1<NumOfSegCFT[l*2+1]; ++seg1){
             for(int seg2 = 0; seg2<NumOfSegBGO; ++seg2){
                 int hitCFT = gUnpacker.get_entries(k_device_cft, l*2+1, seg1, 0, k_leading);
@@ -2465,27 +2465,27 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
                 int tdcCFT = gUnpacker.get(k_device_cft, l*2+1, seg1, 0, k_leading);
                 int tdcBGO = gUnpacker.get(k_device_bgo, 0, seg2, 0, k_BGOleading);
                 if(tdcCFT != 0&&tdcBGO !=0){
-                            hptr_array[cor_id + l]->Fill(seg1, seg2);
+		  hptr_array[cor_id + l]->Fill(seg1, seg2);
                 }
             }
         }
     }
 
    //  BGO vs PiID
-   cor_id= gHist.getSequentialID(kCorrelation_catch, 1, 0);
-   for(int seg1 = 0; seg1<NumOfSegBGO; ++seg1){
-       for(int seg2 = 0; seg2<NumOfSegPiID; ++seg2){
-           int hitBGO = gUnpacker.get_entries(k_device_bgo, 0, seg1, 0, k_BGOleading);
-           int hitPiID = gUnpacker.get_entries(k_device_piid, 0, seg2, 0, k_PiIDleading);
-           if(hitBGO == 0 || hitPiID == 0)
-	     continue;
-           int tdcBGO = gUnpacker.get(k_device_bgo, 0, seg1, 0, k_BGOleading);
-           int tdcPiID = gUnpacker.get(k_device_piid, 0, seg2, 0, k_PiIDleading);
-           if(tdcBGO != 0 && tdcPiID !=0){
-	     hptr_array[cor_id]->Fill(seg1, seg2);
-           }
-       }
-   }
+    cor_id= gHist.getSequentialID(kCorrelation_catch, 1, 0, 1);
+    for(int seg1 = 0; seg1<NumOfSegBGO; ++seg1){
+      for(int seg2 = 0; seg2<NumOfSegPiID; ++seg2){
+	int hitBGO = gUnpacker.get_entries(k_device_bgo, 0, seg1, 0, k_BGOleading);
+	int hitPiID = gUnpacker.get_entries(k_device_piid, 0, seg2, 0, k_PiIDleading);
+	if(hitBGO == 0 || hitPiID == 0)
+	  continue;
+	int tdcBGO = gUnpacker.get(k_device_bgo, 0, seg1, 0, k_BGOleading);
+	int tdcPiID = gUnpacker.get(k_device_piid, 0, seg2, 0, k_PiIDleading);
+	if(tdcBGO != 0 && tdcPiID !=0){
+	  hptr_array[cor_id]->Fill(seg1, seg2);
+	}
+      }
+    }
 
   }// Correlation
 #endif
