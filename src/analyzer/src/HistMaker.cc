@@ -3530,30 +3530,24 @@ TList* HistMaker::createDAQ( Bool_t flag_ps )
 
   std::vector<Int_t> vme_fe_id;
   std::vector<Int_t> hul_fe_id;
-  std::vector<Int_t> ea0c_fe_id;
-  std::vector<Int_t> cobo_fe_id;
   std::vector<Int_t> vea0c_fe_id;
   for( auto&& c : gUnpacker.get_root()->get_child_list() ){
     if( !c.second )
       continue;
     TString n = c.second->get_name();
     auto id = c.second->get_id();
-    if(n.Contains("vme"))
+    if(n.Contains("vme") || n.Contains("optlink"))
       vme_fe_id.push_back(id);
     if(n.Contains("hul"))
       hul_fe_id.push_back(id);
     if(n.Contains("easiroc"))
-      ea0c_fe_id.push_back(id);
-    if(n.Contains("cobo"))
-      cobo_fe_id.push_back(id);
-    if(n.Contains("aft"))
       vea0c_fe_id.push_back(id);
   }
 
   { //___ EB
     top_dir->Add(createTH1(getUniqueID(kDAQ, kEB, kHitPat),
 			   "Data size EB",
-			   2000, 0, 200000,
+			   2000, 0, 20000,
 			   "Data size [words]", ""));
   }
   { //___ VME
@@ -3563,7 +3557,7 @@ TList* HistMaker::createDAQ( Bool_t flag_ps )
 		       100, 0, 1200,
 		       "VME node ID", "Data size [words]");
     for(Int_t i=0, n=vme_fe_id.size(); i<n; ++i){
-      h->GetXaxis()->SetBinLabel( i+1, "0x"+TString::Itoa(vme_fe_id[i], 16));
+      h->GetXaxis()->SetBinLabel( i+1, TString::Itoa(vme_fe_id[i], 10));
     }
     top_dir->Add(h);
   }
@@ -3576,24 +3570,13 @@ TList* HistMaker::createDAQ( Bool_t flag_ps )
   //   top_dir->Add( h );
   // }
   {
-    auto h = createTH2(getUniqueID(kDAQ, kEASIROC, kHitPat2D),
-		       "Data size EASIROC nodes",
-		       ea0c_fe_id.size(), 0, ea0c_fe_id.size(),
-		       100, 0, 300,
-		       "EASIROC node ID", "Data size [words]");
-    for(Int_t i=0, n=ea0c_fe_id.size(); i<n; ++i){
-      h->GetXaxis()->SetBinLabel(i+1, "0x"+TString::Itoa(ea0c_fe_id[i], 16));
-    }
-    top_dir->Add(h);
-  }
-  {
     auto h = createTH2(getUniqueID(kDAQ, kHUL, kHitPat2D),
 		       "Data size HUL nodes", // 1 origin
 		       hul_fe_id.size(), 0, hul_fe_id.size(),
-		       200, 0, 400,
+		       200, 0, 1200,
 		       "HUL node ID", "Data size [words]");
     for(Int_t i=0, n=hul_fe_id.size(); i<n; ++i){
-      h->GetXaxis()->SetBinLabel(i+1, "0x"+TString::Itoa(hul_fe_id[i], 16));
+      h->GetXaxis()->SetBinLabel(i+1, TString::Itoa(hul_fe_id[i], 10));
     }
     top_dir->Add(h);
   }
@@ -3659,89 +3642,89 @@ TList* HistMaker::createDAQ( Bool_t flag_ps )
 		       100, 0, 1000,
 		       "VME EASIROC node ID", "Data size [words]");
     for(Int_t i=0, n=vea0c_fe_id.size(); i<n; ++i){
-      h->GetXaxis()->SetBinLabel(i+1, "0x"+TString::Itoa(vea0c_fe_id[i], 16));
+      h->GetXaxis()->SetBinLabel(i+1, TString::Itoa(vea0c_fe_id[i], 10));
     }
     top_dir->Add(h);
   }
 
-  { //___ MultiHitTdc
-    // Declaration of the sub-directory
-    TString strSubDir  = CONV_STRING(kMultiHitTdc);
-    const char* nameSubDir = strSubDir.Data();
-    TList *sub_dir = new TList;
-    sub_dir->SetName(nameSubDir);
+  // { //___ MultiHitTdc
+  //   // Declaration of the sub-directory
+  //   TString strSubDir  = CONV_STRING(kMultiHitTdc);
+  //   const char* nameSubDir = strSubDir.Data();
+  //   TList *sub_dir = new TList;
+  //   sub_dir->SetName(nameSubDir);
 
-    Int_t target_id = getUniqueID(kDAQ, 0, kMultiHitTdc);
-    const char* sub_name = "MultiHitTdc";
-    { // BC3
-      const char* name_layer[NumOfLayersBC3] = {"x0", "x1", "v0", "v1", "u0", "u1"};
-      TString strDet = CONV_STRING(kBC3);
-      const char* nameDetector = strDet.Data();
-      // Add to the top directory
-      for(Int_t i=0; i<NumOfLayersBC3; ++i){
-	const char* title = NULL;
-	title = Form("%s_%s_%s", nameDetector, sub_name, name_layer[i]);
-	sub_dir->Add(createTH2(target_id++, title, // 1 origin
-			       NumOfWireBC3, 0, NumOfWireBC3,
-			       20, 0, 20,
-			       "ch", "MultiHitTdc"));
-      }
-    }
-    { // BC4
-      const char* name_layer[NumOfLayersBC4] = {"u0", "u1", "v0", "v1", "x0", "x1"};
-      TString strDet = CONV_STRING(kBC4);
-      const char* nameDetector = strDet.Data();
-      // Add to the top directory
-      for(Int_t i=0; i<NumOfLayersBC4; ++i){
-	const char* title = NULL;
-	title = Form("%s_%s_%s", nameDetector, sub_name, name_layer[i]);
-	sub_dir->Add(createTH2(target_id++, title, // 1 origin
-			       NumOfWireBC4, 0, NumOfWireBC4,
-			       20, 0, 20,
-			       "ch", "MultiHitTdc"));
-      }
-    }
-    { // SDC1
-      const char* name_layer[NumOfLayersSDC1] = {"u0", "u1", "x0", "x1", "v0", "v1"};
-      TString strDet = CONV_STRING(kSDC1);
-      const char* nameDetector = strDet.Data();
-      // Add to the top directory
-      for(Int_t i=0; i<NumOfLayersSDC1; ++i){
-	const char* title = NULL;
-	title = Form("%s_%s_%s", nameDetector, sub_name, name_layer[i]);
-	sub_dir->Add(createTH2(target_id++, title, // 1 origin
-			       NumOfWireSDC1, 0, NumOfWireSDC1,
-			       20, 0, 20,
-			       "ch", "MultiHitTdc"));
-      }
-    }
-    { // SDC2
-      const char* name_layer[NumOfLayersSDC2] = { "v0", "v1", "u0", "u1" };
-      TString strDet = CONV_STRING(kSDC2);
-      const char* nameDetector = strDet.Data();
-      // Add to the top directory
-      for(Int_t i=0; i<NumOfLayersSDC2; ++i){
-	const char* title = NULL;
-	title = Form("%s_%s_%s", nameDetector, sub_name, name_layer[i]);
-	sub_dir->Add(createTH2(target_id++, title, // 1 origin
-			       NumOfWireSDC2, 0, NumOfWireSDC2,
-			       20, 0, 20,
-			       "ch", "MultiHitTdc"));
-      }
-    }
-    { // BH2MTLR
-      TString strDet = CONV_STRING(kBH2);
-      const char* nameDetector = strDet.Data();
-      // Add to the top directory
-      const char* title = Form("%s_MT_%s", nameDetector, nameSubDir);
-      sub_dir->Add(createTH2(target_id++, title, // 1 origin
-			     NumOfSegBH2, 0, NumOfSegBH2,
-			     20, 0, 20,
-			     "ch", "MultiHitTdc"));
-    }
+  //   Int_t target_id = getUniqueID(kDAQ, 0, kMultiHitTdc);
+  //   const char* sub_name = "MultiHitTdc";
+  //   { // BC3
+  //     const char* name_layer[NumOfLayersBC3] = {"x0", "x1", "v0", "v1", "u0", "u1"};
+  //     TString strDet = CONV_STRING(kBC3);
+  //     const char* nameDetector = strDet.Data();
+  //     // Add to the top directory
+  //     for(Int_t i=0; i<NumOfLayersBC3; ++i){
+  // 	const char* title = NULL;
+  // 	title = Form("%s_%s_%s", nameDetector, sub_name, name_layer[i]);
+  // 	sub_dir->Add(createTH2(target_id++, title, // 1 origin
+  // 			       NumOfWireBC3, 0, NumOfWireBC3,
+  // 			       20, 0, 20,
+  // 			       "ch", "MultiHitTdc"));
+  //     }
+  //   }
+  //   { // BC4
+  //     const char* name_layer[NumOfLayersBC4] = {"u0", "u1", "v0", "v1", "x0", "x1"};
+  //     TString strDet = CONV_STRING(kBC4);
+  //     const char* nameDetector = strDet.Data();
+  //     // Add to the top directory
+  //     for(Int_t i=0; i<NumOfLayersBC4; ++i){
+  // 	const char* title = NULL;
+  // 	title = Form("%s_%s_%s", nameDetector, sub_name, name_layer[i]);
+  // 	sub_dir->Add(createTH2(target_id++, title, // 1 origin
+  // 			       NumOfWireBC4, 0, NumOfWireBC4,
+  // 			       20, 0, 20,
+  // 			       "ch", "MultiHitTdc"));
+  //     }
+  //   }
+  //   { // SDC1
+  //     const char* name_layer[NumOfLayersSDC1] = {"u0", "u1", "x0", "x1", "v0", "v1"};
+  //     TString strDet = CONV_STRING(kSDC1);
+  //     const char* nameDetector = strDet.Data();
+  //     // Add to the top directory
+  //     for(Int_t i=0; i<NumOfLayersSDC1; ++i){
+  // 	const char* title = NULL;
+  // 	title = Form("%s_%s_%s", nameDetector, sub_name, name_layer[i]);
+  // 	sub_dir->Add(createTH2(target_id++, title, // 1 origin
+  // 			       NumOfWireSDC1, 0, NumOfWireSDC1,
+  // 			       20, 0, 20,
+  // 			       "ch", "MultiHitTdc"));
+  //     }
+  //   }
+  //   { // SDC2
+  //     const char* name_layer[NumOfLayersSDC2] = { "v0", "v1", "u0", "u1" };
+  //     TString strDet = CONV_STRING(kSDC2);
+  //     const char* nameDetector = strDet.Data();
+  //     // Add to the top directory
+  //     for(Int_t i=0; i<NumOfLayersSDC2; ++i){
+  // 	const char* title = NULL;
+  // 	title = Form("%s_%s_%s", nameDetector, sub_name, name_layer[i]);
+  // 	sub_dir->Add(createTH2(target_id++, title, // 1 origin
+  // 			       NumOfWireSDC2, 0, NumOfWireSDC2,
+  // 			       20, 0, 20,
+  // 			       "ch", "MultiHitTdc"));
+  //     }
+  //   }
+  //   { // BH2MTLR
+  //     TString strDet = CONV_STRING(kBH2);
+  //     const char* nameDetector = strDet.Data();
+  //     // Add to the top directory
+  //     const char* title = Form("%s_MT_%s", nameDetector, nameSubDir);
+  //     sub_dir->Add(createTH2(target_id++, title, // 1 origin
+  // 			     NumOfSegBH2, 0, NumOfSegBH2,
+  // 			     20, 0, 20,
+  // 			     "ch", "MultiHitTdc"));
+  //   }
 
-    top_dir->Add(sub_dir);
-  }
+  //   top_dir->Add(sub_dir);
+  // }
 
   // { //___ CoBo
   //   auto h = createTH2(getUniqueID( kDAQ, kCoBo, kHitPat2D),

@@ -54,7 +54,7 @@
 #include "UserParamMan.hh"
 
 #define DEBUG    0
-#define FLAG_DAQ 0
+#define FLAG_DAQ 1
 
 namespace
 {
@@ -127,13 +127,13 @@ process_begin(const std::vector<std::string>& argv)
   gHttp.Register(gHist.createTOF());
   // gHttp.Register(gHist.createCorrelation());
   // gHttp.Register(gHist.createTriggerFlag());
-  gHttp.Register(gHist.createDAQ());
   // gHttp.Register(gHist.createDCEff());
   // gHttp.Register(gHist.createBTOF());
   gHttp.Register(gHist.createCFT());
   gHttp.Register(gHist.createCatchBGO());
   gHttp.Register(gHist.createPiID());
   //gHttp.Register(gHist.createCorrelation_catch());
+  gHttp.Register(gHist.createDAQ());
 
   if(0 != gHist.setHistPtr(hptr_array)){ return -1; }
 
@@ -283,19 +283,16 @@ process_event(void)
     static const Int_t k_eb = gUnpacker.get_fe_id("k18eb");
     std::vector<Int_t> vme_fe_id;
     std::vector<Int_t> hul_fe_id;
-    std::vector<Int_t> ea0c_fe_id;
     std::vector<Int_t> vea0c_fe_id;
     for(auto&& c : gUnpacker.get_root()->get_child_list()){
       if(!c.second) continue;
       TString n = c.second->get_name();
       auto id = c.second->get_id();
-      if(n.Contains("vme"))
+      if(n.Contains("vme") || n.Contains("optlink"))
 	vme_fe_id.push_back(id);
       if(n.Contains("hul"))
 	hul_fe_id.push_back(id);
       if(n.Contains("easiroc"))
-	ea0c_fe_id.push_back(id);
-      if(n.Contains("aft"))
 	vea0c_fe_id.push_back(id);
     }
 
@@ -303,8 +300,7 @@ process_event(void)
     static const Int_t eb_hid = gHist.getSequentialID(kDAQ, kEB, kHitPat);
     static const Int_t vme_hid = gHist.getSequentialID(kDAQ, kVME, kHitPat2D);
     static const Int_t hul_hid = gHist.getSequentialID(kDAQ, kHUL, kHitPat2D);
-    static const Int_t ea0c_hid = gHist.getSequentialID(kDAQ, kEASIROC, kHitPat2D);
-    static const Int_t vea0c_hid = gHist.getSequentialID(kDAQ, kVMEEASIROC, kHitPat2D);
+    static const Int_t vea0c_hid = gHist.getSequentialID(kDAQ, kVEASIROC, kHitPat2D);
     Int_t multihit_hid = gHist.getSequentialID(kDAQ, 0, kMultiHitTdc);
 
 
@@ -317,13 +313,6 @@ process_event(void)
       for(Int_t i=0, n=vme_fe_id.size(); i<n; ++i){
 	auto data_size = gUnpacker.get_node_header(vme_fe_id[i], DAQNode::k_data_size);
         hptr_array[vme_hid]->Fill(i, data_size);
-      }
-    }
-
-    { // EASIROC
-      for(Int_t i=0, n=ea0c_fe_id.size(); i<n; ++i){
-        auto data_size = gUnpacker.get_node_header(ea0c_fe_id[i], DAQNode::k_data_size);
-        hptr_array[ea0c_hid]->Fill(i, data_size);
       }
     }
 
@@ -1988,14 +1977,11 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
   {
     // data type
     static const int k_device   = gUnpacker.get_device_id("BGO");
-    //    static const int k_adc      = gUnpacker.get_data_id("BGO", "adc\
-");
-    //    static const int k_tdc      = gUnpacker.get_data_id("BGO", "tdc\
-");
+    // static const int k_adc      = gUnpacker.get_data_id("BGO", "adc");
+    // static const int k_tdc      = gUnpacker.get_data_id("BGO", "tdc");
     static const int k_fadc      = gUnpacker.get_data_id("BGO", "adc");
     static const int k_leading   = gUnpacker.get_data_id("BGO", "tdc");
-//    static const int k_trailing   = gUnpacker.get_data_id("BGO", "trail\
-ing");
+    // static const int k_trailing   = gUnpacker.get_data_id("BGO", "trailing");
 
     // TDC gate range
     static const unsigned int tdc_min = gUser.GetParameter("TdcBGO", 0);

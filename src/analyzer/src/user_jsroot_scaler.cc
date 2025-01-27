@@ -107,8 +107,8 @@ process_begin(const std::vector<std::string>& argv)
     gScaler.Set(c, r++, ScalerInfo("SAC",         2,  6));
     gScaler.Set(c, r++, ScalerInfo("E-Veto",      2,  7));
     gScaler.Set(c, r++, ScalerInfo("TOF",         2,  5));
-    gScaler.Set(c, r++, ScalerInfo("TAG-S",       1,  94));
-    gScaler.Set(c, r++, ScalerInfo("TAG-F",       1,  95));
+    gScaler.Set(c, r++, ScalerInfo("TAG-1",       1,  94));
+    gScaler.Set(c, r++, ScalerInfo("TAG-2",       1,  95));
     gScaler.Set(c, r++, ScalerInfo("T0",          1,  90));
     gScaler.Set(c, r++, ScalerInfo("T0-L",        1,  83));
     gScaler.Set(c, r++, ScalerInfo("T0-R",        1,  84));

@@ -36,7 +36,7 @@ std::vector<Double_t> envelope_yfit_mean(NProfile);
 std::vector<Double_t> envelope_y_rms(NProfile);
 std::vector<Double_t> envelope_yfit_sigma(NProfile);
 
-void
+[[maybe_unused]] void
 SetText(TLatex* text, Int_t align, Double_t size, Int_t ndc=1)
 {
   text->SetNDC(ndc);
@@ -855,18 +855,25 @@ DAQ()
   std::vector<Int_t> hist_id = {
     HistMaker::getUniqueID(kDAQ, kEB, kHitPat),
     HistMaker::getUniqueID(kDAQ, kVME, kHitPat2D),
-    HistMaker::getUniqueID(kDAQ, kEASIROC, kHitPat2D),
+    // HistMaker::getUniqueID(kDAQ, kEASIROC, kHitPat2D),
     HistMaker::getUniqueID(kDAQ, kHUL, kHitPat2D),
-    HistMaker::getUniqueID(kDAQ, kVMEEASIROC, kHitPat2D),
+    HistMaker::getUniqueID(kDAQ, kVEASIROC, kHitPat2D),
     // HistMaker::getUniqueID(kDAQ,  kCLite,   kHitPat2D),
     // HistMaker::getUniqueID(kDAQ,  kOpt,     kHitPat2D),
   };
   auto c1 = new TCanvas(__func__, __func__);
-  c1->Divide(3, 2);
+  c1->Divide(1, 2);
+  c1->cd(1)->Divide(3, 1);
   for(Int_t i=0, n=hist_id.size(); i<n; ++i){
-    c1->cd(i + 1); //->SetGrid();
+    if(i != 3){
+      c1->cd(1)->cd(i + 1); //->SetGrid();
+    }else{
+      c1->cd(2); //->SetGrid();
+    }
     auto h1 = GHist::get(hist_id.at(i));
+    std::cout << __func__ << " " << hist_id.at(i) << " " << h1 << std::endl;
     if(!h1) continue;
+    std::cout << __func__ << " " << hist_id.at(i) << " " << h1 << " Draw" << std::endl;
     h1->Draw("colz");
   }
   return c1;
