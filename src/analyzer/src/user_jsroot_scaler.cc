@@ -155,10 +155,21 @@ process_event()
   static const TString tout = gConfig.get_control_param("tout");
 
   Int_t run_number = root->get_run_number();
+  static auto prev_run = run_number;
   Int_t event_number = gUnpacker.get_event_number();
 
   gRM.Decode();
-  Int_t spill_number = gRM.SpillNumber();
+  static auto prev_spill_mtm = gRM.SpillNumber();
+  static Int_t overflow = 0;
+  if(run_number != prev_run){
+    overflow = 0;
+  }
+  if(run_number == prev_run && gRM.SpillNumber() < prev_spill_mtm){
+    ++overflow;
+  }
+  Int_t spill_number = 256 * overflow + gRM.SpillNumber();
+  prev_run = run_number;
+  prev_spill_mtm = gRM.SpillNumber();
 
   std::stringstream ss;
 

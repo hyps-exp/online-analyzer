@@ -400,64 +400,6 @@ TList* HistMaker::createRF( Bool_t flag_ps )
   TList *top_dir = new TList;
   top_dir->SetName(nameDetector);
 
-  // // ADC---------------------------------------------------------
-  // {
-  //   // Declaration of the sub-directory
-  //   TString strSubDir  = CONV_STRING(kADC);
-  //   const char* nameSubDir = strSubDir.Data();
-  //   TList *sub_dir = new TList;
-  //   sub_dir->SetName(nameSubDir);
-
-  //   // Make histogram and add it
-  //   Int_t target_id = getUniqueID(kRF, 0, kADC, 0);
-  //   for(Int_t i = 0; i<NumOfSegTOF*2; ++i){
-  //     const char* title = NULL;
-  //     if(i < NumOfSegTOF){
-  // 	Int_t seg = i;
-  // 	title = Form("%s_%s_%dU", nameDetector, nameSubDir, seg);
-  //     }else{
-  // 	Int_t seg = i-NumOfSegTOF;
-  // 	title = Form("%s_%s_%dD", nameDetector, nameSubDir, seg);
-  //     }
-
-  //     sub_dir->Add(createTH1(target_id + i, title,
-  // 			     0x1000, 0, 0x1000,
-  // 			     "ADC [ch]", ""));
-  //   }
-
-  //   // insert sub directory
-  //   top_dir->Add(sub_dir);
-  // }
-
-  // // ADCwTDC ---------------------------------------------------------
-  // {
-  //   // Declaration of the sub-directory
-  //   TString strSubDir  = CONV_STRING(kADCwTDC);
-  //   const char* nameSubDir = strSubDir.Data();
-  //   TList *sub_dir = new TList;
-  //   sub_dir->SetName(nameSubDir);
-
-  //   // Make histogram and add it
-  //   Int_t target_id = getUniqueID(kRF, 0, kADCwTDC, 0);
-  //   for( Int_t i=0; i<NumOfSegTOF*2; ++i ){
-  //     const char* title = NULL;
-  //     if( i<NumOfSegTOF ){
-  // 	Int_t seg = i;
-  // 	title = Form("%s_%s_%dU", nameDetector, nameSubDir, seg);
-  //     }else{
-  // 	Int_t seg = i-NumOfSegTOF;
-  // 	title = Form("%s_%s_%dD", nameDetector, nameSubDir, seg);
-  //     }
-
-  //     sub_dir->Add(createTH1(target_id + i, title,
-  // 			     0x1000, 0, 0x1000,
-  // 			     "ADC [ch]", ""));
-  //   }
-
-  //   // insert sub directory
-  //   top_dir->Add(sub_dir);
-  // }
-
   // TDC ---------------------------------------------------------
   {
     // Declaration of the sub-directory
@@ -472,7 +414,7 @@ TList* HistMaker::createRF( Bool_t flag_ps )
       const char* title = NULL;
       title = Form("%s_%s", nameDetector, nameSubDir);
       sub_dir->Add(createTH1(target_id, title,
-			     50000, 0, 2000000,
+			     50000, 0, 1000000,
 			     "TDC [ch]", ""));
     }
 
