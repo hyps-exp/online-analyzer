@@ -1969,7 +1969,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 
 #endif // Corre, BTOF, TF_TF, TF_GN1, TF_GN2
 
-
+#if 1
   //------------------------------------------------------------------
   // BGO
   //------------------------------------------------------------------
@@ -2105,6 +2105,8 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 
 #if DEBUG
   std::cout << __FILE__ << " " << __LINE__ << std::endl;
+#endif
+
 #endif
 
 #if 1
@@ -2387,7 +2389,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	unsigned int tdc = gUnpacker.get(k_device, 0, seg, 0, k_tdc);
 	if(tdc!=0){
 	  hptr_array[piidt_id + seg]->Fill(tdc);
-	  // ADCwTDC
+	  //ADCwTDC
 	  if( gUnpacker.get_entries(k_device, 0, seg, 0, k_hg)>0 ){
 	    unsigned int hadc = gUnpacker.get(k_device, 0, seg, 0, k_hg);
 	    hptr_array[piidhgwt_id + seg]->Fill( hadc );
@@ -2400,7 +2402,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
       }
     }
 
-    // Hit pattern && multiplicity
+    // // Hit pattern && multiplicity
     static const int piidhit_id = gHist.getSequentialID(kPiID, 0, kHitPat);
     static const int piidmul_id = gHist.getSequentialID(kPiID, 0, kMulti);
     int multiplicity  = 0;
@@ -2437,7 +2439,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #if DEBUG
   std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif
-
+#if 0
   // Correlation (2D histograms) -------------------------------------
   {
     static const int k_device_cft   = gUnpacker.get_device_id("CFT");
@@ -2487,7 +2489,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 
   }// Correlation
 #endif
-
+#endif
 #if DEBUG
   std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif

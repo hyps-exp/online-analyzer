@@ -871,9 +871,7 @@ DAQ()
       c1->cd(2); //->SetGrid();
     }
     auto h1 = GHist::get(hist_id.at(i));
-    std::cout << __func__ << " " << hist_id.at(i) << " " << h1 << std::endl;
     if(!h1) continue;
-    std::cout << __func__ << " " << hist_id.at(i) << " " << h1 << " Draw" << std::endl;
     h1->Draw("colz");
   }
   return c1;

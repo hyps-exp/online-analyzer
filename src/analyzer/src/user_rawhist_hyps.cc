@@ -519,7 +519,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
       // TDC
       for(Int_t m=0, n=gUnpacker.get_entries(device_id, 0, seg, 0, tdc_id);
 	  m<n; ++m) {
-	Bool_t is_in_gate = false;	
+	Bool_t is_in_gate = false;
 	tdc = gUnpacker.get(device_id, 0, seg, 0, tdc_id, m);
 	if (tdc != 0) {
 	  hptr_array[tdc_hid + seg]->Fill(tdc);
@@ -538,7 +538,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
       }
     }
     hptr_array[mul_hid]->Fill(multiplicity);
-    
+
 
 #if 0
     // Debug, dump data relating this detector
@@ -778,7 +778,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     static const Int_t sdc0mulwt_ctot_id
       = gHist.getSequentialID(kSDC0, 0, kMulti, NumOfLayersSDC0 + kTOTcutOffset);
     static const Int_t sdc0layer_correlation_id
-      = gHist.getSequentialID(kSDC0, 0, kCorr,  20);    
+      = gHist.getSequentialID(kSDC0, 0, kCorr,  20);
     // static const Int_t sdc0self_corr_id  = gHist.getSequentialID(kSDC0, kSelfCorr, 0, 0);
 
     // TDC & HitPat & Multi
@@ -881,10 +881,10 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	  if (nhit_l_2 == 0) continue;
 	  hptr_array[sdc0layer_correlation_id + l]->Fill(w,x);
 	}
-      }	
+      }
     }
 
-   
+
     // for(Int_t s=0; s<NumOfDimSDC0 ;s++) {
     //   Int_t corr=2*s;
     //   for(UInt_t i=0; i<SDC0HitCont[corr].size() ;i++) {
@@ -1119,7 +1119,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     static const Int_t sdc2mulwt_ctot_id
       = gHist.getSequentialID(kSDC2, 0, kMulti, NumOfLayersSDC2 + kTOTcutOffset);
     static const Int_t sdc2layer_correlation_id
-      = gHist.getSequentialID(kSDC2, 0, kCorr,  20);    
+      = gHist.getSequentialID(kSDC2, 0, kCorr,  20);
     // static const Int_t sdc2self_corr_id  = gHist.getSequentialID(kSDC2, kSelfCorr, 0, 0);
 
 
