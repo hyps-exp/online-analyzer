@@ -1,5 +1,6 @@
 // -*- C++ -*-
 
+#include <fstream>
 #include <iostream>
 
 #include <TCanvas.h>
@@ -9,6 +10,8 @@
 #include <TKey.h>
 #include <TMacro.h>
 #include <TObject.h>
+#include <TObjArray.h>
+#include <TObjString.h>
 #include <TPostScript.h>
 #include <TROOT.h>
 #include <TSystem.h>
@@ -55,42 +58,56 @@ HttpServer::Hide( TString dir )
 
 //_____________________________________________________________________________
 void
-HttpServer::MakePs(void)
+HttpServer::MakePs(Int_t runno)
 {
   // static auto& gJsRoot = analyzer::JsRootUpdater::getInstance();
-  gSystem->Sleep(5000);
-  TString ps_path("/home/sks/PSFile/pro/default.ps");
-  TPostScript ps(ps_path, 112);
-  const auto& g_unpacker = hddaq::unpacker::GUnpacker::get_instance();
-  Int_t runno = g_unpacker.get_root()->get_run_number();
-  ps.NewPage();
+  // gSystem->Sleep(5000);
+  // const auto& g_unpacker = hddaq::unpacker::GUnpacker::get_instance();
+  // Int_t runno = g_unpacker.get_root()->get_run_number();
+  TString ps_path(Form("/misc/subdata/psfile/run%05d.pdf", runno));
+  std::ifstream comment_txt("/misc/rawdata/misc/comment.txt");
+  TString line;
+  TString comment;
+  while(line.ReadLine(comment_txt)){
+    if(line.Contains("START") && line.Contains(Form("%05d", runno))){
+      auto tokens = line.Tokenize(" \t");
+      if(tokens && tokens->GetEntries() >= 8){
+	for(Int_t i=7; i<tokens->GetEntries(); ++i){
+	  if(!comment.IsNull()) comment += " ";
+	  comment += ((TObjString*)tokens->At(i))->GetString();
+	}
+      }
+    }
+  }
+  std::cout << "#D HttpServer::MakePs() open " << ps_path << std::endl;
   {
-    static TCanvas c1("cps", "cps", 700, 500);
-    c1.Clear();
-    c1.cd(1);
-    c1.GetPad(1)->Range(0,0,100,100);
+    TCanvas c1("cps", "cps", 700, 500);
     TText text;
     text.SetTextSize(0.2);
     text.SetTextAlign(22);
-    text.DrawText(50.,65., Form("Run# %d", runno));
-    // TTimeStamp stamp;
-    // stamp.Add(-stamp.GetZoneOffset());
-    // text.SetTextSize(0.1);
-    // text.DrawText(50.,40., stamp.AsString("s"));
+    text.SetNDC(1);
+    text.DrawText(0.5, 0.65, Form("Run# %d", runno));
+    TTimeStamp stamp;
+    stamp.Add(-stamp.GetZoneOffset());
+    text.SetTextSize(0.04);
+    text.DrawText(0.5, 0.45, comment);
+    text.SetTextSize(0.08);
+    text.DrawText(0.5, 0.32, stamp.AsString("s"));
+    c1.Modified();
     c1.Update();
-    c1.GetPad(1)->Close();
+    c1.Print(ps_path + "(");
   }
-  gSystem->Setenv("SLEEP_JSROOT", "0");
-  return;
-  TIter canvas_iterator(gROOT->GetListOfCanvases());
-  while(true){
-    Int_t i = 0;
-    std::cout << "#D HttpServer::MakePs()" << i++ << std::endl;
-    auto c1 = dynamic_cast<TCanvas*>(canvas_iterator.Next());
-    if(!c1) break;
+  TIter next(gROOT->GetListOfCanvases());
+  TCanvas* c1;
+  while((c1 = dynamic_cast<TCanvas*>(next()))){
+    std::cout << c1->GetName() << std::endl;
     c1->Modified();
     c1->Update();
+    c1->Print(ps_path);
   }
+  TCanvas c2;
+  c2.Print(ps_path + "]");
+  std::cout << "#D HttpServer::MakePs() done" << std::endl;
 }
 
 //_____________________________________________________________________________

@@ -81,6 +81,12 @@ process_begin(const std::vector<std::string>& argv)
   gHttp.SetItemField("/Tag", "value", ss.str().c_str());
   gHttp.Hide("/Reset");
 
+  std::ifstream ifs("/misc/subdata/scaler/tagger_rate_threshold.txt");
+  TString line;
+  if(ifs.is_open() && line.ReadLine(ifs)){
+    tagger_rate_threshold = line.Atof();
+  }
+
   gScaler.SetFlag(ScalerAnalyzer::kSeparateComma);
   gScaler.SetFlag(ScalerAnalyzer::kSemiOnline);
   gScaler.SetFlag(ScalerAnalyzer::kSpillBySpill);
@@ -128,12 +134,6 @@ process_begin(const std::vector<std::string>& argv)
   }
 
   gScaler.PrintFlags();
-
-  std::ifstream ifs("/misc/subdata/scaler/tagger_rate_threshold.txt");
-  TString line;
-  if(ifs.is_open() && line.ReadLine(ifs)){
-    tagger_rate_threshold = line.Atof();
-  }
 
   return 0;
 }

@@ -105,7 +105,7 @@ process_begin(const std::vector<std::string>& argv)
 
   gHttp.SetPort(port);
   gHttp.Open();
-  gHttp.CreateItem("/", "Online Analyzer");
+  gHttp.CreateItem("/", "HYPS Online Analyzer");
   gHttp.CreateItem("/Tag", "Tag Check");
   gHttp.SetItemField("/Tag", "_kind", "Text");
   std::stringstream ss;
@@ -198,6 +198,8 @@ process_event(void)
   static Int_t run_number = -1;
   {
     if(run_number != gUnpacker.get_root()->get_run_number()){
+      if(run_number != -1)
+	gHttp.MakePs(run_number);
       for(Int_t i=0, n=hptr_array.size(); i<n; ++i){
 	hptr_array[i]->Reset();
       }
