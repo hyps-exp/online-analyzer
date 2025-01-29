@@ -1090,7 +1090,7 @@ TList* HistMaker::createSDC0( Bool_t flag_ps )
       title = Form("%s_%s_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
 			     500, 0, 500,
-			     5000, 0, 5000,
+			     1500, 0, 1500,
 			     "TOT [ch]", "TDC [ch]"));
     }
 
@@ -1390,7 +1390,7 @@ TList* HistMaker::createSDC1( Bool_t flag_ps )
       title = Form("%s_%s_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
 			     500, 0, 500,
-			     5000, 0, 5000,
+			     1500, 0, 1500,
 			     "TOT [ch]", "TDC [ch]"));
     }
 
@@ -1691,7 +1691,7 @@ TList* HistMaker::createSDC2( Bool_t flag_ps )
       title = Form("%s_%s_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
 			     500, 0, 500,
-			     5000, 0, 5000,
+			     1500, 0, 1500,
 			     "TOT [ch]", "TDC [ch]"));
     }
 
@@ -1993,7 +1993,7 @@ TList* HistMaker::createSDC3( Bool_t flag_ps )
       title = Form("%s_%s_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH2(target_id + i, title,
 			     500, 0, 500,
-			     5000, 0, 5000,
+			     1500, 0, 1500,
 			     "TOT [ch]", "TDC [ch]"));
     }
 
