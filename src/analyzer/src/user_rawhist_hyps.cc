@@ -435,28 +435,18 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
   std::vector<Int_t> hitseg_SFB;
   { ///// TAG_SF
     static const auto device_id = gUnpacker.get_device_id("TAG-SF");
-    static const auto adc_id    = gUnpacker.get_data_id("TAG-SF", "adc");
     static const auto tdc_id    = gUnpacker.get_data_id("TAG-SF", "tdc");
     static const auto tdc_min   = gUser.GetParameter("TdcSF", 0);
     static const auto tdc_max   = gUser.GetParameter("TdcSF", 1);
     //static const auto tdc_min   = 600;
     //static const auto tdc_max   = 700;
-    static const auto adc_hid   = gHist.getSequentialID(kTAG_SF, 0, kADC,     0);
     static const auto tdc_hid   = gHist.getSequentialID(kTAG_SF, 0, kTDC,     0);
-    static const auto awt_hid   = gHist.getSequentialID(kTAG_SF, 0, kADCwTDC, 0);
     static const auto hit_hid   = gHist.getSequentialID(kTAG_SF, 0, kHitPat,  0);
     static const auto mul_hid   = gHist.getSequentialID(kTAG_SF, 0, kMulti,   0);
     Int_t multiplicity = 0;
     for(Int_t l=0; l<NumOfLayersTAG_SF;++l){
       for(Int_t seg=0; seg<NumOfSegTAG_SF; ++seg) {
-	Int_t adc=0;
 	Int_t tdc=0;
-	// ADC
-	auto nhit = gUnpacker.get_entries(device_id, l, seg, 0, adc_id);
-	if (nhit != 0) {
-	  adc = gUnpacker.get(device_id, l, seg, 0, adc_id);
-	  hptr_array[adc_hid + l*NumOfSegTAG_SF + seg]->Fill(adc);
-	}
 	// TDC
 	for(Int_t m=0, n=gUnpacker.get_entries(device_id, l, seg, 0, tdc_id);
 	    m<n; ++m) {
@@ -469,10 +459,6 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	    }
 	  }
 	  if (is_in_gate) {
-	    if (gUnpacker.get_entries(device_id, l, seg, 0, adc_id)>0){
-	      Int_t adc = gUnpacker.get(device_id, l, seg, 0, adc_id);
-	      hptr_array[awt_hid + l*NumOfSegTAG_SF + seg]->Fill(adc);
-	    }
 	    ++multiplicity;
 	    hptr_array[hit_hid + l]->Fill(seg);
 	  }

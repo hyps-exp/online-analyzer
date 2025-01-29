@@ -355,6 +355,28 @@ TAG_PL_TDC(){
 
 //_____________________________________________________________________________
 TCanvas*
+TAG_PL_ADC(){
+  auto c = new TCanvas(__func__, __func__);
+  c->Divide(3, 4);
+
+  //draw TDC
+  int TAG_PL_base_id = HistMaker::getUniqueID(kTAG_PL, 0, kADC, 0);
+  int TAG_PL_base_id_wt = HistMaker::getUniqueID(kTAG_PL, 0, kADCwTDC, 0);
+
+  for( int i=0; i<NumOfSegTAG_PL; ++i ){
+    c->cd(i+1)->SetLogy();
+    TH1 *h = GHist::get(TAG_PL_base_id + i);
+    TH1 *hh = GHist::get(TAG_PL_base_id_wt + i);
+    h->Draw();
+    hh->SetLineColor(kRed);
+    hh->Draw("same");
+  }
+  c->Update();
+  return c;
+}
+
+//_____________________________________________________________________________
+TCanvas*
 TAG_Multi(){
   auto c = new TCanvas(__func__, __func__);
   c->Divide(2, 2);
@@ -387,7 +409,7 @@ U_Veto(){
   int base_id_h   = HistMaker::getUniqueID(kU_Veto, 0, kHitPat, 0);
   int base_id_m   = HistMaker::getUniqueID(kU_Veto, 0, kMulti, 0);
 
-  c->cd(1);
+  c->cd(1)->SetLogy();
   TH1 *h1 = GHist::get(base_id_a);
   h1->Draw();
   TH1 *hh1 = GHist::get(base_id_awt);
@@ -423,7 +445,7 @@ T0(){
   int base_id_m   = HistMaker::getUniqueID(kT0, 0, kMulti, 0);
 
   for (int i=0; i<2; i++){
-    c->cd(i+1);
+    c->cd(i+1)->SetLogy();
     TH1 *h1 = GHist::get(base_id_a + i);
     h1->Draw();
     TH1 *hh1 = GHist::get(base_id_awt + i);
@@ -458,7 +480,7 @@ SAC(){
   int base_id_h   = HistMaker::getUniqueID(kSAC, 0, kHitPat, 0);
   int base_id_m = HistMaker::getUniqueID(kSAC, 0, kMulti, 0);
 
-  c->cd(1);
+  c->cd(1)->SetLogy();
   TH1 *h1 = GHist::get(base_id_a);
   h1->Draw();
   TH1 *hh1 = GHist::get(base_id_awt);
@@ -1080,7 +1102,7 @@ E_Veto(){
   int base_id_m   = HistMaker::getUniqueID(kE_Veto, 0, kMulti, 0);
 
   for (int i=0; i<2; i++){
-    c->cd(i+1);
+    c->cd(i+1)->SetLogy();
     TH1 *h1 = GHist::get(base_id_a + i);
     h1->Draw();
     TH1 *hh1 = GHist::get(base_id_awt + i);
@@ -1546,7 +1568,7 @@ CFTHighGain()
   int base_id_ch = HistMaker::getUniqueID(kCFT, 0, kHighGain, 21);
 
   for(Int_t l=0; l<NumOfLayersCFT; ++l){
-    c1->cd(l+1);
+    c1->cd(l+1)->SetLogy();
     TH1 *h = GHist::get(base_id+l);
     if(!h) continue;
     h->Draw();
@@ -1569,7 +1591,7 @@ CFTLowGain()
   int base_id_cl = HistMaker::getUniqueID(kCFT, 0, kLowGain, 21);
 
   for(Int_t l=0; l<NumOfLayersCFT; ++l){
-    c1->cd(l+1);
+    c1->cd(l+1)->SetLogy();;
     TH1 *h = GHist::get(base_id+l);
     if(!h) continue;
     h->Draw();
@@ -1918,7 +1940,7 @@ BGOADC()
   int base_id_wt = HistMaker::getUniqueID(kBGO, 0, kADCwTDC, 1);
 
   for(Int_t i=0; i<NumOfSegBGO; ++i){
-    c1->cd(i+1);
+    c1->cd(i+1)->SetLogy();
     TH1 *h = GHist::get(base_id+i);
     if(!h) continue;
     h->Draw();
@@ -2013,7 +2035,7 @@ PiIDHighGain()
 
   TH1 *h;
   for(Int_t i=0; i<NumOfSegPiID; ++i){
-    c1->cd(i+1);
+    c1->cd(i+1)->SetLogy();
     h = GHist::get(base_id+i);
     if(!h) continue;
     h->Draw();
@@ -2037,7 +2059,7 @@ PiIDLowGain()
 
   TH1 *h;
   for(Int_t i=0; i<NumOfSegPiID; ++i){
-    c1->cd(i+1);
+    c1->cd(i+1)->SetLogy();
     h = GHist::get(base_id+i);
     if(!h) continue;
     h->Draw();
