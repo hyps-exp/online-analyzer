@@ -139,6 +139,13 @@ process_begin(const std::vector<std::string>& argv)
 
   //___ Macro for HttpServer
   gHttp.Register(http::Counter_TDC());
+  gHttp.Register(http::SDCIn_HitPat());
+  gHttp.Register(http::SDCOut_HitPat());
+  gHttp.Register(http::SDC_Correlation());
+  gHttp.Register(http::CFTHighGain2D());
+  gHttp.Register(http::CFTHitPat());
+  gHttp.Register(http::BGOHitMulti());
+  gHttp.Register(http::PiIDADC2DHitMulti());
   gHttp.Register(http::TAG_SFF_TDC1());
   gHttp.Register(http::TAG_SFF_TDC2());
   gHttp.Register(http::TAG_SFF_TDC3());
@@ -158,7 +165,6 @@ process_begin(const std::vector<std::string>& argv)
   gHttp.Register(http::SDCIn_TDC());
   gHttp.Register(http::SDCIn_TDC1st());
   gHttp.Register(http::SDCIn_TOT());
-  gHttp.Register(http::SDCIn_HitPat());
   gHttp.Register(http::SDCIn_Multi());
   gHttp.Register(http::SDCIn_TDC2D());
   gHttp.Register(http::SDCIn_TDC2DC());
@@ -166,12 +172,10 @@ process_begin(const std::vector<std::string>& argv)
   gHttp.Register(http::SDCOut_TDC());
   gHttp.Register(http::SDCOut_TDC1st());
   gHttp.Register(http::SDCOut_TOT());
-  gHttp.Register(http::SDCOut_HitPat());
   gHttp.Register(http::SDCOut_Multi());
   gHttp.Register(http::SDCOut_TDC2D());
   gHttp.Register(http::SDCOut_TDC2DC());
   gHttp.Register(http::SDCOut_TOTTDC2D());
-  gHttp.Register(http::SDC_Correlation());
   gHttp.Register(http::E_Veto());
   gHttp.Register(http::TOF_ADCU1());
   gHttp.Register(http::TOF_ADCU2());
@@ -193,14 +197,12 @@ process_begin(const std::vector<std::string>& argv)
   gHttp.Register(http::CFTHighGain());
   gHttp.Register(http::CFTLowGain());
   gHttp.Register(http::CFTPedestal());
-  gHttp.Register(http::CFTHighGain2D());
   gHttp.Register(http::CFTLowGain2D());
   gHttp.Register(http::CFTPedestal2D());
   gHttp.Register(http::CFTCHighGain2D());
   gHttp.Register(http::CFTCLowGain2D());
   gHttp.Register(http::CFTHighGainxTOT());
   gHttp.Register(http::CFTLowGainxTOT());
-  gHttp.Register(http::CFTHitPat());
   gHttp.Register(http::CFTMulti());
   gHttp.Register(http::CFTClusterHighGain());
   gHttp.Register(http::CFTClusterLowGain());
@@ -213,11 +215,9 @@ process_begin(const std::vector<std::string>& argv)
   gHttp.Register(http::BGOADC());
   gHttp.Register(http::BGOTDC());
   gHttp.Register(http::BGOADCTDC2D());
-  gHttp.Register(http::BGOHitMulti());
   gHttp.Register(http::PiIDTDC());
   gHttp.Register(http::PiIDHighGain());
   gHttp.Register(http::PiIDLowGain());
-  gHttp.Register(http::PiIDADC2DHitMulti());
   gHttp.Register(http::Correlation_CATCH());
   gHttp.Register(http::DAQ());
 
