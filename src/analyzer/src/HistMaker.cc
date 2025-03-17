@@ -553,6 +553,21 @@ HistMaker::createTAG_PL(Bool_t flag_ps)
     }
     top_dir->Add(sub_dir);
   }
+  { ///// FADC
+    TString strSubDir  = CONV_STRING(kFADC);
+    const char* nameSubDir = strSubDir.Data();
+    TList *sub_dir = new TList;
+    sub_dir->SetName(nameSubDir);
+    Int_t target_id = getUniqueID(kTAG_PL, 0, kFADC, 0);
+    for(Int_t j = 0; j<NumOfSegTAG_PL; ++j){
+      const char* title = NULL;
+      title = Form("%s_%s_%d", nameDetector, nameSubDir, j);
+      sub_dir->Add(createTH2(target_id + j, title,
+                             1024, 0, 1024, 0x200, 0, 0x3fff,
+			     "Sample#", "ADC [ch]"));
+    }
+    top_dir->Add(sub_dir);
+  }
   { ///// ADC w/TDC
     TString strSubDir  = CONV_STRING(kADCwTDC);
     const char* nameSubDir = strSubDir.Data();
@@ -2591,7 +2606,7 @@ TList* HistMaker::createCFT( Bool_t flag_ps )
       title = Form("%s_%s_2D_%s", nameDetector, sub_name, name_Layer[i] );
       sub_dir->Add(createTH2(++target_id, title, // 1 origin
 			     NumOfSegCFT[i], 0, NumOfSegCFT[i],
-			     4096/8,-200, 824,
+			     4096/8,-200, 3000,
 			     "Fiber", "ADC [ch]"));
     }
     // insert sub directory

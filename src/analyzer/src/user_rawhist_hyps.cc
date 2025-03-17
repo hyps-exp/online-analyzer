@@ -44,6 +44,8 @@
 #define DEBUG      0
 #define FLAG_DAQ   1
 #define TIME_STAMP 0
+#define TAG_PL_ADC 1
+#define TAG_PL_FADC 1
 
 /*------- for debug ------*/
 #define CLEAR "\033[0m"
@@ -482,26 +484,40 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
   { ///// TAG_PL
     static const auto device_id = gUnpacker.get_device_id("TAG-PL");
     static const auto adc_id    = gUnpacker.get_data_id("TAG-PL", "adc");
+    static const auto fadc_id   = gUnpacker.get_data_id("TAG-PL", "fadc");
     static const auto tdc_id    = gUnpacker.get_data_id("TAG-PL", "tdc");
     static const auto tdc_min   = gUser.GetParameter("TdcPL", 0);
     static const auto tdc_max   = gUser.GetParameter("TdcPL", 1);
     //static const auto tdc_min   = 580;
     //static const auto tdc_max   = 640;
     static const auto adc_hid   = gHist.getSequentialID(kTAG_PL, 0, kADC,     0);
+    static const auto fadc_hid  = gHist.getSequentialID(kTAG_PL, 0, kFADC,     0);
     static const auto tdc_hid   = gHist.getSequentialID(kTAG_PL, 0, kTDC,     0);
     static const auto awt_hid   = gHist.getSequentialID(kTAG_PL, 0, kADCwTDC, 0);
     static const auto hit_hid   = gHist.getSequentialID(kTAG_PL, 0, kHitPat,  0);
     static const auto mul_hid   = gHist.getSequentialID(kTAG_PL, 0, kMulti,   0);
     Int_t multiplicity = 0;
+
     for(Int_t seg=0; seg<NumOfSegTAG_PL; ++seg) {
       Int_t adc=0;
+      Int_t fadc=0;
       Int_t tdc=0;
       // ADC
+#if TAG_PL_ADC
       auto nhit = gUnpacker.get_entries(device_id, 0, seg, 0, adc_id);
       if (nhit != 0) {
 	adc = gUnpacker.get(device_id, 0, seg, 0, adc_id);
 	hptr_array[adc_hid + seg]->Fill(adc);
       }
+#endif
+      // FADC
+#if TAG_PL_FADC
+      auto nhit_f = gUnpacker.get_entries(device_id, 0, seg, 0, fadc_id);
+      for (Int_t m=0; m<nhit_f; ++m) {
+	fadc = gUnpacker.get(device_id, 0, seg, 0, fadc_id, m);
+	hptr_array[fadc_hid + seg]->Fill(m, fadc);
+      }
+#endif
       // TDC
       for(Int_t m=0, n=gUnpacker.get_entries(device_id, 0, seg, 0, tdc_id);
 	  m<n; ++m) {

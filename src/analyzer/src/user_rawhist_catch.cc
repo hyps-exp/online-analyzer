@@ -57,6 +57,7 @@ namespace analyzer
   namespace
   {
     const UserParamMan& gUser = UserParamMan::GetInstance();
+    const HodoParamMan& gHodoParam = HodoParamMan::GetInstance();    
     std::vector<TH1*> hptr_array;
     bool flag_event_cut = false;
     int event_cut_factor = 1; // for fast semi-online analysis
@@ -501,9 +502,9 @@ process_event( void )
 	  hptr_array[cft_hg_id+l]->Fill(adc_hg);
 	  hptr_array[cft_hg_2d_id+l]->Fill(i, adc_hg);
 	  double pedeCFT = 0.;
-	  double gainCFT = 100.;
-	  //                pedeCFT = hman->GetPedestal(DetIdCFT,layer,i,0);
-	  //                gainCFT = hman->GetGain(DetIdCFT,layer,i,0);
+	  double gainCFT = 1.;
+	  pedeCFT = gHodoParam.GetP0(k_device,l,i,0);
+	  // gainCFT = gHodoParam->GetGain(DetIdCFT,layer,i,0);
 	  double adc_pe = ((double)adc_hg - pedeCFT)/gainCFT;
 	  hptr_array[cft_pe_id+l]->Fill(adc_pe);
 	  hptr_array[cft_pe_2d_id+l]->Fill(i, adc_pe);
