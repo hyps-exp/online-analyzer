@@ -106,6 +106,7 @@ process_begin(const std::vector<std::string>& argv)
     gScaler.Set(c, r++, ScalerInfo("L1-Req",      2,  1));
     gScaler.Set(c, r++, ScalerInfo("L1-Acc",      2,  2));
     gScaler.Set(c, r++, ScalerInfo("L2-Acc",      2,  3));
+    gScaler.Set(c, r++, ScalerInfo("CLR",      2,  8));
     gScaler.Set(c, r++, ScalerInfo("RF",          1,  81));
     gScaler.Set(c, r++, ScalerInfo("TAG-All",     1,  82));
     gScaler.Set(c, r++, ScalerInfo("T0",          2,  4));
@@ -320,6 +321,16 @@ process_event()
     ss << "RUN " << run_number << "   Event " << event_number
        << "<br>";
     if(!gUnpacker.is_good()){
+      std::cout << "[Warning] Tag is not good." << std::endl;
+      static const TString host(gSystem->Getenv("HOSTNAME"));
+      static auto prev_time = std::time(0);
+      auto        curr_time = std::time(0);
+      if(host.Contains("online") &&
+	 event_number > 1 && curr_time - prev_time > 3){
+	std::cout << "exec tagslip sound!" << std::endl;
+	gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/tagslip.wav\" &");
+	prev_time = curr_time;
+      }
       std::ifstream ifs(tout);
       if(ifs.good()){
 	TString buf;

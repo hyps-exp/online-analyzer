@@ -2543,18 +2543,18 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
   //   gErrorIgnoreLevel = prev_level;
   // }
 
-  if(!gUnpacker.is_good()){
-    std::cout << "[Warning] Tag is not good." << std::endl;
-    static const TString host(gSystem->Getenv("HOSTNAME"));
-    static auto prev_time = std::time(0);
-    auto        curr_time = std::time(0);
-    if(host.Contains("online") &&
-       event_number > 1 && curr_time - prev_time > 3){
-      std::cout << "exec tagslip sound!" << std::endl;
-      gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/tagslip.wav\" &");
-      prev_time = curr_time;
-    }
-  }
+  // if(!gUnpacker.is_good()){
+  //   std::cout << "[Warning] Tag is not good." << std::endl;
+  //   static const TString host(gSystem->Getenv("HOSTNAME"));
+  //   static auto prev_time = std::time(0);
+  //   auto        curr_time = std::time(0);
+  //   if(host.Contains("online") &&
+  //      event_number > 1 && curr_time - prev_time > 3){
+  //     std::cout << "exec tagslip sound!" << std::endl;
+  //     gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/tagslip.wav\" &");
+  //     prev_time = curr_time;
+  //   }
+  // }
 
   gSystem->ProcessEvents();
 
