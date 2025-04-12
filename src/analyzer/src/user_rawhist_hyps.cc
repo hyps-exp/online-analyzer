@@ -525,7 +525,8 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	tdc = gUnpacker.get(device_id, 0, seg, 0, tdc_id, m);
 	if (tdc != 0) {
 	  hptr_array[tdc_hid + seg]->Fill(tdc);
-	  if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
+	  //if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
+	  if (tdc_min<tdc && tdc<tdc_max) {
 	    is_in_gate = true;
 	  }
 	}
