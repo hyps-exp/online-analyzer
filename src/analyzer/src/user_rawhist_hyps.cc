@@ -153,7 +153,7 @@ process_begin(const std::vector<std::string>& argv)
   // tab_hist->Add(gHist.createTOF_HRTDC());
   // tab_hist->Add(gHist.createCaenV1725());
   // tab_hist->Add(gHist.createCorrelation());
-  // tab_hist->Add(gHist.createTriggerFlag());
+  tab_hist->Add(gHist.createTriggerFlag());
 #if FLAG_DAQ
   tab_hist->Add(gHist.createDAQ());
 #endif
@@ -224,7 +224,6 @@ process_event()
   if (flag_event_cut && event_number%event_cut_factor!=0)
     return 0;
 
-#if 0 // TriggerFlag, TimeStamp, DAQ
   //------------------------------------------------------------------
   // TriggerFlag
   //------------------------------------------------------------------
@@ -246,11 +245,11 @@ process_event()
       if (trigger_flag[seg]) hptr_array[hit_id]->Fill(seg);
     }
 
-    Bool_t l1_flag =
-      trigger_flag[trigger::kL1SpillOn] ||
-      trigger_flag[trigger::kL1SpillOff] ||
-      trigger_flag[trigger::kSpillOnEnd] ||
-      trigger_flag[trigger::kSpillOffEnd];
+    // Bool_t l1_flag =
+    //   trigger_flag[trigger::kL1SpillOn] ||
+    //   trigger_flag[trigger::kL1SpillOff] ||
+    //   trigger_flag[trigger::kSpillOnEnd] ||
+    //   trigger_flag[trigger::kSpillOffEnd];
     // if(!l1_flag)
     //   hddaq::cerr << "#W Trigger flag is missing : "
     // 		  << trigger_flag << std::endl;
@@ -290,7 +289,6 @@ process_event()
     static const Int_t k_eb = gUnpacker.get_fe_id("k18eb");
     std::vector<Int_t> vme_fe_id;
     std::vector<Int_t> hul_fe_id;
-    std::vector<Int_t> ea0c_fe_id;
     std::vector<Int_t> vea0c_fe_id;
     for(auto&& c : gUnpacker.get_root()->get_child_list()) {
       if (!c.second) continue;
@@ -300,20 +298,17 @@ process_event()
 	vme_fe_id.push_back(id);
       if (n.Contains("hul"))
 	hul_fe_id.push_back(id);
-      if (n.Contains("easiroc"))
-	ea0c_fe_id.push_back(id);
-      if (n.Contains("aft"))
+      if (n.Contains("Veasiroc"))
 	vea0c_fe_id.push_back(id);
     }
 
     //___ sequential id
-    static const Int_t eb_hid = gHist.getSequentialID(kDAQ, kEB, kHitPat);
-    static const Int_t vme_hid = gHist.getSequentialID(kDAQ, kVME, kHitPat2D);
-    static const Int_t hul_hid = gHist.getSequentialID(kDAQ, kHUL, kHitPat2D);
-    static const Int_t ea0c_hid = gHist.getSequentialID(kDAQ, kEASIROC, kHitPat2D);
-    static const Int_t vea0c_hid = gHist.getSequentialID(kDAQ, kVMEEASIROC, kHitPat2D);
+    static const Int_t eb_hid    = gHist.getSequentialID(kDAQ, kEB,          kHitPat);
+    static const Int_t vme_hid   = gHist.getSequentialID(kDAQ, kVME,         kHitPat2D);
+    static const Int_t hul_hid   = gHist.getSequentialID(kDAQ, kHUL,         kHitPat2D);
+    static const Int_t vea0c_hid = gHist.getSequentialID(kDAQ, kVMEEASIROC,  kHitPat2D);
     static const Int_t hulof_hid = gHist.getSequentialID(kDAQ, kHULOverflow, kHitPat2D);
-    Int_t multihit_hid = gHist.getSequentialID(kDAQ, 0, kMultiHitTdc);
+    Int_t multihit_hid           = gHist.getSequentialID(kDAQ, 0,            kMultiHitTdc);
 
     { //___ EB
       auto data_size = gUnpacker.get_node_header(k_eb, DAQNode::k_data_size);
@@ -324,13 +319,6 @@ process_event()
       for(Int_t i=0, n=vme_fe_id.size(); i<n; ++i) {
 	auto data_size = gUnpacker.get_node_header(vme_fe_id[i], DAQNode::k_data_size);
 	hptr_array[vme_hid]->Fill(i, data_size);
-      }
-    }
-
-    { // EASIROC
-      for(Int_t i=0, n=ea0c_fe_id.size(); i<n; ++i) {
-	auto data_size = gUnpacker.get_node_header(ea0c_fe_id[i], DAQNode::k_data_size);
-	hptr_array[ea0c_hid]->Fill(i, data_size);
       }
     }
 
@@ -358,22 +346,17 @@ process_event()
       // 	++multihit_hid;
       // }
 
-      // { // HUL node overflow
-      // 	for(Int_t i=0, n=hul_fe_id.size(); i<n; ++i) {
-      // 	  auto overflow = gUnpacker.get_node_header(hul_fe_id[i], DAQNode::);
-      // 	  hptr_array[hul_hid]->Fill(i, overflow);
-      // 	}
-      // }
+    // { // HUL node overflow
+    //   for(Int_t i=0, n=hul_fe_id.size(); i<n; ++i) {
+    // 	auto type_hul = gUnpacker.get
+    // 	auto overflow = gUnpacker.get_node_header(hul_fe_id[i], DAQNode::);
+    // 	hptr_array[hul_hid]->Fill(i, overflow);
+    //   }
+    // }
 
-    }
   }
 
 #endif
-
-  if (trigger_flag[trigger::kSpillOnEnd] || trigger_flag[trigger::kSpillOffEnd])
-    return 0;
-
-#endif // TriggerFlag, TimeStamp, DAQ
 
   //------------------------------------------------------------------
   // RF
@@ -525,7 +508,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	tdc = gUnpacker.get(device_id, 0, seg, 0, tdc_id, m);
 	if (tdc != 0) {
 	  hptr_array[tdc_hid + seg]->Fill(tdc);
-	  //if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
+	  // if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
 	  if (tdc_min<tdc && tdc<tdc_max) {
 	    is_in_gate = true;
 	  }
