@@ -2165,7 +2165,8 @@ TList* HistMaker::createE_Veto( Bool_t flag_ps )
       }
 
       sub_dir->Add(createTH1(target_id + i, title,
-			     10000, 0, 400000,
+			     10000, 0, 1000000,
+			     // 10000, 0, 400000,
 			     //50000, 0, 2000000,
 			     "TDC [ch]", ""));
     }
