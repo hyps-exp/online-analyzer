@@ -404,7 +404,7 @@ process_event( void )
 
     int cft_hit_id     = gHist.getSequentialID(kCFT, 0, kHitPat,  1);
     int cft_chit_id    = gHist.getSequentialID(kCFT, 0, kHitPat, 11);
-    int cft_chitbgo_id = gHist.getSequentialID(kCFT, 0, kMulti,  21);
+    int cft_chitbgo_id = gHist.getSequentialID(kCFT, 0, kHitPat,  21);
     int cft_mul_id     = gHist.getSequentialID(kCFT, 0, kMulti,   1);
     int cft_cmul_id    = gHist.getSequentialID(kCFT, 0, kMulti,  11);
     int cft_cmulbgo_id = gHist.getSequentialID(kCFT, 0, kMulti,  21);
