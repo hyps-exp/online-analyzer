@@ -830,7 +830,6 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
 
     Int_t target_id = getUniqueID(kSAC, 0, kADC, 0);
     for(Int_t i = 0; i<NumOfSegSAC; ++i){
-    std::cout <<"ADChist i = " << i << std::endl;
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], nameSubDir);
       sub_dir->Add(createTH1(target_id + i, title,
@@ -849,7 +848,6 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
 
     Int_t target_id = getUniqueID(kSAC, 0, kADCwTDC, 0);
     for( Int_t i=0; i<NumOfSegSAC; ++i ){
-    std::cout <<"ADC w/TDC hist i = " << i << std::endl;
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], nameSubDir);
       sub_dir->Add(createTH1(target_id + i, title,
@@ -868,7 +866,6 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
 
     Int_t target_id = getUniqueID(kSAC, 0, kTDC, 0);
     for(Int_t i = 0; i<1; ++i){
-    std::cout <<"TDChist i = " << i << std::endl;
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], nameSubDir);
       sub_dir->Add(createTH1(target_id + i, title,
@@ -889,7 +886,6 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
   { // Multiplicity -----------------------------------------------
     Int_t target_id = getUniqueID(kSAC, 0, kMulti, 0);
     for(Int_t i = 0; i<NumOfSegSAC; ++i){
-      std::cout <<"Multi i = " << i << std::endl;
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], "multiplicity");
       top_dir->Add(createTH1(target_id + i, title,
