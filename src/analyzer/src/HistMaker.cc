@@ -634,6 +634,38 @@ HistMaker::createTAG_PL(Bool_t flag_ps)
   return top_dir;
 }
 
+// -------------------------------------------------------------------------
+// createV1725_STOP
+// -------------------------------------------------------------------------
+TList*
+HistMaker::createV1725_STOP(Bool_t flag_ps)
+{
+  TString strDet = CONV_STRING(kV1725_STOP);
+  name_created_detectors_.push_back(strDet);
+  if(flag_ps){
+    name_ps_files_.push_back(strDet);
+  }
+  const char* nameDetector = strDet.Data();
+  TList *top_dir = new TList;
+  top_dir->SetName(nameDetector);
+
+  { ///// FADC
+    TString strSubDir  = CONV_STRING(kFADC);
+    const char* nameSubDir = strSubDir.Data();
+    TList *sub_dir = new TList;
+    sub_dir->SetName(nameSubDir);
+
+    Int_t target_id = getUniqueID(kV1725_STOP, 0, kFADC, 0);
+    const char* title = NULL;
+    title = Form("%s_%s_%d", nameDetector, nameSubDir, 0);
+    sub_dir->Add(createTH2(target_id, title,
+			   1024, 0, 1024, 0x200, 0, 0x3fff,
+			   "Sample#", "FADC [ch]"));
+    top_dir->Add(sub_dir);
+  }
+  return top_dir;
+}
+
 
 // -------------------------------------------------------------------------
 // createU_Veto

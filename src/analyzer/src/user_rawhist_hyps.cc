@@ -44,7 +44,7 @@
 #define DEBUG      0
 #define FLAG_DAQ   1
 #define TIME_STAMP 0
-#define TAG_PL_ADC 1
+#define TAG_PL_ADC 0
 #define TAG_PL_FADC 1
 
 /*------- for debug ------*/
@@ -139,6 +139,7 @@ process_begin(const std::vector<std::string>& argv)
   tab_hist->Add(gHist.createRF());
   tab_hist->Add(gHist.createTAG_SF());
   tab_hist->Add(gHist.createTAG_PL());
+  tab_hist->Add(gHist.createV1725_STOP());
   //  std::cout << "OK!OK!" << std::endl;
   tab_hist->Add(gHist.createU_Veto());
   tab_hist->Add(gHist.createT0());
@@ -416,6 +417,9 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif
 
 #if 1
+  //------------------------------------------------------------------
+  // TAG_SF
+  //------------------------------------------------------------------
   std::vector<Int_t> hitseg_SFF;
   std::vector<Int_t> hitseg_SFB;
   { ///// TAG_SF
@@ -462,18 +466,21 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif
 
+  //------------------------------------------------------------------
+  // TAG_PL
+  //------------------------------------------------------------------
   std::vector<Int_t> hitseg_PLF;
   std::vector<Int_t> hitseg_PLB;
   { ///// TAG_PL
     static const auto device_id = gUnpacker.get_device_id("TAG-PL");
-    static const auto adc_id    = gUnpacker.get_data_id("TAG-PL", "adc");
-    static const auto fadc_id   = gUnpacker.get_data_id("TAG-PL", "fadc");
+    // static const auto adc_id    = gUnpacker.get_data_id("TAG-PL", "adc");
+    static const auto fadc_id   = gUnpacker.get_data_id("TAG-PL", "adc");
     static const auto tdc_id    = gUnpacker.get_data_id("TAG-PL", "tdc");
     static const auto tdc_min   = gUser.GetParameter("TdcPL", 0);
     static const auto tdc_max   = gUser.GetParameter("TdcPL", 1);
     //static const auto tdc_min   = 580;
     //static const auto tdc_max   = 640;
-    static const auto adc_hid   = gHist.getSequentialID(kTAG_PL, 0, kADC,     0);
+    // static const auto adc_hid   = gHist.getSequentialID(kTAG_PL, 0, kADC,     0);
     static const auto fadc_hid  = gHist.getSequentialID(kTAG_PL, 0, kFADC,     0);
     static const auto tdc_hid   = gHist.getSequentialID(kTAG_PL, 0, kTDC,     0);
     static const auto awt_hid   = gHist.getSequentialID(kTAG_PL, 0, kADCwTDC, 0);
@@ -514,10 +521,12 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	  }
 	}
 	if (is_in_gate) {
+#if TAG_PL_ADC
 	  if (gUnpacker.get_entries(device_id, 0, seg, 0, adc_id)>0){
 	    Int_t adc = gUnpacker.get(device_id, 0, seg, 0, adc_id);
 	    hptr_array[awt_hid + seg]->Fill(adc);
 	  }
+#endif
 	  ++multiplicity;
 	  hptr_array[hit_hid]->Fill(seg);
 	}
@@ -532,6 +541,34 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif
   }
 #endif
+
+#if DEBUG
+std::cout << __FILE__ << " " << __LINE__ << std::endl;
+#endif
+
+  //------------------------------------------------------------------
+  // V1725_STOP
+  //------------------------------------------------------------------
+  { ///// V1725-STOP : copy(TAG-PL)
+    static const auto device_id = gUnpacker.get_device_id("V1725-STOP");
+    static const auto fadc_id    = gUnpacker.get_data_id("V1725-STOP", "adc");
+    //static const auto tdc_min   = 580;
+    //static const auto tdc_max   = 640;
+    static const auto fadc_hid   = gHist.getSequentialID(kV1725_STOP, 0, kFADC,     0);
+
+    Int_t fadc=0;
+    // FADC
+    auto nhit_f = gUnpacker.get_entries(device_id, 0, 0, 0, fadc_id);
+    for (Int_t m=0; m<nhit_f; ++m) {
+      fadc = gUnpacker.get(device_id, 0, 0, 0, fadc_id, m);
+      hptr_array[fadc_hid]->Fill(m, fadc);
+    }
+
+#if 0
+    // Debug, dump data relating this detector
+    gUnpacker.dump_data_device(k_device);
+#endif
+  }
 
 #if DEBUG
 std::cout << __FILE__ << " " << __LINE__ << std::endl;
