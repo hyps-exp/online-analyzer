@@ -538,21 +538,23 @@ HistMaker::createTAG_PL(Bool_t flag_ps)
   TList *top_dir = new TList;
   top_dir->SetName(nameDetector);
 
-  { ///// ADC
-    TString strSubDir  = CONV_STRING(kADC);
-    const char* nameSubDir = strSubDir.Data();
-    TList *sub_dir = new TList;
-    sub_dir->SetName(nameSubDir);
-    Int_t target_id = getUniqueID(kTAG_PL, 0, kADC, 0);
-    for(Int_t j = 0; j<NumOfSegTAG_PL; ++j){
-      const char* title = NULL;
-      title = Form("%s_%s_%d", nameDetector, nameSubDir, j);
-      sub_dir->Add(createTH1(target_id + j, title,
-			     0x1000, 0, 0x1000,
-			     "ADC [ch]", ""));
-    }
-    top_dir->Add(sub_dir);
-  }
+
+  // { ///// ADC
+  //   TString strSubDir  = CONV_STRING(kADC);
+  //   const char* nameSubDir = strSubDir.Data();
+  //   TList *sub_dir = new TList;
+  //   sub_dir->SetName(nameSubDir);
+  //   Int_t target_id = getUniqueID(kTAG_PL, 0, kADC, 0);
+  //   for(Int_t j = 0; j<NumOfSegTAG_PL; ++j){
+  //     const char* title = NULL;
+  //     title = Form("%s_%s_%d", nameDetector, nameSubDir, j);
+  //     sub_dir->Add(createTH1(target_id + j, title,
+  // 			     0x1000, 0, 0x1000,
+  // 			     "ADC [ch]", ""));
+  //   }
+  //   top_dir->Add(sub_dir);
+  // }
+
   { ///// FADC
     TString strSubDir  = CONV_STRING(kFADC);
     const char* nameSubDir = strSubDir.Data();
@@ -570,21 +572,23 @@ HistMaker::createTAG_PL(Bool_t flag_ps)
     }
     top_dir->Add(sub_dir);
   }
-  { ///// ADC w/TDC
-    TString strSubDir  = CONV_STRING(kADCwTDC);
-    const char* nameSubDir = strSubDir.Data();
-    TList *sub_dir = new TList;
-    sub_dir->SetName(nameSubDir);
-    Int_t target_id = getUniqueID(kTAG_PL, 0, kADCwTDC, 0);
-    for(Int_t j = 0; j<NumOfSegTAG_PL; ++j){
-      const char* title = NULL;
-      title = Form("%s_%s_%d", nameDetector, nameSubDir, j);
-      sub_dir->Add(createTH1(target_id + j, title,
-			     0x1000, 0, 0x1000,
-			     "ADC [ch]", ""));
-    }
-    top_dir->Add(sub_dir);
-  }
+
+  // { ///// ADC w/TDC
+  //   TString strSubDir  = CONV_STRING(kADCwTDC);
+  //   const char* nameSubDir = strSubDir.Data();
+  //   TList *sub_dir = new TList;
+  //   sub_dir->SetName(nameSubDir);
+  //   Int_t target_id = getUniqueID(kTAG_PL, 0, kADCwTDC, 0);
+  //   for(Int_t j = 0; j<NumOfSegTAG_PL; ++j){
+  //     const char* title = NULL;
+  //     title = Form("%s_%s_%d", nameDetector, nameSubDir, j);
+  //     sub_dir->Add(createTH1(target_id + j, title,
+  // 			     0x1000, 0, 0x1000,
+  // 			     "ADC [ch]", ""));
+  //   }
+  //   top_dir->Add(sub_dir);
+  // }
+
   { ///// TDC
     TString strSubDir  = CONV_STRING(kTDC);
     const char* nameSubDir = strSubDir.Data();
@@ -661,7 +665,9 @@ HistMaker::createV1725_STOP(Bool_t flag_ps)
     const char* title = NULL;
     title = Form("%s_%s_%d", nameDetector, nameSubDir, 0);
     sub_dir->Add(createTH2(target_id, title,
-			   1024, 0, 1024, 0x200, 0, 0x3fff,
+			   200, 0, 200, 110, 5000, 16000,
+			   // -2025/04/20
+			   // 1024, 0, 1024, 0x200, 0, 0x3fff,
 			   "Sample#", "FADC [ch]"));
     top_dir->Add(sub_dir);
   }

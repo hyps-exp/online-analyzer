@@ -160,7 +160,7 @@ process_begin(const std::vector<std::string>& argv)
   gHttp.Register(http::TAG_SFB_TDC4());
   gHttp.Register(http::TAG_SFB_TDC5());
   gHttp.Register(http::TAG_PL_TDC());
-  gHttp.Register(http::TAG_PL_FADC());
+  gHttp.Register(http::TAG_PL_FADC_V1725_STOP());
   gHttp.Register(http::TAG_Multi());
   gHttp.Register(http::U_Veto());
   gHttp.Register(http::T0());

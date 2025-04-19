@@ -355,12 +355,13 @@ TAG_PL_TDC(){
 
 //_____________________________________________________________________________
 TCanvas*
-TAG_PL_FADC(){
+TAG_PL_FADC_V1725_STOP(){
   auto c = new TCanvas(__func__, __func__);
   c->Divide(3, 4);
 
-  //draw TDC
-  int TAG_PL_base_id = HistMaker::getUniqueID(kTAG_PL, 0, kFADC, 0);
+  //draw FADC
+  int TAG_PL_base_id     = HistMaker::getUniqueID(kTAG_PL, 0, kFADC, 0);
+  int V1725_STOP_base_id = HistMaker::getUniqueID(kV1725_STOP, 0, kFADC, 0);
 
   for( int i=0; i<NumOfSegTAG_PL; ++i ){
     c->cd(i+1);
@@ -369,6 +370,14 @@ TAG_PL_FADC(){
     h->GetYaxis()->SetRangeUser(12000, 16000);
     h->Draw();
   }
+
+  // draw V1725_STOP
+  c->cd(11);
+  TH1 *h = GHist::get(V1725_STOP_base_id);
+  h->GetXaxis()->SetRangeUser(0, 200);
+  h->GetYaxis()->SetRangeUser(5000, 16000);
+  h->Draw();
+
   c->Update();
   return c;
 }
