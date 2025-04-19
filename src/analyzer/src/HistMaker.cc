@@ -563,7 +563,9 @@ HistMaker::createTAG_PL(Bool_t flag_ps)
       const char* title = NULL;
       title = Form("%s_%s_%d", nameDetector, nameSubDir, j);
       sub_dir->Add(createTH2(target_id + j, title,
-                             1024, 0, 1024, 0x200, 0, 0x3fff,
+                             300, 0, 300, 4000, 12000, 16000,
+			     // -2025/04/19
+                             // 1024, 0, 1024, 0x200, 0, 0x3fff,
 			     "Sample#", "ADC [ch]"));
     }
     top_dir->Add(sub_dir);
