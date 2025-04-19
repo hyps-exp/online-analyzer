@@ -118,6 +118,7 @@ process_begin(const std::vector<std::string>& argv)
   gHttp.Register(gHist.createRF());
   gHttp.Register(gHist.createTAG_SF());
   gHttp.Register(gHist.createTAG_PL());
+  gHttp.Register(gHist.createV1725_STOP());
   gHttp.Register(gHist.createU_Veto());
   gHttp.Register(gHist.createT0());
   gHttp.Register(gHist.createSAC());
@@ -581,6 +582,34 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif
   }
 #endif
+
+#if DEBUG
+std::cout << __FILE__ << " " << __LINE__ << std::endl;
+#endif
+
+  //------------------------------------------------------------------
+  // V1725_STOP
+  //------------------------------------------------------------------
+  { ///// V1725-STOP : copy(TAG-PL)
+    static const auto device_id = gUnpacker.get_device_id("V1725-STOP");
+    static const auto fadc_id    = gUnpacker.get_data_id("V1725-STOP", "adc");
+    //static const auto tdc_min   = 580;
+    //static const auto tdc_max   = 640;
+    static const auto fadc_hid   = gHist.getSequentialID(kV1725_STOP, 0, kFADC,     0);
+
+    Int_t fadc=0;
+    // FADC
+    auto nhit_f = gUnpacker.get_entries(device_id, 0, 0, 0, fadc_id);
+    for (Int_t m=0; m<nhit_f; ++m) {
+      fadc = gUnpacker.get(device_id, 0, 0, 0, fadc_id, m);
+      hptr_array[fadc_hid]->Fill(m, fadc);
+    }
+
+#if 0
+    // Debug, dump data relating this detector
+    gUnpacker.dump_data_device(k_device);
+#endif
+  }
 
 #if DEBUG
 std::cout << __FILE__ << " " << __LINE__ << std::endl;
