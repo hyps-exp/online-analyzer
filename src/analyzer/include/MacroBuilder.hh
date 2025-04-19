@@ -44,7 +44,7 @@ TCanvas* TAG_SFB_TDC3();
 TCanvas* TAG_SFB_TDC4();
 TCanvas* TAG_SFB_TDC5();
 TCanvas* TAG_PL_TDC();
-TCanvas* TAG_PL_ADC();
+TCanvas* TAG_PL_FADC();
 TCanvas* TAG_Multi();
 TCanvas* U_Veto();
 TCanvas* T0();

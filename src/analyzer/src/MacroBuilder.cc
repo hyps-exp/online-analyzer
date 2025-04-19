@@ -355,21 +355,19 @@ TAG_PL_TDC(){
 
 //_____________________________________________________________________________
 TCanvas*
-TAG_PL_ADC(){
+TAG_PL_FADC(){
   auto c = new TCanvas(__func__, __func__);
   c->Divide(3, 4);
 
   //draw TDC
-  int TAG_PL_base_id = HistMaker::getUniqueID(kTAG_PL, 0, kADC, 0);
-  int TAG_PL_base_id_wt = HistMaker::getUniqueID(kTAG_PL, 0, kADCwTDC, 0);
+  int TAG_PL_base_id = HistMaker::getUniqueID(kTAG_PL, 0, kFADC, 0);
 
   for( int i=0; i<NumOfSegTAG_PL; ++i ){
-    c->cd(i+1)->SetLogy();
+    c->cd(i+1);
     TH1 *h = GHist::get(TAG_PL_base_id + i);
-    TH1 *hh = GHist::get(TAG_PL_base_id_wt + i);
+    h->GetXaxis()->SetRangeUser(0, 300);
+    h->GetYaxis()->SetRangeUser(12000, 16000);
     h->Draw();
-    hh->SetLineColor(kRed);
-    hh->Draw("same");
   }
   c->Update();
   return c;

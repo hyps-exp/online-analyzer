@@ -55,6 +55,8 @@
 
 #define DEBUG    0
 #define FLAG_DAQ 1
+#define TAG_PL_ADCNo 0
+
 
 namespace
 {
@@ -157,7 +159,7 @@ process_begin(const std::vector<std::string>& argv)
   gHttp.Register(http::TAG_SFB_TDC4());
   gHttp.Register(http::TAG_SFB_TDC5());
   gHttp.Register(http::TAG_PL_TDC());
-  gHttp.Register(http::TAG_PL_ADC());
+  gHttp.Register(http::TAG_PL_FADC());
   gHttp.Register(http::TAG_Multi());
   gHttp.Register(http::U_Veto());
   gHttp.Register(http::T0());
@@ -512,28 +514,41 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
   std::vector<Int_t> hitseg_PLF;
   std::vector<Int_t> hitseg_PLB;
   { ///// TAG_PL
-    static const auto device_id = gUnpacker.get_device_id("TAG-PL");
-    static const auto adc_id    = gUnpacker.get_data_id("TAG-PL", "adc");
-    static const auto tdc_id    = gUnpacker.get_data_id("TAG-PL", "tdc");
-    static const auto tdc_min   = gUser.GetParameter("TdcPL", 0);
-    static const auto tdc_max   = gUser.GetParameter("TdcPL", 1);
+    static const auto device_id  = gUnpacker.get_device_id("TAG-PL");
+    // static const auto adc_id     = gUnpacker.get_data_id("TAG-PL", "adc");
+    static const auto fadc_id    = gUnpacker.get_data_id("TAG-PL", "adc");
+    static const auto tdc_id     = gUnpacker.get_data_id("TAG-PL", "tdc");
+    static const auto tdc_min    = gUser.GetParameter("TdcPL", 0);
+    static const auto tdc_max    = gUser.GetParameter("TdcPL", 1);
     //static const auto tdc_min   = 580;
     //static const auto tdc_max   = 640;
-    static const auto adc_hid   = gHist.getSequentialID(kTAG_PL, 0, kADC,     0);
-    static const auto tdc_hid   = gHist.getSequentialID(kTAG_PL, 0, kTDC,     0);
-    static const auto awt_hid   = gHist.getSequentialID(kTAG_PL, 0, kADCwTDC, 0);
-    static const auto hit_hid   = gHist.getSequentialID(kTAG_PL, 0, kHitPat,  0);
-    static const auto mul_hid   = gHist.getSequentialID(kTAG_PL, 0, kMulti,   0);
+    // static const auto adc_hid   = gHist.getSequentialID(kTAG_PL, 0, kADC,     0);
+    static const auto fadc_hid   = gHist.getSequentialID(kTAG_PL, 0, kFADC,    0);
+    static const auto tdc_hid    = gHist.getSequentialID(kTAG_PL, 0, kTDC,     0);
+    static const auto awt_hid    = gHist.getSequentialID(kTAG_PL, 0, kADCwTDC, 0);
+    static const auto hit_hid    = gHist.getSequentialID(kTAG_PL, 0, kHitPat,  0);
+    static const auto mul_hid    = gHist.getSequentialID(kTAG_PL, 0, kMulti,   0);
     Int_t multiplicity = 0;
     for(Int_t seg=0; seg<NumOfSegTAG_PL; ++seg) {
       Int_t adc=0;
       Int_t tdc=0;
+      Int_t fadc=0;
+#if TAG_PL_ADCNo
       // ADC
       auto nhit = gUnpacker.get_entries(device_id, 0, seg, 0, adc_id);
       if (nhit != 0) {
 	adc = gUnpacker.get(device_id, 0, seg, 0, adc_id);
 	hptr_array[adc_hid + seg]->Fill(adc);
       }
+#endif
+
+      // FADC
+      auto nhit_f = gUnpacker.get_entries(device_id, 0, seg, 0, fadc_id);
+      for (Int_t m=0; m<nhit_f; ++m) {
+	fadc = gUnpacker.get(device_id, 0, seg, 0, fadc_id, m);
+	hptr_array[fadc_hid + seg]->Fill(m, fadc);
+      }
+
       // TDC
       for(Int_t m=0, n=gUnpacker.get_entries(device_id, 0, seg, 0, tdc_id);
 	  m<n; ++m) {
@@ -541,15 +556,17 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	tdc = gUnpacker.get(device_id, 0, seg, 0, tdc_id, m);
 	if (tdc != 0) {
 	  hptr_array[tdc_hid + seg]->Fill(tdc);
-	  if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
+	  if (tdc_min<tdc && tdc<tdc_max) {
 	    is_in_gate = true;
 	  }
 	}
 	if (is_in_gate) {
+#if TAG_PL_ADCNo
 	  if (gUnpacker.get_entries(device_id, 0, seg, 0, adc_id)>0){
 	    Int_t adc = gUnpacker.get(device_id, 0, seg, 0, adc_id);
 	    hptr_array[awt_hid + seg]->Fill(adc);
 	  }
+#endif
 	  ++multiplicity;
 	  hptr_array[hit_hid]->Fill(seg);
 	}
