@@ -873,7 +873,8 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], nameSubDir);
       sub_dir->Add(createTH1(target_id + i, title,
-			     0x1000, 0, 0x1000,
+			     2000, 0, 2000,
+			     // 0x1000, 0, 0x1000,
 			     "ADC [ch]", ""));
     }
     top_dir->Add(sub_dir);
@@ -891,7 +892,8 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], nameSubDir);
       sub_dir->Add(createTH1(target_id + i, title,
-			     0x1000, 0, 0x1000,
+			     2000, 0, 2000,
+			     // 0x1000, 0, 0x1000,
 			     "ADC [ch]", ""));
     }
     top_dir->Add(sub_dir);
@@ -925,13 +927,11 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
 
   { // Multiplicity -----------------------------------------------
     Int_t target_id = getUniqueID(kSAC, 0, kMulti, 0);
-    for(Int_t i = 0; i<NumOfSegSAC; ++i){
-      const char* title = NULL;
-      title = Form("%s_%s", name_acs[i], "multiplicity");
-      top_dir->Add(createTH1(target_id + i, title,
-			     NumOfSegSAC+1, 0, NumOfSegSAC+1,
-			     "Multiplicity", ""));
-    }
+    const char* title = NULL;
+    title = Form("%s_%s", name_acs[0], "multiplicity");
+    top_dir->Add(createTH1(target_id, title,
+			   NumOfSegSAC+1, 0, NumOfSegSAC+1,
+			   "Multiplicity", ""));
   }
 
   return top_dir;

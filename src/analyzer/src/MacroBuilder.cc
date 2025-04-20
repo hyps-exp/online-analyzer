@@ -479,7 +479,7 @@ T0(){
 TCanvas*
 SAC(){
   auto c = new TCanvas(__func__, __func__);
-  c->Divide(4, 4);
+  c->Divide(4, 2);
 
   int base_id_a   = HistMaker::getUniqueID(kSAC, 0, kADC, 0);
   int base_id_awt = HistMaker::getUniqueID(kSAC, 0, kADCwTDC, 0);
@@ -487,15 +487,8 @@ SAC(){
   int base_id_h   = HistMaker::getUniqueID(kSAC, 0, kHitPat, 0);
   int base_id_m = HistMaker::getUniqueID(kSAC, 0, kMulti, 0);
 
-  c->cd(1)->SetLogy();
-  TH1 *h1 = GHist::get(base_id_a);
-  h1->Draw();
-  TH1 *hh1 = GHist::get(base_id_awt);
-  hh1->SetLineColor(kRed);
-  hh1->Draw("same");
-
   for (int i=1; i<NumOfSegSAC; i++){
-    c->cd(i+4);
+    c->cd(i)->SetLogy();
     TH1 *h2 = GHist::get(base_id_a+i);
     h2->Draw();
     TH1 *hh2 = GHist::get(base_id_awt+i);
@@ -503,23 +496,24 @@ SAC(){
     hh2->Draw("same");
   }
 
-  c->cd(9);
+  c->cd(5)->SetLogy();
+  TH1 *h1 = GHist::get(base_id_a);
+  h1->Draw();
+  TH1 *hh1 = GHist::get(base_id_awt);
+  hh1->SetLineColor(kRed);
+  hh1->Draw("same");
+
+  c->cd(6);
   TH1 *h3 = GHist::get(base_id_t);
   h3->Draw();
 
-  c->cd(10);
+  c->cd(7);
   TH1 *h4 = GHist::get(base_id_h);
   h4->Draw();
 
-  c->cd(11);
+  c->cd(8);
   TH1 *h5 = GHist::get(base_id_m);
   h5->Draw();
-
-  for (int i=1; i<NumOfSegSAC; i++){
-    c->cd(i+12);
-    TH1 *h6 = GHist::get(base_id_m+i);
-    h6->Draw();
-  }
 
   c->Update();
   return c;
