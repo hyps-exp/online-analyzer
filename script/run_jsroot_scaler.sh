@@ -7,7 +7,7 @@ program=jsroot_scaler
 top_dir=$(dirname $(readlink -f $0))/..
 server=$top_dir/bin/$program
 
-conf=/misc/software/param/dev/conf/analyzer_jsroot_scaler.conf
+conf=/misc/software/param/pro/conf/analyzer_jsroot_scaler.conf
 if [ -z "$1" ]; then
     data=${ebhost}:8901
 else
