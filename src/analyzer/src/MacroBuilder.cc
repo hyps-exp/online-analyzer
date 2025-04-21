@@ -141,6 +141,7 @@ Counter_TDC()
   h9->Draw();
   c1->cd(11);
   TH1 *h10 = (TH1*)GHist::get(T0R_id);
+  h10->SetMinimum(0);
   h10->Draw();
   c1->cd(12);
   TH1 *h11 = (TH1*)GHist::get(TOF_id);
@@ -651,18 +652,22 @@ SDCIn_HitPat(){
     if(i<2) c->cd(i+1);
     if(i>=2) c->cd(i+2);
     TH1 *h = (TH1*)GHist::get(SDC0_base_id + i);
+    h->SetMinimum(0);
     h->Draw();
     TH1 *hh = (TH1*)GHist::get( SDC0_base_id_ctot + i );
     if( !hh ) continue;
+    hh->SetMinimum(0);
     hh->SetLineColor( kRed );
     hh->Draw("same");
   }
   for( int i=0; i<NumOfLayersSDC1; ++i ){
     c->cd(i+7);
     TH1 *h1 = (TH1*)GHist::get(SDC1_base_id + i);
+    h1->SetMinimum(0);
     h1->Draw();
     TH1 *hh1 = (TH1*)GHist::get( SDC1_base_id_ctot + i );
     if( !hh1 ) continue;
+    hh1->SetMinimum(0);
     hh1->SetLineColor( kRed );
     hh1->Draw("same");
   }
@@ -915,18 +920,22 @@ SDCOut_HitPat(){
   for( int i=0; i<NumOfLayersSDC2; ++i ){
     c->cd(i+1);
     TH1 *h = (TH1*)GHist::get(SDC2_base_id + i);
+    h->SetMinimum(0);
     h->Draw();
     TH1 *hh = (TH1*)GHist::get( SDC2_base_id_ctot + i );
     if( !hh ) continue;
+    hh->SetMinimum(0);
     hh->SetLineColor( kRed );
     hh->Draw("same");
   }
   for( int i=0; i<NumOfLayersSDC3; ++i ){
     c->cd(i+7);
     TH1 *h1 = (TH1*)GHist::get(SDC3_base_id + i);
+    h1->SetMinimum(0);
     h1->Draw();
     TH1 *hh1 = (TH1*)GHist::get( SDC3_base_id_ctot + i );
     if( !hh1 ) continue;
+    hh1->SetMinimum(0);
     hh1->SetLineColor( kRed );
     hh1->Draw("same");
   }
@@ -1765,13 +1774,16 @@ CFTHitPat()
     c1->cd(l+1);
     TH1 *h1 = GHist::get(base_id+l);
     if(!h1) continue;
+    h1->SetMinimum(0);
     h1->Draw();
     TH1 *h2 = GHist::get(base_id_ct+l);
     if(!h2) continue;
+    h2->SetMinimum(0);
     h2->SetLineColor(kRed);
     h2->Draw("same");
     TH1 *h3 = GHist::get(base_id_ctwb+l);
     if(!h3) continue;
+    h3->SetMinimum(0);
     h3->SetLineColor(kGreen);
     h3->Draw("same");
   }
@@ -2011,6 +2023,7 @@ BGOHitMulti()
   TH1 *h2 = (TH1*)GHist::get(base_id_h);
   h2->Draw();
   TH1 *hh2 = (TH1*)GHist::get(base_id_h+1);
+  hh2->SetMinimum(0);
   hh2->SetLineColor(kRed);
   hh2->Draw("same");
   c1->cd(7);
@@ -2114,6 +2127,7 @@ PiIDADC2DHitMulti()
   for(Int_t i=0; i<2; ++i){
     h = GHist::get(base_id_h+i);
     if(!h) continue;
+    h->SetMinimum(0);
     if(i==0) h->Draw();
     if(i==1){
       h->SetLineColor(kRed);
