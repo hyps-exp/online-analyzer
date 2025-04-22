@@ -1499,7 +1499,7 @@ CFTTDC2D()
   int base_id = HistMaker::getUniqueID(kCFT, 0, kTDC2D, 1);
 
   for(Int_t l=0; l<NumOfLayersCFT; ++l){
-    c1->cd(l+1);
+    c1->cd(l+1)->SetLogz();
     TH1 *h = GHist::get(base_id+l);
     if(!h) continue;
     h->Draw("colz");
@@ -1543,7 +1543,7 @@ CFTTOT2D()
   int base_id = HistMaker::getUniqueID(kCFT, 0, kADC2D, 1);
 
   for(Int_t l=0; l<NumOfLayersCFT; ++l){
-    c1->cd(l+1);
+    c1->cd(l+1)->SetLogz();
     TH1 *h = GHist::get(base_id+l);
     if(!h) continue;
     h->Draw("colz");
@@ -1561,7 +1561,7 @@ CFTCTOT2D()
   int base_id = HistMaker::getUniqueID(kCFT, 0, kADC2D, 11);
 
   for(Int_t l=0; l<NumOfLayersCFT; ++l){
-    c1->cd(l+1);
+    c1->cd(l+1)->SetLogz();
     TH1 *h = GHist::get(base_id+l);
     if(!h) continue;
     h->Draw("colz");
@@ -1604,7 +1604,7 @@ CFTLowGain()
   int base_id_cl = HistMaker::getUniqueID(kCFT, 0, kLowGain, 21);
 
   for(Int_t l=0; l<NumOfLayersCFT; ++l){
-    c1->cd(l+1)->SetLogy();;
+    c1->cd(l+1)->SetLogy();
     TH1 *h = GHist::get(base_id+l);
     if(!h) continue;
     h->Draw();
@@ -1717,7 +1717,7 @@ CFTPedestal2D()
   int base_id = HistMaker::getUniqueID(kCFT, 0, kPede, 11);
 
   for(Int_t l=0; l<NumOfLayersCFT; ++l){
-    c1->cd(l+1);
+    c1->cd(l+1)->SetLogz();
     TH1 *h = GHist::get(base_id);
     if(!h) continue;
     h->Draw("colz");
@@ -1952,10 +1952,10 @@ BGOFADC()
   int base_id = HistMaker::getUniqueID(kBGO, 0, kFADC, 1);
 
   for(Int_t i=0; i<NumOfSegBGO; ++i){
-    c1->cd(i+1);
+    c1->cd(i+1)->SetLogz();
     TH1 *h = GHist::get(base_id+i);
     if(!h) continue;
-    h->GetXaxis()->SetRangeUser(80, 200);
+    // h->GetXaxis()->SetRangeUser(80, 200);
     h->Draw("colz");
   }
   return c1;
@@ -1971,10 +1971,10 @@ BGOFADCwTDC()
   int base_id = HistMaker::getUniqueID(kBGO, 0, kFADCwTDC, 1);
 
   for(Int_t i=0; i<NumOfSegBGO; ++i){
-    c1->cd(i+1);
+    c1->cd(i+1)->SetLogz();
     TH1 *h = GHist::get(base_id+i);
     if(!h) continue;
-    h->GetXaxis()->SetRangeUser(80, 200);
+    // h->GetXaxis()->SetRangeUser(80, 200);
     h->Draw("colz");
   }
   return c1;
@@ -2093,7 +2093,7 @@ PiIDHighGain()
     h = GHist::get(base_id+i);
     if(!h) continue;
     h->Draw();
-    h = GHist::get(base_id_wt);
+    h = GHist::get(base_id_wt+i);
     if(!h) continue;
     h->SetLineColor(kRed+1);
     h->Draw("same");
