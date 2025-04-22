@@ -89,6 +89,8 @@ TCanvas* CFTHighGain();
 TCanvas* CFTLowGain();
 TCanvas* CFTPedestal();
 TCanvas* CFTHighGain2D();
+TCanvas* CFTHighGain2D_check1();
+TCanvas* CFTHighGain2D_check2();
 TCanvas* CFTLowGain2D();
 TCanvas* CFTPedestal2D();
 TCanvas* CFTCHighGain2D();

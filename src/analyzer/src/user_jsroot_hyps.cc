@@ -145,7 +145,8 @@ process_begin(const std::vector<std::string>& argv)
   gHttp.Register(http::SDCIn_HitPat());
   gHttp.Register(http::SDCOut_HitPat());
   gHttp.Register(http::SDC_Correlation());
-  gHttp.Register(http::CFTHighGain2D());
+  gHttp.Register(http::CFTHighGain2D_check1());
+  gHttp.Register(http::CFTHighGain2D_check2());
   gHttp.Register(http::CFTHitPat());
   gHttp.Register(http::BGOHitMulti());
   gHttp.Register(http::PiIDADC2DHitMulti());
@@ -200,6 +201,7 @@ process_begin(const std::vector<std::string>& argv)
   gHttp.Register(http::CFTHighGain());
   gHttp.Register(http::CFTLowGain());
   gHttp.Register(http::CFTPedestal());
+  gHttp.Register(http::CFTHighGain2D());
   gHttp.Register(http::CFTLowGain2D());
   gHttp.Register(http::CFTPedestal2D());
   gHttp.Register(http::CFTCHighGain2D());

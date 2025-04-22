@@ -111,12 +111,15 @@ Counter_TDC()
 
   c1->cd(1);
   TH1 *h2 = (TH1*)GHist::get(TAG_SFF_id);
+  h2->SetMinimum(0);
   h2->Draw();
   c1->cd(2);
   TH1 *h3 = (TH1*)GHist::get(TAG_SFB_id);
+  h3->SetMinimum(0);
   h3->Draw();
   c1->cd(3);
   TH1 *h4 = (TH1*)GHist::get(TAG_PL_id);
+  h4->SetMinimum(0);
   h4->Draw();
 
   c1->cd(4);
@@ -365,7 +368,7 @@ TAG_PL_FADC_V1725_STOP(){
   int V1725_STOP_base_id = HistMaker::getUniqueID(kV1725_STOP, 0, kFADC, 0);
 
   for( int i=0; i<NumOfSegTAG_PL; ++i ){
-    c->cd(i+1);
+    c->cd(i+1)->SetLogz();
     TH1 *h = GHist::get(TAG_PL_base_id + i);
     h->GetXaxis()->SetRangeUser(0, 300);
     h->GetYaxis()->SetRangeUser(12000, 16000);
@@ -1642,8 +1645,44 @@ CFTHighGain2D()
   int base_id = HistMaker::getUniqueID(kCFT, 0, kHighGain, 11);
 
   for(Int_t l=0; l<NumOfLayersCFT; ++l){
-    c1->cd(l+1);
+    c1->cd(l+1)->SetLogz();
     TH1 *h = GHist::get(base_id+l);
+    if(!h) continue;
+    h->Draw("colz");
+  }
+  return c1;
+}
+
+//_____________________________________________________________________________
+TCanvas*
+CFTHighGain2D_check1()
+{
+  TCanvas *c1 = new TCanvas(__func__, __func__);
+  c1->Divide(1, 4);
+
+  int base_id = HistMaker::getUniqueID(kCFT, 0, kHighGain, 11);
+
+  for(Int_t l=0; l<NumOfLayersCFT/2; ++l){
+    c1->cd(l+1)->SetLogz();
+    TH1 *h = GHist::get(base_id+l);
+    if(!h) continue;
+    h->Draw("colz");
+  }
+  return c1;
+}
+
+//_____________________________________________________________________________
+TCanvas*
+CFTHighGain2D_check2()
+{
+  TCanvas *c1 = new TCanvas(__func__, __func__);
+  c1->Divide(1, 4);
+
+  int base_id = HistMaker::getUniqueID(kCFT, 0, kHighGain, 11);
+
+  for(Int_t l=0; l<NumOfLayersCFT/2; ++l){
+    c1->cd(l+1)->SetLogz();
+    TH1 *h = GHist::get(base_id+l+4);
     if(!h) continue;
     h->Draw("colz");
   }
@@ -1660,7 +1699,7 @@ CFTLowGain2D()
   int base_id = HistMaker::getUniqueID(kCFT, 0, kLowGain, 11);
 
   for(Int_t l=0; l<NumOfLayersCFT; ++l){
-    c1->cd(l+1);
+    c1->cd(l+1)->SetLogz();
     TH1 *h = GHist::get(base_id+l);
     if(!h) continue;
     h->Draw("colz");
@@ -1696,7 +1735,7 @@ CFTCHighGain2D()
   int base_id = HistMaker::getUniqueID(kCFT, 0, kHighGain, 31);
 
   for(Int_t l=0; l<NumOfLayersCFT; ++l){
-    c1->cd(l+1);
+    c1->cd(l+1)->SetLogz();
     TH1 *h = GHist::get(base_id+l);
     if(!h) continue;
     h->Draw("colz");
@@ -1714,7 +1753,7 @@ CFTCLowGain2D()
   int base_id = HistMaker::getUniqueID(kCFT, 0, kLowGain, 31);
 
   for(Int_t l=0; l<NumOfLayersCFT; ++l){
-    c1->cd(l+1);
+    c1->cd(l+1)->SetLogz();
     TH1 *h = GHist::get(base_id+l);
     if(!h) continue;
     h->Draw("colz");
@@ -2021,6 +2060,7 @@ BGOHitMulti()
 
   c1->cd(5);
   TH1 *h2 = (TH1*)GHist::get(base_id_h);
+  h2->SetMinimum(0);
   h2->Draw();
   TH1 *hh2 = (TH1*)GHist::get(base_id_h+1);
   hh2->SetMinimum(0);
