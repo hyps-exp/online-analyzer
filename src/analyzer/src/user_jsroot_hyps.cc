@@ -1557,8 +1557,18 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     static const auto device_id = gUnpacker.get_device_id("TOF");
     static const auto adc_id    = gUnpacker.get_data_id("TOF", "adc");
     static const auto tdc_id    = gUnpacker.get_data_id("TOF", "tdc");
-    static const auto tdc_min   = gUser.GetParameter("TdcTOF", 0);
-    static const auto tdc_max   = gUser.GetParameter("TdcTOF", 1);
+    //static const auto tdc_min   = gUser.GetParameter("TdcTOF", 0);
+    //static const auto tdc_max   = gUser.GetParameter("TdcTOF", 1);
+    Int_t tdc_min = 0;
+    Int_t tdc_max = 0;
+    static const auto tdc_min_ku   = gUser.GetParameter("TdcTOF_KURAMA_U", 0);
+    static const auto tdc_min_kd   = gUser.GetParameter("TdcTOF_KURAMA_D", 0);
+    static const auto tdc_min_lu   = gUser.GetParameter("TdcTOF_LEPS_U", 0);
+    static const auto tdc_min_ld   = gUser.GetParameter("TdcTOF_LEPS_D", 0);
+    static const auto tdc_max_ku   = gUser.GetParameter("TdcTOF_KURAMA_U", 1);
+    static const auto tdc_max_kd   = gUser.GetParameter("TdcTOF_KURAMA_D", 1);
+    static const auto tdc_max_lu   = gUser.GetParameter("TdcTOF_LEPS_U", 1);
+    static const auto tdc_max_ld   = gUser.GetParameter("TdcTOF_LEPS_D", 1);
     static const auto adc_hid   = gHist.getSequentialID(kTOF, 0, kADC,     0);
     static const auto tdc_hid   = gHist.getSequentialID(kTOF, 0, kTDC,     0);
     static const auto awt_hid   = gHist.getSequentialID(kTOF, 0, kADCwTDC, 0);
@@ -1582,6 +1592,26 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	  auto tdc = gUnpacker.get(device_id, 0, seg, ud, tdc_id, m);
 	  if (tdc != 0) {
 	    hptr_array[tdc_hid + ud*NumOfSegTOF + seg]->Fill(tdc);
+	    /*   if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
+	      hit_flag[seg][ud] = 1;
+	      }*/
+	    if (seg<12 || seg>36) { // LEPS TOF
+	      if (ud == kU){
+		tdc_min = tdc_min_lu;
+		tdc_max = tdc_max_lu;
+	      }else{
+		tdc_min = tdc_min_ld;
+		tdc_max = tdc_max_ld;
+	      }
+	    }else{// KURAMA TOF
+	      if (ud == kU){
+		tdc_min = tdc_min_ku;
+		tdc_max = tdc_max_ku;
+	      }else{
+		tdc_min = tdc_min_kd;
+		tdc_max = tdc_max_kd;
+	      }
+	    }
 	    if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
 	      hit_flag[seg][ud] = 1;
 	    }
