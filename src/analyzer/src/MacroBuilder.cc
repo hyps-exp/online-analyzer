@@ -43,7 +43,12 @@ SetText(TLatex* text, Int_t align, Double_t size, Int_t ndc=1)
   text->SetTextAlign(align);
   text->SetTextSize(size);
 }
+
+Bool_t IsAbsentTOF(Int_t seg)
+{
+  return TOF_Absent.count(seg);
 }
+} // namespace
 
 namespace analyzer
 {
@@ -1148,15 +1153,22 @@ TOF_ADCU1()
   c->Divide(4, 4);
 
   static const Int_t seg_per_canvas = 16;
+  static const Int_t seg_offset     =  0;
+
+  TLatex *t = new TLatex(.5, .5, "Absent");
+  SetText(t, 22, 0.25);
+  t->SetTextColor(kGray);
+  t->SetTextAngle(25);
 
   // draw ADC U0-15
-  int TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kADC, 0);
-  int TOF_base_id_wtdc = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, 0);
-  for( int i=0; i<seg_per_canvas; ++i ){
+  Int_t TOF_base_id      = HistMaker::getUniqueID( kTOF, 0, kADC,     seg_offset);
+  Int_t TOF_base_id_wtdc = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, seg_offset);
+  for( Int_t i=0; i<seg_per_canvas; ++i ){
     c->cd(i+1)->SetLogy();
     TH1 *h = (TH1*)GHist::get( TOF_base_id + i );
     if( !h ) continue;
     h->Draw();
+    if( IsAbsentTOF(i) ) t->Draw("same");
     TH1 *hh = (TH1*)GHist::get( TOF_base_id_wtdc + i );
     if( !hh ) continue;
     hh->SetLineColor( kRed );
@@ -1174,15 +1186,22 @@ TOF_ADCU2()
   c->Divide(4, 4);
 
   static const Int_t seg_per_canvas = 16;
+  static const Int_t seg_offset     = 16;
+
+  TLatex *t = new TLatex(.5, .5, "Absent");
+  SetText(t, 22, 0.25);
+  t->SetTextColor(kGray);
+  t->SetTextAngle(25);
 
   // draw ADC U16-31
-  int TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kADC, 16);
-  int TOF_base_id_wtdc = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, 16);
-  for( int i=0; i<seg_per_canvas; ++i ){
+  Int_t TOF_base_id      = HistMaker::getUniqueID( kTOF, 0, kADC,     seg_offset);
+  Int_t TOF_base_id_wtdc = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, seg_offset);
+  for( Int_t i=0; i<seg_per_canvas; ++i ){
     c->cd(i+1)->SetLogy();
     TH1 *h = (TH1*)GHist::get( TOF_base_id + i );
     if( !h ) continue;
     h->Draw();
+    if( TOF_Absent.count(i + seg_offset) ) t->Draw("same");
     TH1 *hh = (TH1*)GHist::get( TOF_base_id_wtdc + i );
     if( !hh ) continue;
     hh->SetLineColor( kRed );
@@ -1200,15 +1219,22 @@ TOF_ADCU3()
   c->Divide(4, 4);
 
   static const Int_t seg_per_canvas = 16;
+  static const Int_t seg_offset     = 32;
+
+  TLatex *t = new TLatex(.5, .5, "Absent");
+  SetText(t, 22, 0.25);
+  t->SetTextColor(kGray);
+  t->SetTextAngle(25);
 
   // draw ADC U32-48
-  int TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kADC, 32);
-  int TOF_base_id_wtdc = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, 32);
-  for( int i=0; i<seg_per_canvas; ++i ){
+  Int_t TOF_base_id      = HistMaker::getUniqueID( kTOF, 0, kADC,     seg_offset);
+  Int_t TOF_base_id_wtdc = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, seg_offset);
+  for( Int_t i=0; i<seg_per_canvas; ++i ){
     c->cd(i+1)->SetLogy();
     TH1 *h = (TH1*)GHist::get( TOF_base_id + i );
     if( !h ) continue;
     h->Draw();
+    if( TOF_Absent.count(i + seg_offset) ) t->Draw("same");
     TH1 *hh = (TH1*)GHist::get( TOF_base_id_wtdc + i );
     if( !hh ) continue;
     hh->SetLineColor( kRed );
@@ -1227,15 +1253,22 @@ TOF_ADCD1()
   c->Divide(4, 4);
 
   static const Int_t seg_per_canvas = 16;
+  static const Int_t seg_offset     =  0;
+
+  TLatex *t = new TLatex(.5, .5, "Absent");
+  SetText(t, 22, 0.25);
+  t->SetTextColor(kGray);
+  t->SetTextAngle(25);
 
   // draw ADC U0-15
-  int TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kADC,NumOfSegTOF +  0);
-  int TOF_base_id_wtdc = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, NumOfSegTOF + 0);
-  for( int i=0; i<seg_per_canvas; ++i ){
+  Int_t TOF_base_id      = HistMaker::getUniqueID( kTOF, 0, kADC,     NumOfSegTOF + seg_offset);
+  Int_t TOF_base_id_wtdc = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, NumOfSegTOF + seg_offset);
+  for( Int_t i=0; i<seg_per_canvas; ++i ){
     c->cd(i+1)->SetLogy();
     TH1 *h = (TH1*)GHist::get( TOF_base_id + i );
     if( !h ) continue;
     h->Draw();
+    if( IsAbsentTOF(i) ) t->Draw("same");
     TH1 *hh = (TH1*)GHist::get( TOF_base_id_wtdc + i );
     if( !hh ) continue;
     hh->SetLineColor( kRed );
@@ -1253,15 +1286,22 @@ TOF_ADCD2()
   c->Divide(4, 4);
 
   static const Int_t seg_per_canvas = 16;
+  static const Int_t seg_offset     = 16;
+
+  TLatex *t = new TLatex(.5, .5, "Absent");
+  SetText(t, 22, 0.25);
+  t->SetTextColor(kGray);
+  t->SetTextAngle(25);
 
   // draw ADC U16-31
-  int TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kADC, NumOfSegTOF + 16);
-  int TOF_base_id_wtdc = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, NumOfSegTOF + 16);
-  for( int i=0; i<seg_per_canvas; ++i ){
+  Int_t TOF_base_id      = HistMaker::getUniqueID( kTOF, 0, kADC,     NumOfSegTOF + seg_offset);
+  Int_t TOF_base_id_wtdc = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, NumOfSegTOF + seg_offset);
+  for( Int_t i=0; i<seg_per_canvas; ++i ){
     c->cd(i+1)->SetLogy();
     TH1 *h = (TH1*)GHist::get( TOF_base_id + i );
     if( !h ) continue;
     h->Draw();
+    if( IsAbsentTOF(i + seg_offset) ) t->Draw("same");
     TH1 *hh = (TH1*)GHist::get( TOF_base_id_wtdc + i );
     if( !hh ) continue;
     hh->SetLineColor( kRed );
@@ -1279,15 +1319,22 @@ TOF_ADCD3()
   c->Divide(4, 4);
 
   static const Int_t seg_per_canvas = 16;
+  static const Int_t seg_offset     = 32;
+
+  TLatex *t = new TLatex(.5, .5, "Absent");
+  SetText(t, 22, 0.25);
+  t->SetTextColor(kGray);
+  t->SetTextAngle(25);
 
   // draw ADC U32-48
-  int TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kADC, NumOfSegTOF + 32);
-  int TOF_base_id_wtdc = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, NumOfSegTOF + 32);
-  for( int i=0; i<seg_per_canvas; ++i ){
+  Int_t TOF_base_id      = HistMaker::getUniqueID( kTOF, 0, kADC,     NumOfSegTOF + seg_offset);
+  Int_t TOF_base_id_wtdc = HistMaker::getUniqueID( kTOF, 0, kADCwTDC, NumOfSegTOF + seg_offset);
+  for( Int_t i=0; i<seg_per_canvas; ++i ){
     c->cd(i+1)->SetLogy();
     TH1 *h = (TH1*)GHist::get( TOF_base_id + i );
     if( !h ) continue;
     h->Draw();
+    if( IsAbsentTOF(i + seg_offset) ) t->Draw("same");
     TH1 *hh = (TH1*)GHist::get( TOF_base_id_wtdc + i );
     if( !hh ) continue;
     hh->SetLineColor( kRed );
@@ -1309,15 +1356,22 @@ TOF_TDCU1()
   c->Divide(4, 4);
 
   static const Int_t seg_per_canvas = 16;
+  static const Int_t seg_offset     =  0;
+
+  TLatex *t = new TLatex(.5, .5, "Absent");
+  SetText(t, 22, 0.25);
+  t->SetTextColor(kGray);
+  t->SetTextAngle(25);
 
   // draw TDC U0-15
-  int TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kTDC, 0);
+  Int_t TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kTDC, seg_offset);
 
-  for( int i=0; i<seg_per_canvas; ++i ){
+  for( Int_t i=0; i<seg_per_canvas; ++i ){
     c->cd(i+1)->SetLogy();
     TH1 *h = (TH1*)GHist::get( TOF_base_id + i );
     if( !h ) continue;
     h->Draw();
+    if( IsAbsentTOF(i + seg_offset) ) t->Draw("same");
   }
   c->Update();
   return c;
@@ -1331,15 +1385,22 @@ TOF_TDCU2()
   c->Divide(4, 4);
 
   static const Int_t seg_per_canvas = 16;
+  static const Int_t seg_offset     = 16;
+
+  TLatex *t = new TLatex(.5, .5, "Absent");
+  SetText(t, 22, 0.25);
+  t->SetTextColor(kGray);
+  t->SetTextAngle(25);
 
   // draw TDC U16-31
-  int TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kTDC, 16);
+  Int_t TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kTDC, seg_offset);
 
-  for( int i=0; i<seg_per_canvas; ++i ){
+  for( Int_t i=0; i<seg_per_canvas; ++i ){
     c->cd(i+1)->SetLogy();
     TH1 *h = (TH1*)GHist::get( TOF_base_id + i );
     if( !h ) continue;
     h->Draw();
+    if( IsAbsentTOF(i + seg_offset) ) t->Draw("same");
   }
   c->Update();
   return c;
@@ -1353,15 +1414,22 @@ TOF_TDCU3()
   c->Divide(4, 4);
 
   static const Int_t seg_per_canvas = 16;
+  static const Int_t seg_offset     = 32;
+
+  TLatex *t = new TLatex(.5, .5, "Absent");
+  SetText(t, 22, 0.25);
+  t->SetTextColor(kGray);
+  t->SetTextAngle(25);
 
   // draw TDC U32-48
-  int TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kTDC, 32);
+  Int_t TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kTDC, seg_offset);
 
-  for( int i=0; i<seg_per_canvas; ++i ){
+  for( Int_t i=0; i<seg_per_canvas; ++i ){
     c->cd(i+1)->SetLogy();
     TH1 *h = (TH1*)GHist::get( TOF_base_id + i );
     if( !h ) continue;
     h->Draw();
+    if( IsAbsentTOF(i + seg_offset) ) t->Draw("same");
   }
   c->Update();
   return c;
@@ -1376,15 +1444,22 @@ TOF_TDCD1()
   c->Divide(4, 4);
 
   static const Int_t seg_per_canvas = 16;
+  static const Int_t seg_offset     =  0;
+
+  TLatex *t = new TLatex(.5, .5, "Absent");
+  SetText(t, 22, 0.25);
+  t->SetTextColor(kGray);
+  t->SetTextAngle(25);
 
   // draw TDC U0-15
-  int TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kTDC,NumOfSegTOF +  0);
+  Int_t TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kTDC, NumOfSegTOF + seg_offset);
 
-  for( int i=0; i<seg_per_canvas; ++i ){
+  for( Int_t i=0; i<seg_per_canvas; ++i ){
     c->cd(i+1)->SetLogy();
     TH1 *h = (TH1*)GHist::get( TOF_base_id + i );
     if( !h ) continue;
     h->Draw();
+    if( IsAbsentTOF(i + seg_offset) ) t->Draw("same");
   }
   c->Update();
   return c;
@@ -1398,15 +1473,22 @@ TOF_TDCD2()
   c->Divide(4, 4);
 
   static const Int_t seg_per_canvas = 16;
+  static const Int_t seg_offset     = 16;
+
+  TLatex *t = new TLatex(.5, .5, "Absent");
+  SetText(t, 22, 0.25);
+  t->SetTextColor(kGray);
+  t->SetTextAngle(25);
 
   // draw TDC U16-31
-  int TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kTDC, NumOfSegTOF + 16);
+  Int_t TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kTDC, NumOfSegTOF + seg_offset);
 
-  for( int i=0; i<seg_per_canvas; ++i ){
+  for( Int_t i=0; i<seg_per_canvas; ++i ){
     c->cd(i+1)->SetLogy();
     TH1 *h = (TH1*)GHist::get( TOF_base_id + i );
     if( !h ) continue;
     h->Draw();
+    if( IsAbsentTOF(i + seg_offset) ) t->Draw("same");
   }
   c->Update();
   return c;
@@ -1420,15 +1502,22 @@ TOF_TDCD3()
   c->Divide(4, 4);
 
   static const Int_t seg_per_canvas = 16;
+  static const Int_t seg_offset     = 32;
+
+  TLatex *t = new TLatex(.5, .5, "Absent");
+  SetText(t, 22, 0.25);
+  t->SetTextColor(kGray);
+  t->SetTextAngle(25);
 
   // draw TDC U32-48
-  int TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kTDC, NumOfSegTOF + 32);
+  Int_t TOF_base_id = HistMaker::getUniqueID( kTOF, 0, kTDC, NumOfSegTOF + seg_offset);
 
-  for( int i=0; i<seg_per_canvas; ++i ){
+  for( Int_t i=0; i<seg_per_canvas; ++i ){
     c->cd(i+1)->SetLogy();
     TH1 *h = (TH1*)GHist::get( TOF_base_id + i );
     if( !h ) continue;
     h->Draw();
+    if( IsAbsentTOF(i + seg_offset) ) t->Draw("same");
   }
   c->Update();
   return c;
