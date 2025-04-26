@@ -1667,6 +1667,38 @@ CFTHighGain2D_check1()
     TH1 *h = GHist::get(base_id+l);
     if(!h) continue;
     h->Draw("colz");
+
+    // missing channel
+    if(l==0){
+      TLine *l1 = new TLine(417.5, 0, 417.5, 4000);
+      l1->SetLineColor(kRed);
+      l1->Draw("same");
+    }else if(l==2){
+      TLine *l1 = new TLine(10.5, 0, 10.5, 4000);
+      l1->SetLineColor(kRed);
+      l1->Draw("same");
+      TLine *l2 = new TLine(158.5, 0, 158.5, 4000);
+      l2->SetLineColor(kRed);
+      l2->Draw("same");
+      TLine *l3 = new TLine(412.5, 0, 412.5, 4000);
+      l3->SetLineColor(kRed);
+      l3->Draw("same");
+      TLine *l4 = new TLine(462.5, 0, 462.5, 4000);
+      l4->SetLineColor(kRed);
+      l4->Draw("same");
+    }else if(l==3){
+      TLine *l1 = new TLine(64.5, 0, 64.5, 4000);
+      l1->SetLineColor(kRed);
+      l1->Draw("same");
+      TLine *l2 = new TLine(384.5, 0, 384.5, 4000);
+      l2->SetLineColor(kRed);
+      l2->Draw("same");
+      TLine *l3 = new TLine(386.5, 0, 386.5, 4000);
+      l3->SetLineColor(kRed);
+      l3->Draw("same");
+    }
+
+
   }
   return c1;
 }
@@ -1685,6 +1717,36 @@ CFTHighGain2D_check2()
     TH1 *h = GHist::get(base_id+l+4);
     if(!h) continue;
     h->Draw("colz");
+
+    // missing channel
+    if(l==1){
+      TLine *l1 = new TLine(739.5, 0, 739.5, 4000);
+      l1->SetLineColor(kRed);
+      l1->Draw("same");
+    }else if(l==2){
+      TLine *l1 = new TLine(0.5, 0, 0.5, 4000);
+      l1->SetLineColor(kRed);
+      l1->Draw("same");
+      TLine *l2 = new TLine(60.5, 0, 60.5, 4000);
+      l2->SetLineColor(kRed);
+      l2->Draw("same");
+      TLine *l3 = new TLine(223.5, 0, 223.5, 4000);
+      l3->SetLineColor(kRed);
+      l3->Draw("same");
+      TLine *l4 = new TLine(491.5, 0, 491.5, 4000);
+      l4->SetLineColor(kRed);
+      l4->Draw("same");
+    }else if(l==3){
+      TLine *l1 = new TLine(89.5, 0, 89.5, 4000);
+      l1->SetLineColor(kRed);
+      l1->Draw("same");
+      TLine *l2 = new TLine(93.5, 0, 93.5, 4000);
+      l2->SetLineColor(kRed);
+      l2->Draw("same");
+      TLine *l3 = new TLine(431.5, 0, 431.5, 4000);
+      l3->SetLineColor(kRed);
+      l3->Draw("same");
+    }
   }
   return c1;
 }
@@ -2156,11 +2218,17 @@ PiIDADC2DHitMulti()
   int base_id_m = HistMaker::getUniqueID(kPiID, 0, kMulti,  1);
 
   TH1 *h;
+  TLine *l1;
   for(Int_t i=0; i<2; ++i){
     c1->cd(i+1);
     h = GHist::get(base_id+i*10);
     if(!h) continue;
     h->Draw();
+
+    // missing channel
+    l1 = new TLine(2.5, 0, 2.5, 4000);
+    l1->SetLineColor(kRed);
+    l1->Draw("same");
   }
 
   c1->cd(3);
