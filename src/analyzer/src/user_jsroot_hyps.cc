@@ -56,7 +56,8 @@
 #define DEBUG    0
 #define FLAG_DAQ 1
 #define TAG_PL_ADCNo 0
-
+#define TOF_indiv_TDC 1
+//individual KURAMA LEPS for ADC w/TDC
 
 namespace
 {
@@ -1559,8 +1560,8 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     static const auto tdc_id    = gUnpacker.get_data_id("TOF", "tdc");
     //static const auto tdc_min   = gUser.GetParameter("TdcTOF", 0);
     //static const auto tdc_max   = gUser.GetParameter("TdcTOF", 1);
-    Int_t tdc_min = 0;
-    Int_t tdc_max = 0;
+
+#if TOF_indiv_TDC
     static const auto tdc_min_ku   = gUser.GetParameter("TdcTOF_KURAMA_U", 0);
     static const auto tdc_min_kd   = gUser.GetParameter("TdcTOF_KURAMA_D", 0);
     static const auto tdc_min_lu   = gUser.GetParameter("TdcTOF_LEPS_U", 0);
@@ -1569,6 +1570,14 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     static const auto tdc_max_kd   = gUser.GetParameter("TdcTOF_KURAMA_D", 1);
     static const auto tdc_max_lu   = gUser.GetParameter("TdcTOF_LEPS_U", 1);
     static const auto tdc_max_ld   = gUser.GetParameter("TdcTOF_LEPS_D", 1);
+    Int_t tdc_min = 0;
+    Int_t tdc_max = 0;
+
+#else
+    static const auto tdc_min   = gUser.GetParameter("TdcTOF", 0);
+    static const auto tdc_max   = gUser.GetParameter("TdcTOF", 1);
+#endif //TOF_indiv_TDC
+
     static const auto adc_hid   = gHist.getSequentialID(kTOF, 0, kADC,     0);
     static const auto tdc_hid   = gHist.getSequentialID(kTOF, 0, kTDC,     0);
     static const auto awt_hid   = gHist.getSequentialID(kTOF, 0, kADCwTDC, 0);
@@ -1595,6 +1604,8 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	    /*   if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
 	      hit_flag[seg][ud] = 1;
 	      }*/
+
+#if TOF_indiv_TDC
 	    if (seg<12 || seg>36) { // LEPS TOF
 	      if (ud == kU){
 		tdc_min = tdc_min_lu;
@@ -1612,6 +1623,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 		tdc_max = tdc_max_kd;
 	      }
 	    }
+#endif //TOF_indiv_TDC
 	    if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
 	      hit_flag[seg][ud] = 1;
 	    }
