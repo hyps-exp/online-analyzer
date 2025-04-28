@@ -1763,15 +1763,15 @@ CFTHighGain2D_check1()
       l1->SetLineColor(kRed);
       l1->Draw("same");
     }else if(l==2){
-      TLine *l1 = new TLine(10.5, 0, 10.5, 4000);
-      l1->SetLineColor(kRed);
-      l1->Draw("same");
+      // TLine *l1 = new TLine(10.5, 0, 10.5, 4000);
+      // l1->SetLineColor(kRed);
+      // l1->Draw("same");
       TLine *l2 = new TLine(158.5, 0, 158.5, 4000);
       l2->SetLineColor(kRed);
       l2->Draw("same");
-      TLine *l3 = new TLine(412.5, 0, 412.5, 4000);
-      l3->SetLineColor(kRed);
-      l3->Draw("same");
+      // TLine *l3 = new TLine(412.5, 0, 412.5, 4000);
+      // l3->SetLineColor(kRed);
+      // l3->Draw("same");
       TLine *l4 = new TLine(462.5, 0, 462.5, 4000);
       l4->SetLineColor(kRed);
       l4->Draw("same");
@@ -1822,9 +1822,9 @@ CFTHighGain2D_check2()
       TLine *l3 = new TLine(223.5, 0, 223.5, 4000);
       l3->SetLineColor(kRed);
       l3->Draw("same");
-      TLine *l4 = new TLine(491.5, 0, 491.5, 4000);
-      l4->SetLineColor(kRed);
-      l4->Draw("same");
+      // TLine *l4 = new TLine(491.5, 0, 491.5, 4000);
+      // l4->SetLineColor(kRed);
+      // l4->Draw("same");
     }else if(l==3){
       TLine *l1 = new TLine(89.5, 0, 89.5, 4000);
       l1->SetLineColor(kRed);
