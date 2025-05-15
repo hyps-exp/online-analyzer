@@ -249,6 +249,10 @@ process_event(void)
 {
   gSystem->ProcessEvents();
   static Int_t run_number = -1;
+  static Bool_t ADCwTDC[2];
+  for(Int_t i=0; i<2; i++){
+    ADCwTDC[i]=true;
+  }
   {
     if(run_number != gUnpacker.get_root()->get_run_number()){
       if(run_number != -1)
@@ -712,6 +716,11 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	    hptr_array[tdc_hid + lr*NumOfSegT0 + seg]->Fill(tdc);
 	    if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
 	      hit_flag[seg][lr] = 1;
+	      if(lr==0 && adc<90){
+		ADCwTDC[0] = false;
+	      }else if(lr==1 && adc<110){
+		ADCwTDC[0] = false;
+	      }
 	    }
 	  }
 	}
@@ -1626,6 +1635,11 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif //TOF_indiv_TDC
 	    if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
 	      hit_flag[seg][ud] = 1;
+	      if(ud==0 && adc<300 && seg==20){
+		ADCwTDC[1] = false;
+	      }else if(ud==1 && adc<150 && seg==34){
+		ADCwTDC[1] = false;
+	      }
 	    }
 	  }
 	}
@@ -2645,6 +2659,25 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
   //     gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/tagslip.wav\" &");
   //     prev_time = curr_time;
   //   }
+  // }
+
+  // if(!gUnpacker.is_good()){
+  //   std::cout << "[Warning] adc slip." << std::endl;
+  //   static const TString host(gSystem->Getenv("HOSTNAME"));
+  // static auto prev_time = std::time(0);
+  // auto        curr_time = std::time(0);
+  // if(host.Contains("online") &&
+  //    event_number > 1 && curr_time - prev_time > 3){
+  if(!ADCwTDC[0]){
+    std::cout << "[Warning] adc slip (T0)." << std::endl;
+    std::cout << "exec adcslip sound!" << std::endl;
+    gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/ADC_slip.wav\" &");
+    // prev_time_t0 = curr_time_t0;
+  }else if(!ADCwTDC[1]){
+    std::cout << "[Warning] adc slip (TO F20U or 34D)." << std::endl;
+    std::cout << "exec adcslip sound!" << std::endl;
+    gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/ADC_slip.wav\" &");
+  }
   // }
 
   gSystem->ProcessEvents();
