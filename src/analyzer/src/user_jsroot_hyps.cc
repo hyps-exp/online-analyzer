@@ -2668,16 +2668,16 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
   // auto        curr_time = std::time(0);
   // if(host.Contains("online") &&
   //    event_number > 1 && curr_time - prev_time > 3){
-  if(!ADCwTDC[0]){
-    std::cout << "[Warning] adc slip (T0)." << std::endl;
-    std::cout << "exec adcslip sound!" << std::endl;
-    gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/ADC_slip.wav\" &");
-    // prev_time_t0 = curr_time_t0;
-  }else if(!ADCwTDC[1]){
-    std::cout << "[Warning] adc slip (TO F20U or 34D)." << std::endl;
-    std::cout << "exec adcslip sound!" << std::endl;
-    gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/ADC_slip.wav\" &");
-  }
+  // if(!ADCwTDC[0]){
+  //   std::cout << "[Warning] adc slip (T0)." << std::endl;
+  //   std::cout << "exec adcslip sound!" << std::endl;
+  //   // gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/ADC_slip.wav\" &");
+  //   // prev_time_t0 = curr_time_t0;
+  // }else if(!ADCwTDC[1]){
+  //   std::cout << "[Warning] adc slip (TO F20U or 34D)." << std::endl;
+  //   std::cout << "exec adcslip sound!" << std::endl;
+  //   // gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/ADC_slip.wav\" &");
+  // }
   // }
 
   gSystem->ProcessEvents();
