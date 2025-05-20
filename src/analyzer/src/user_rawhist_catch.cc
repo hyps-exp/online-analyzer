@@ -57,7 +57,7 @@ namespace analyzer
   namespace
   {
     const UserParamMan& gUser = UserParamMan::GetInstance();
-    const HodoParamMan& gHodoParam = HodoParamMan::GetInstance();    
+    const HodoParamMan& gHodoParam = HodoParamMan::GetInstance();
     std::vector<TH1*> hptr_array;
     bool flag_event_cut = false;
     int event_cut_factor = 1; // for fast semi-online analysis
@@ -114,7 +114,7 @@ process_begin( const std::vector<std::string>& argv )
   tab_hist->Add(gHist.createCFT());
   tab_hist->Add(gHist.createCatchBGO());
   tab_hist->Add(gHist.createPiID());
-  //tab_hist->Add(gHist.createCorrelation_catch());
+  tab_hist->Add(gHist.createCorrelation_catch());
 
   // Set histogram pointers to the vector sequentially.
   // This vector contains both TH1 and TH2.
