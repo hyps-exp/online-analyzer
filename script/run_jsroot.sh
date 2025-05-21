@@ -3,47 +3,58 @@
 . $(dirname $(readlink -f $0))/setebhost
 program=jsroot_hyps
 
-#_______________________________________________________________________________
-# if [ -z $ROOTSYS ]; then
-#     echo "ROOTSYS must be set"
-#     exit 1
-# fi
-# thisroot_sh=$ROOTSYS/bin/thisroot.sh
-
-#_______________________________________________________________________________
 top_dir=$(dirname $(readlink -f $0))/..
 server=$top_dir/bin/$program
 
 conf=/misc/software/param/pro/conf/analyzer_hyps_jsroot.conf
-if [ -z "$1" ]; then
+
+#_____ Check Online or SemiOnline _____________________________________________
+if [ $# -eq 0 ]; then
     data=${ebhost}:8901
-else
-    data=$top_dir/data/run$1.dat
+    port=9090
+    name=${program}
+elif [ $# -eq 1 ]; then
+    echo -ne "\033[1;31m [ERROR] \033[0m"
+    echo "Port Number should be specified for SemiOnline"
+    exit 1
+elif [ $# -eq 2 ]; then
+    #--- Check if the port is used
+    port_check=$(ss -tuln | grep -E "\:$2(\s|$)" > /dev/null; echo $?)
+    if [ $port_check -eq 1 ]; then
+	run_num=$(printf "%05d" "$1")
+	data=/misc/rawdata/run${run_num}.dat
+	#--- Check if rawdata exists
+	if [ -e $data ]; then
+	    port=$2
+	    name=semi_${run_num}_${program}
+	else
+	    echo -ne "\033[1;31m [ERROR] \033[0m"
+	    echo ""$data" does not exist"
+	    exit 1
+	fi
+    elif [ $port_check -eq 0 ]; then
+	echo -ne "\033[1;31m [ERROR] \033[0m"
+	echo "Port "$2" is already used"
+	exit 1
+    else
+	echo -ne "\033[1;31m [ERROR] \033[0m"
+	echo "Something wrong"
+	exit 1
+    fi
+elif [ $# -ge 3 ]; then
+    echo -ne "\033[1;31m [ERROR] \033[0m"
+    echo "Too many arguments"
+    exit 1
 fi
 
-# if [ -z "$1" ]; then
-#     conf=/param/conf/analyzer.conf
-# else
-#     conf=$1
-# fi
-# if [ -z "$2" ]; then
-#     data=eb0:8901
-# else
-#     data=$2
-# fi
-
-#_______________________________________________________________________________
-# screen -AmdS K18OnlineServer \
-#     sh -c ". $thisroot_sh && while true; do $server $conf $data; done"
-# screen -AmdS K18OnlineServer \
-#     sh -c "while true; do $server $conf $data 2>/dev/null; done"
-name=$program
-session=`tmux ls | grep $name`
+#_____ Launch the HTTP server _________________________________________________
+session=`tmux ls 2>/dev/null | grep $name`
 if [ -z "$session" ]; then
-    echo "create new session $name"
+    echo -ne "\033[1;36m [NOTICE] \033[0m"
+    echo "Create new session $name"
     tmux new-session -d -s $name \
-	"while true; do $server $conf $data 2>/dev/null; done"
+	 "while true; do $server $conf $data $port 2>/dev/null; done"
 else
-    echo "reattach session $name"
-    tmux a -t $name
+    echo -ne "\033[1;33m [WARNING] \033[0m"
+    echo "Run "$1" is already analyzing."
 fi
