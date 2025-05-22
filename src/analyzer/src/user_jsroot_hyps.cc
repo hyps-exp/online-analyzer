@@ -263,30 +263,31 @@ process_event(void)
   {
     if(run_number != gUnpacker.get_root()->get_run_number()){
       if(run_number != -1){
-	if(port == 9090) gHttp.MakePs(run_number);
+	gHttp.MakePs(run_number);
+	// if(port == 9090) gHttp.MakePs(run_number);
 	for(Int_t i=0, n=hptr_array.size(); i<n; ++i){
 	  hptr_array[i]->Reset();
 	}
       }
       run_number = gUnpacker.get_root()->get_run_number();
-      last_saved_event_number = -1;
-      first_event_number = -1;
+      // last_saved_event_number = -1;
+      // first_event_number = -1;
     }
   }
   auto event_number = gUnpacker.get_event_number();
-  {
-    if(port == 9092){
-      if(first_event_number==-1){
-	first_event_number = event_number;
-      }
-      if(event_number >= threshould && event_number - first_event_number >= threshould){
-	if(last_saved_event_number == -1 || event_number - last_saved_event_number >= threshould){
-	  gHttp.MakePsPre(run_number);
-	  last_saved_event_number = event_number;
-	}
-      }
-    }
-  }
+  // {
+  //   if(port == 9092){
+  //     if(first_event_number==-1){
+  // 	first_event_number = event_number;
+  //     }
+  //     if(event_number >= threshould && event_number - first_event_number >= threshould){
+  // 	if(last_saved_event_number == -1 || event_number - last_saved_event_number >= threshould){
+  // 	  gHttp.MakePsPre(run_number);
+  // 	  last_saved_event_number = event_number;
+  // 	}
+  //     }
+  //   }
+  // }
   { ///// Tag Checker
     static const auto& gConfig = GConfig::get_instance();
     static const TString tout(gConfig.get_control_param("tout"));
