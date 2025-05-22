@@ -2333,8 +2333,8 @@ TList* HistMaker::createTOF( Bool_t flag_ps )
       }
 
       sub_dir->Add(createTH1(target_id + i, title,
-			     2500, 170000, 270000,
-			     // 50000, 0, 2000000,
+			     // 2500, 170000, 270000,
+			     50000, 0, 2000000,
 			     "TDC [ch]", ""));
     }
 
@@ -2975,7 +2975,7 @@ TList* HistMaker::createBGO( Bool_t flag_ps )
       Int_t seg = i+1; // 1 origin
       title = Form("%s_%s%d", nameDetector, nameSubDir, seg);
       sub_dir->Add(createTH1(target_id + i+1, title, // 1 origin
-  			     1000, 0, 200000,
+  			     1000, 0, 20000,
   			     "ADC [ch]", ""));
     }
 
@@ -3136,8 +3136,11 @@ TList* HistMaker::createCatchBGO( Bool_t flag_ps )
     for(Int_t i = 0; i<NumOfSegBGO; ++i){
       Int_t seg = i+1;
       TString title = Form("%s_%s_%d", nameDetector, nameSubDir, seg);
+      Int_t range = 100000;
+      if(i==14 || i==15)
+	range = 1000000;
       sub_dir->Add(createTH1(target_id + i+1, title, // 1 origin
-			     1000, 0, 100000, "[ch]"));
+			     1000, 0, range, "[ch]"));
     }
     top_dir->Add(sub_dir);
   }
@@ -3152,8 +3155,11 @@ TList* HistMaker::createCatchBGO( Bool_t flag_ps )
     for(Int_t i = 0; i<NumOfSegBGO; ++i){
       Int_t seg = i+1;
       TString title = Form("%s_%s_%d", nameDetector, nameSubDir, seg);
+      Int_t range = 100000;
+      if(i==14 || i==15)
+	range = 2000000;
       sub_dir->Add(createTH1(target_id + i+1, title, // 1 origin
-			     1000, 0, 100000, "[ch]"));
+			     1000, 0, range, "[ch]"));
     }
     top_dir->Add(sub_dir);
   }

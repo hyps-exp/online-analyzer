@@ -269,14 +269,18 @@ process_event( void )
 	unsigned int fadc = gUnpacker.get(k_device, 0, seg, 0, k_fadc ,i);
 	if( fadc == 0xffff )
 	  continue;
+
 	if( ped == 0 && fadc>14000)
 	  ped = fadc;
 	hptr_array[bgo_fa_id + seg]->Fill( i+1, fadc);
 	if (ped>0)
 	  de += (ped - fadc);
       }
-      hptr_array[bgo_a_id + seg]->Fill( de );
-      hptr_array[bgo_a2d_id]->Fill( seg, de );
+
+      if (ped>0) {
+	hptr_array[bgo_a_id + seg]->Fill( de );
+	hptr_array[bgo_a2d_id]->Fill( seg, de );
+      }
       // TDC && Hit pattern && multiplicity
       unsigned int nhit_l = gUnpacker.get_entries(k_device, 0, seg, 0, k_leading);
 //      unsigned int nhit_t = gUnpacker.get_entries(k_device, 0, seg, 0, k_trailing);

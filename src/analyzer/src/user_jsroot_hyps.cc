@@ -77,7 +77,8 @@ const auto& gHodo     = HodoParamMan::GetInstance();
 
 namespace analyzer
 {
-
+static Int_t port;
+static Int_t threshould;
 //____________________________________________________________________________
 int
 process_begin(const std::vector<std::string>& argv)
@@ -103,9 +104,13 @@ process_begin(const std::vector<std::string>& argv)
 
   if(!gConfMan.IsGood()) return -1;
 
-  Int_t port = 9090;
-  if(argv.size()==4)
+  // Int_t port = 9090;
+  port = 9090;
+  threshould = 100000;
+  if(argv.size()>=4){
     port = TString(argv[3]).Atoi();
+    threshould = TString(argv[4]).Atoi();
+  }
 
   gHttp.SetPort(port);
   gHttp.Open();
@@ -249,22 +254,39 @@ process_event(void)
 {
   gSystem->ProcessEvents();
   static Int_t run_number = -1;
+  static Int_t first_event_number = -1;
+  static Int_t last_saved_event_number = -1;
   static Bool_t ADCwTDC[2];
   for(Int_t i=0; i<2; i++){
     ADCwTDC[i]=true;
   }
   {
     if(run_number != gUnpacker.get_root()->get_run_number()){
-      if(run_number != -1)
-	gHttp.MakePs(run_number);
-      for(Int_t i=0, n=hptr_array.size(); i<n; ++i){
-	hptr_array[i]->Reset();
+      if(run_number != -1){
+	if(port == 9090) gHttp.MakePs(run_number);
+	for(Int_t i=0, n=hptr_array.size(); i<n; ++i){
+	  hptr_array[i]->Reset();
+	}
       }
       run_number = gUnpacker.get_root()->get_run_number();
+      last_saved_event_number = -1;
+      first_event_number = -1;
     }
   }
   auto event_number = gUnpacker.get_event_number();
-
+  {
+    if(port == 9092){
+      if(first_event_number==-1){
+	first_event_number = event_number;
+      }
+      if(event_number >= threshould && event_number - first_event_number >= threshould){
+	if(last_saved_event_number == -1 || event_number - last_saved_event_number >= threshould){
+	  gHttp.MakePsPre(run_number);
+	  last_saved_event_number = event_number;
+	}
+      }
+    }
+  }
   { ///// Tag Checker
     static const auto& gConfig = GConfig::get_instance();
     static const TString tout(gConfig.get_control_param("tout"));
@@ -716,11 +738,11 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	    hptr_array[tdc_hid + lr*NumOfSegT0 + seg]->Fill(tdc);
 	    if (tdc_min<tdc && tdc<tdc_max && adc > 0) {
 	      hit_flag[seg][lr] = 1;
-	      if(lr==0 && adc<90){
-		ADCwTDC[0] = false;
-	      }else if(lr==1 && adc<110){
-		ADCwTDC[0] = false;
-	      }
+	      // if(lr==0 && adc<80){
+	      // 	ADCwTDC[0] = false;
+	      // }else if(lr==1 && adc<80){
+	      // 	ADCwTDC[0] = false;
+	      // }
 	    }
 	  }
 	}
@@ -2160,8 +2182,10 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	if (ped>0)
 	  de += (ped - fadc);
       }
-      hptr_array[bgo_a_id + seg]->Fill( de );
-      hptr_array[bgo_a2d_id]->Fill( seg, de );
+      if(ped>0){
+	hptr_array[bgo_a_id + seg]->Fill( de );
+	hptr_array[bgo_a2d_id]->Fill( seg, de );
+      }
       // TDC && Hit pattern && multiplicity
       unsigned int nhit_l = gUnpacker.get_entries(k_device, 0, seg, 0, k_leading);
 //      unsigned int nhit_t = gUnpacker.get_entries(k_device, 0, seg, 0, k_trailing);
@@ -2200,8 +2224,10 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
         }
 	if( is_hit ){
 	  de_array.at(seg) = de;
-	  hptr_array[bgo_awt_id + seg]->Fill( de );
-	  hptr_array[bgo_a2d_id + 1]->Fill( seg, de );
+	  if(ped>0){
+	    hptr_array[bgo_awt_id + seg]->Fill( de );
+	    hptr_array[bgo_a2d_id + 1]->Fill( seg, de );
+	  }
 	}
       } else {
 	de_array.at(seg) = 0;
@@ -2674,7 +2700,7 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
   //   // gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/ADC_slip.wav\" &");
   //   // prev_time_t0 = curr_time_t0;
   // }else if(!ADCwTDC[1]){
-  //   std::cout << "[Warning] adc slip (TO F20U or 34D)." << std::endl;
+  //   std::cout << "[Warning] adc slip (TOF 20U or 34D)." << std::endl;
   //   std::cout << "exec adcslip sound!" << std::endl;
   //   // gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/ADC_slip.wav\" &");
   // }
