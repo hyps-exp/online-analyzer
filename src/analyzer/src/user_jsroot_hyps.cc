@@ -107,7 +107,9 @@ process_begin(const std::vector<std::string>& argv)
   // Int_t port = 9090;
   port = 9090;
   threshould = 100000;
-  if(argv.size()>=4){
+  if(argv.size()==4){
+    port = TString(argv[3]).Atoi();
+  }else if(argv.size()==5){
     port = TString(argv[3]).Atoi();
     threshould = TString(argv[4]).Atoi();
   }
