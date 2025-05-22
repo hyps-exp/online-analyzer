@@ -223,7 +223,6 @@ all::	$(my_tgt_skeleton) $(my_tgt_udebug) $(my_tgt_tag) \
 	$(my_tgt_scaler_daq) \
 	$(my_tgt_jsroot_hyps) \
 	$(my_tgt_jsroot_scaler)\
-        $(my_tgt_psmaker_hyps) \
 	$(my_tgt_vme01debug) \
 	$(core_dict_lib)
 #	$(my_old_tgt)
@@ -266,7 +265,8 @@ my_old_tgt	:= $(my_tgt_rawhist_e13) $(my_tgt_beamprofile_e13) \
 	$(my_tgt_jsroot_beammonitor) \
 	$(my_tgt_jsroot_totmonitor) \
 	$(my_tgt_ktune_y2020) \
-	$(my_tgt_ktune_e70)
+	$(my_tgt_ktune_e70) \
+        $(my_tgt_psmaker_hyps)
 
 #______________________________________________________________________________
 $(my_dir)/dict/%_Dict.cc: $(my_dir)/include/%.hh $(my_dir)/linkdef/%_LinkDef.hh
