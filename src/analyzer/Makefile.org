@@ -93,6 +93,9 @@ my_tgt_rawhist_vmeeasiroc	:= $(bin_dir)/raw_hist_vmeeasiroc
 my_obj_rawhist_hyps	:= $(core_obj) user_rawhist_hyps.o $(gui_obj)
 my_tgt_rawhist_hyps	:= $(bin_dir)/raw_hist_hyps
 
+my_obj_psmaker_hyps	:= $(core_obj) user_psmaker_hyps.o $(gui_obj)
+my_tgt_psmaker_hyps	:= $(bin_dir)/raw_psmaker_hyps
+
 my_obj_mstmonitor_e40	:= $(core_obj) user_mstmonitor_e40.o
 my_tgt_mstmonitor_e40	:= $(bin_dir)/mstmonitor_e40
 
@@ -100,7 +103,7 @@ my_obj_mstmonitorjs_e40	:= $(core_obj) user_mstmonitorjs_e40.o
 my_tgt_mstmonitorjs_e40	:= $(bin_dir)/mstmonitorjs_e40
 
 my_obj_vme01debug	:= $(core_obj) user_vme01debug.o
-my_tgt_vme01debug	:= $(bin_dir)/raw_vme01debug
+my_tgt_vme01debug	:= $(bin_dir)/vme01debug
 
 my_obj_jsroot_e07	:= $(core_obj) user_jsroot_e07.o
 my_tgt_jsroot_e07	:= $(bin_dir)/jsroot_e07
@@ -219,8 +222,9 @@ all::	$(my_tgt_skeleton) $(my_tgt_udebug) $(my_tgt_tag) \
 	$(my_tgt_rawhist_hyps) \
 	$(my_tgt_scaler_daq) \
 	$(my_tgt_jsroot_hyps) \
-	$(my_tgt_jsroot_scaler)
-#	$(my_tgt_vme01debug) \
+	$(my_tgt_jsroot_scaler)\
+        $(my_tgt_psmaker_hyps) \
+	$(my_tgt_vme01debug) \
 	$(core_dict_lib)
 #	$(my_old_tgt)
 
@@ -411,6 +415,14 @@ my_obj_rawhist_hyps	:= $(my_obj_rawhist_hyps) \
 my_lib_rawhist_hyps	:= libmyrawhist_hyps.so
 $(eval $(call make-lib,$(my_lib_rawhist_hyps),$(my_obj_rawhist_hyps)))
 $(eval $(call make-gui-target,$(my_tgt_rawhist_hyps),$(my_lib_rawhist_hyps)))
+
+#______________________________________________________________________________
+my_obj_psmaker_hyps	:= $(addprefix $(my_dir)/src/,$(my_obj_psmaker_hyps))
+my_obj_psmaker_hyps	:= $(my_obj_psmaker_hyps) \
+		$(my_dir)/dict/GuiPs_Dict.o
+my_lib_psmaker_hyps	:= libmypsmaker_hyps.so
+$(eval $(call make-lib,$(my_lib_psmaker_hyps),$(my_obj_psmaker_hyps)))
+$(eval $(call make-gui-target,$(my_tgt_psmaker_hyps),$(my_lib_psmaker_hyps)))
 
 #______________________________________________________________________________
 my_obj_vme01debug	:= $(addprefix $(my_dir)/src/,$(my_obj_vme01debug))
