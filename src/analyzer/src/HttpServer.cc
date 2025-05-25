@@ -112,6 +112,60 @@ HttpServer::MakePs(Int_t runno)
 
 //_____________________________________________________________________________
 void
+HttpServer::MakePsPre(Int_t runno)
+{
+  // static auto& gJsRoot = analyzer::JsRootUpdater::getInstance();
+  // gSystem->Sleep(5000);
+  // const auto& g_unpacker = hddaq::unpacker::GUnpacker::get_instance();
+  // Int_t runno = g_unpacker.get_root()->get_run_number();
+  TString ps_path(Form("/home/sks/user/haratani/psfile/now/pdf/auto00000.pdf"));
+  std::ifstream comment_txt("/misc/rawdata/misc/comment.txt");
+  TString line;
+  TString comment;
+  while(line.ReadLine(comment_txt)){
+    if(line.Contains("START") && line.Contains(Form("%05d", runno))){
+      auto tokens = line.Tokenize(" \t");
+      if(tokens && tokens->GetEntries() >= 8){
+	for(Int_t i=7; i<tokens->GetEntries(); ++i){
+	  if(!comment.IsNull()) comment += " ";
+	  comment += ((TObjString*)tokens->At(i))->GetString();
+	}
+      }
+    }
+  }
+  std::cout << "#D HttpServer::MakePsPre() open " << ps_path << std::endl;
+  {
+    TCanvas c1("cps", "cps", 700, 500);
+    TText text;
+    text.SetTextSize(0.2);
+    text.SetTextAlign(22);
+    text.SetNDC(1);
+    text.DrawText(0.5, 0.65, Form("auto# 00000"));
+    TTimeStamp stamp;
+    stamp.Add(-stamp.GetZoneOffset());
+    text.SetTextSize(0.04);
+    text.DrawText(0.5, 0.45, comment);
+    text.SetTextSize(0.08);
+    text.DrawText(0.5, 0.32, stamp.AsString("s"));
+    c1.Modified();
+    c1.Update();
+    c1.Print(ps_path + "(");
+  }
+  TIter next(gROOT->GetListOfCanvases());
+  TCanvas* c1;
+  while((c1 = dynamic_cast<TCanvas*>(next()))){
+    std::cout << c1->GetName() << std::endl;
+    c1->Modified();
+    c1->Update();
+    c1->Print(ps_path);
+  }
+  TCanvas c2;
+  c2.Print(ps_path + "]");
+  std::cout << "#D HttpServer::MakePsPre() done" << std::endl;
+}
+
+//_____________________________________________________________________________
+void
 HttpServer::Open( void )
 {
   m_server = new THttpServer(Form("http:%d?loopback?thrds=5", m_port));

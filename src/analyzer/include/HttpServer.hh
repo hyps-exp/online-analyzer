@@ -33,6 +33,7 @@ public:
   void Hide(TString dir);
   void Open(void);
   void MakePs(Int_t runno);
+  void MakePsPre(Int_t runno);
   void Register(TObject *obj);
   void Register(TList *list, TList *parent=nullptr);
   void Register(TMacro *macro);

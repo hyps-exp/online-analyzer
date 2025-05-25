@@ -104,9 +104,8 @@ process_begin(const std::vector<std::string>& argv)
 
   if(!gConfMan.IsGood()) return -1;
 
-  // Int_t port = 9090;
   port = 9090;
-  threshould = 100000;
+  threshould = 500000;
   if(argv.size()==4){
     port = TString(argv[3]).Atoi();
   }else if(argv.size()==5){
@@ -263,33 +262,35 @@ process_event(void)
     ADCwTDC[i]=true;
   }
   {
-    if(run_number != gUnpacker.get_root()->get_run_number()){
-      if(run_number != -1){
-	gHttp.MakePs(run_number);
-	// if(port == 9090) gHttp.MakePs(run_number);
-	for(Int_t i=0, n=hptr_array.size(); i<n; ++i){
-	  hptr_array[i]->Reset();
+    if(port == 9090){
+      if(run_number != gUnpacker.get_root()->get_run_number()){
+	if(run_number != -1){
+	  gHttp.MakePs(run_number);
+	  for(Int_t i=0, n=hptr_array.size(); i<n; ++i){
+	    hptr_array[i]->Reset();
+	  }
 	}
+	run_number = gUnpacker.get_root()->get_run_number();
       }
-      run_number = gUnpacker.get_root()->get_run_number();
-      // last_saved_event_number = -1;
-      // first_event_number = -1;
     }
   }
   auto event_number = gUnpacker.get_event_number();
-  // {
-  //   if(port == 9092){
-  //     if(first_event_number==-1){
-  // 	first_event_number = event_number;
-  //     }
-  //     if(event_number >= threshould && event_number - first_event_number >= threshould){
-  // 	if(last_saved_event_number == -1 || event_number - last_saved_event_number >= threshould){
-  // 	  gHttp.MakePsPre(run_number);
-  // 	  last_saved_event_number = event_number;
-  // 	}
-  //     }
-  //   }
-  // }
+  {
+    if(port == 9092){
+      if(first_event_number==-1){
+	first_event_number = event_number;
+      }
+      if(event_number >= threshould && event_number - first_event_number >= threshould){
+	if(last_saved_event_number == -1 || event_number - last_saved_event_number >= threshould){
+	  gHttp.MakePsPre(run_number);
+	  last_saved_event_number = event_number;
+	  for(Int_t i=0, n=hptr_array.size(); i<n; ++i){
+	    hptr_array[i]->Reset();
+	  }
+	}
+      }
+    }
+  }
   { ///// Tag Checker
     static const auto& gConfig = GConfig::get_instance();
     static const TString tout(gConfig.get_control_param("tout"));
