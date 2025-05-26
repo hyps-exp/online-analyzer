@@ -102,40 +102,43 @@ process_begin(const std::vector<std::string>& argv)
     {
       // Int_t c = ScalerAnalyzer::kLeft;
       Int_t r = 0;
-      gScaler.Set(c, r++, ScalerInfo("CLK-1MHz",      2,  0));
-      gScaler.Set(c, r++, ScalerInfo("Real-Time",     2,  0));
-      gScaler.Set(c, r++, ScalerInfo("Live-Time",     2,  14));
-      gScaler.Set(c, r++, ScalerInfo("L1-Req",        2,  1));
-      gScaler.Set(c, r++, ScalerInfo("L1-Acc",        2,  2));
-      gScaler.Set(c, r++, ScalerInfo("L2-Acc",        2,  3));
-      gScaler.Set(c, r++, ScalerInfo("CLEAR",         2,  8));
-      gScaler.Set(c, r++, ScalerInfo("QDC-GATE",      1,  88));
-      gScaler.Set(c, r++, ScalerInfo("TAG-All",       1,  82));
-      gScaler.Set(c, r++, ScalerInfo("Trig-A",   2,  121));
-      gScaler.Set(c, r++, ScalerInfo("Trig-B",   2,  123));
-      gScaler.Set(c, r++, ScalerInfo("Trig-C",   2,  124));
-      gScaler.Set(c, r++, ScalerInfo("Trig-D",   2,  125));
-      gScaler.Set(c, r++, ScalerInfo("Trig-E",   2,  126));
-      gScaler.Set(c, r++, ScalerInfo("Trig-F",   2,  127));
-      gScaler.Set(c, r++, ScalerInfo("TRIG-A-PS",     2,  32));
-      gScaler.Set(c, r++, ScalerInfo("TRIG-B-PS",     2,  33));
-      gScaler.Set(c, r++, ScalerInfo("TRIG-C-PS",     2,  34));
-      gScaler.Set(c, r++, ScalerInfo("TRIG-D-PS",     2,  35));
-      gScaler.Set(c, r++, ScalerInfo("TRIG-E-PS",     2,  36));
-      gScaler.Set(c, r++, ScalerInfo("TRIG-F-PS",     2,  37));
-      gScaler.Set(c, r++, ScalerInfo("TRIG-PSOR-A",   2,  38));
-      gScaler.Set(c, r++, ScalerInfo("TRIG-PSOR-B",   2,  39));
-      gScaler.Set(c, r++, ScalerInfo("Clock-PS",      2,  40));
-      gScaler.Set(c, r++, ScalerInfo("Rsv2-PS",       2,  41));
-      gScaler.Set(c, r++, ScalerInfo("Level1-OR",     2,  42));
-      gScaler.Set(c, r++, ScalerInfo("RF",            1,  81));
-      gScaler.Set(c, r++, ScalerInfo("TAG-SF-OR",     1,  94));
-      gScaler.Set(c, r++, ScalerInfo("TAG-PL-OR",     1,  95));
-      gScaler.Set(c, r++, ScalerInfo("U-Veto",        2,  8));
-      gScaler.Set(c, r++, ScalerInfo("T0",            2,  4));
-      gScaler.Set(c, r++, ScalerInfo("SAC",           2,  6));
-      gScaler.Set(c, r++, ScalerInfo("E-Veto",        2,  7));
-      gScaler.Set(c, r++, ScalerInfo("TOF",           2,  5));
+      gScaler.Set(c, r++, ScalerInfo("CLK-1MHz",      2,    0));
+      gScaler.Set(c, r++, ScalerInfo("Real-Time",     2,    0));
+      gScaler.Set(c, r++, ScalerInfo("Live-Time",     2,    1));
+      gScaler.Set(c, r++, ScalerInfo("L1-Req",        2,    2));
+      gScaler.Set(c, r++, ScalerInfo("L1-Acc",        2,    3));
+      gScaler.Set(c, r++, ScalerInfo("L2-Acc",        2,    4));
+      gScaler.Set(c, r++, ScalerInfo("CLEAR",         2,    5));
+      gScaler.Set(c, r++, ScalerInfo("QDC-GATE",      1,   88));
+      gScaler.Set(c, r++, ScalerInfo("TAG-ALL",       2,    8));
+      gScaler.Set(c, r++, ScalerInfo("Trig-A",        2,   89));
+      gScaler.Set(c, r++, ScalerInfo("Trig-B",        2,   90));
+      gScaler.Set(c, r++, ScalerInfo("Trig-C",        2,   91));
+      gScaler.Set(c, r++, ScalerInfo("Trig-D",        2,   92));
+      gScaler.Set(c, r++, ScalerInfo("Trig-E",        2,   93));
+      gScaler.Set(c, r++, ScalerInfo("Trig-F",        2,   94));
+      gScaler.Set(c, r++, ScalerInfo("TRIG-A-PS",     2,   32));
+      gScaler.Set(c, r++, ScalerInfo("TRIG-B-PS",     2,   33));
+      gScaler.Set(c, r++, ScalerInfo("TRIG-C-PS",     2,   34));
+      gScaler.Set(c, r++, ScalerInfo("TRIG-D-PS",     2,   35));
+      gScaler.Set(c, r++, ScalerInfo("TRIG-E-PS",     2,   36));
+      gScaler.Set(c, r++, ScalerInfo("TRIG-F-PS",     2,   37));
+      gScaler.Set(c, r++, ScalerInfo("TRIG-PSOR-A",   2,   38));
+      gScaler.Set(c, r++, ScalerInfo("TRIG-PSOR-B",   2,   39));
+      gScaler.Set(c, r++, ScalerInfo("Clock-PS",      2,   40));
+      gScaler.Set(c, r++, ScalerInfo("Rsv2-PS",       2,   41));
+      gScaler.Set(c, r++, ScalerInfo("Level1-OR",     2,   42));
+      gScaler.Set(c, r++, ScalerInfo("RF",            1,   81));
+      gScaler.Set(c, r++, ScalerInfo("TAG-SF-OR",     2,    6));
+      gScaler.Set(c, r++, ScalerInfo("TAG-PL-OR",     2,    7));
+      gScaler.Set(c, r++, ScalerInfo("U-Veto",        2,   66));
+      gScaler.Set(c, r++, ScalerInfo("T0",            2,   65));
+      gScaler.Set(c, r++, ScalerInfo("SAC",           2,   68));
+      gScaler.Set(c, r++, ScalerInfo("E-Veto",        2,   69));
+      gScaler.Set(c, r++, ScalerInfo("TOF",           2,    9));
+      gScaler.Set(c, r++, ScalerInfo("TOF-HUL",       2,   71));
+      // gScaler.Set(c, r++, ScalerInfo("TOFOR-1",       2,    6));
+      // gScaler.Set(c, r++, ScalerInfo("TOFOR-2",       2,    7));
       // gScaler.Set(c, r++, ScalerInfo("T0",          1,  90));
       // gScaler.Set(c, r++, ScalerInfo("T0-L",        1,  83));
       // gScaler.Set(c, r++, ScalerInfo("T0-R",        1,  84));
@@ -148,7 +151,7 @@ process_begin(const std::vector<std::string>& argv)
       gScaler.Set(c, r++, ScalerInfo("CFT-Phi2-OR",   2,  11));
       gScaler.Set(c, r++, ScalerInfo("CFT-Phi3-OR",   2,  12));
       gScaler.Set(c, r++, ScalerInfo("CFT-Phi4-OR",   2,  13));
-      gScaler.Set(c, r++, ScalerInfo("BGO",           2,  9));
+      gScaler.Set(c, r++, ScalerInfo("BGO",           2,  14));
       // gScaler.Set(c, r++, ScalerInfo("BGO-OR1",     1,  92));
       // gScaler.Set(c, r++, ScalerInfo("BGO-OR2",     1,  93));
     }
@@ -298,9 +301,9 @@ process_event()
       ss << "</tr>";
     }
     ss << "<tr><td></td><td></td><td></td></tr>"
-       << "<tr><td>T0/TAG-All</td>"
+       << "<tr><td>T0/TAG-ALL</td>"
        << "<td align=\"right\">"
-       << Form("%.6f", gScaler.Fraction("T0", "TAG-All"))
+       << Form("%.6f", gScaler.Fraction("T0", "TAG-ALL"))
        << "</td>"
        << "<td> : Live/Real</td>"
        << "<td align=\"right\">"
@@ -311,9 +314,9 @@ process_event()
        << Form("%.6f", gScaler.Fraction("L1-Acc", "L1-Req"))
        << "</td>"
        << "</tr></tr>"
-       << "<td>L1Req/TAG-All</td>"
+       << "<td>L1Req/TAG-ALL</td>"
        << "<td align=\"right\">"
-       << Form("%.6f", gScaler.Fraction("L1-Req", "TAG-All"))
+       << Form("%.6f", gScaler.Fraction("L1-Req", "TAG-ALL"))
        << "</td>"
        << "<td> : L2-Eff</td>"
        << "<td align=\"right\">"
@@ -328,13 +331,13 @@ process_event()
     ss << "</div>";
     gHttp.SetItemField("/ScalerOn", "value", ss.str().c_str());
     ofs << std::endl
-	<< Form("%-20s", "T0/TAG-All") << Form("%.6f", gScaler.Fraction("T0", "TAG-All")) << std::endl
+	<< Form("%-20s", "T0/TAG-ALL") << Form("%.6f", gScaler.Fraction("T0", "TAG-ALL")) << std::endl
 	<< Form("%-20s", "Live/Real") << Form("%.6f", gScaler.Fraction("Live-Time", "Real-Time")) << std::endl
 	<< Form("%-20s", "DAQ-Eff") << Form("%.6f", gScaler.Fraction("L1-Acc", "L1-Req")) << std::endl
 	<< Form("%-20s", "L2-Eff") << Form("%.6f", gScaler.Fraction("L2-Acc", "L1-Acc")) << std::endl
 	<< Form("%-20s", "Duty") << Form("%.6f", gScaler.Duty()) << std::endl;
     // gSystem->Sleep(2000);
-    auto tagger_rate = 1.e6 * gScaler.Get("TAG-All") / gScaler.Get("CLK-1MHz");
+    auto tagger_rate = 1.e6 * gScaler.Get("TAG-ALL") / gScaler.Get("CLK-1MHz");
 
     if(tagger_rate < tagger_rate_threshold){
       static const TString host(gSystem->Getenv("HOSTNAME"));
