@@ -50,8 +50,8 @@ fi
 #_____ Launch the HTTP server _________________________________________________
 session=`tmux ls 2>/dev/null | grep $name`
 if [ -z "$session" ]; then
-    echo -ne "\033[1;36m [NOTICE] \033[0m"
-    echo "Create new session $name"
+    echo -ne "\033[1;36m [INFO] \033[0m"
+    echo "Create new session: $name"
     tmux new-session -d -s $name \
 	 "while true; do $server $conf $data $port 2>/dev/null; done"
 else
