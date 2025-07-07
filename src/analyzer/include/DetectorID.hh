@@ -25,7 +25,7 @@ const Int_t DetIdRF           = 781; // This value is temporarily
 const Int_t NumOfSegRF        =   1;
 
 inline const std::unordered_set<Int_t> TOF_Absent =
-  {0, 1, 2, 3, 4, 5, 6, 7, 10, 11, 38, 39, 44, 45, 46, 47};
+  {0, 1, 2, 3, 4};
 
 // Counters ___________________________________________________________
 const Int_t DetIdBH1      =  1;
