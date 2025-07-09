@@ -730,7 +730,7 @@ HistMaker::createU_Veto(Bool_t flag_ps)
       const char* title = NULL;
       title = Form("%s_%s_%d", nameDetector, nameSubDir, seg);
       sub_dir->Add(createTH1(target_id + seg, title,
-			     10000, 0, 400000,
+			     10000, 0, 1000000,
      			     //50000, 0, 2000000,
 			     "TDC [ch]", ""));
     }
