@@ -1872,7 +1872,7 @@ CFTPedestal2D()
 
   for(Int_t l=0; l<NumOfLayersCFT; ++l){
     c1->cd(l+1)->SetLogz();
-    TH1 *h = GHist::get(base_id);
+    TH1 *h = GHist::get(base_id+l);
     if(!h) continue;
     h->Draw("colz");
   }
