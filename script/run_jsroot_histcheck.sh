@@ -16,7 +16,7 @@ else
     threshould=$1
 fi
 
-name="${program}_histcheck"
+name="$histcheck_{program}"
 session=`tmux ls | grep $name`
 if [ -z "$session" ]; then
     echo "create new session $name"
