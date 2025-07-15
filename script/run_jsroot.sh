@@ -1,21 +1,21 @@
 #!/bin/sh
 
 . $(dirname $(readlink -f $0))/setebhost
-program=jsroot_hyps
+program=jsroot_hyps_hoge
 
 top_dir=$(dirname $(readlink -f $0))/..
 server=$top_dir/bin/$program
 
 conf=/misc/software/param/pro/conf/analyzer_hyps_jsroot.conf
 
-#_____ Check Online or SemiOnline _____________________________________________
+#_____ Check Online or Semi-Online _____________________________________________
 if [ $# -eq 0 ]; then
     data=${ebhost}:8901
     port=9090
     name=${program}
 elif [ $# -eq 1 ]; then
     echo -ne "\033[1;31m [ERROR] \033[0m"
-    echo "Port Number should be specified for SemiOnline"
+    echo "Port Number should be specified for Semi-Online"
     exit 1
 elif [ $# -eq 2 ]; then
     #--- Check if the port is used
@@ -48,13 +48,17 @@ elif [ $# -ge 3 ]; then
 fi
 
 #_____ Launch the HTTP server _________________________________________________
-session=`tmux ls 2>/dev/null | grep $name`
-if [ -z "$session" ]; then
+session_check=$(tmux ls 2>/dev/null | grep "^$name:")
+if [ -z "$session_check" ]; then
     echo -ne "\033[1;36m [INFO] \033[0m"
     echo "Create new session: $name"
     tmux new-session -d -s $name \
 	 "while true; do $server $conf $data $port 2>/dev/null; done"
 else
     echo -ne "\033[1;33m [WARNING] \033[0m"
-    echo "Run "$1" is already analyzing."
+    if [ $# -eq 0 ]; then
+	echo "Online analyzer is already running."
+    else
+	echo "Semi-Online analyzer for Run "$1" is already running."
+    fi
 fi
