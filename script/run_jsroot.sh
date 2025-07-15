@@ -1,7 +1,7 @@
 #!/bin/sh
 
 . $(dirname $(readlink -f $0))/setebhost
-program=jsroot_hyps_hoge
+program=jsroot_hyps
 
 top_dir=$(dirname $(readlink -f $0))/..
 server=$top_dir/bin/$program
