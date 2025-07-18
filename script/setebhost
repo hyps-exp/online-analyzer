@@ -1,9 +1,13 @@
 #!/bin/sh
 
-ebhost=eb-hyps.monitor.hypsnet
+ip_list=$(ip -4 a s | awk '/inet / {print $2}' | grep -v '^127\.' | cut -d/ -f1)
 
-# if [ -z "${HDDAQ_EBHOST+x}" ]; then
-#     ebhost=geteb1
-# else
-#     ebhost=$HDDAQ_EBHOST
-# fi
+for ip in $ip_list; do
+    if [[ $ip == 192.168.20.* ]]; then
+	ebhost=eb-hyps.monitor.hypsnet
+	break
+    elif [[ $ip == 192.168.30.* ]]; then
+	ebhost=eb-hyps.user.hypsnet
+	break
+    fi
+done
