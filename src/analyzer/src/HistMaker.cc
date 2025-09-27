@@ -830,6 +830,53 @@ HistMaker::createT0(Bool_t flag_ps)
     }
     top_dir->Add(sub_dir);
   }
+  { ///// TOT
+    TString strSubDir  = CONV_STRING(kTOT);
+    const char* nameSubDir = strSubDir.Data();
+    TList *sub_dir = new TList;
+    sub_dir->SetName(nameSubDir);
+    Int_t target_id = getUniqueID(kT0, 0, kTOT, 0);
+    for(Int_t i = 0; i<NumOfSegT0*2; ++i){
+      const char* title = NULL;
+      if(i < NumOfSegT0){
+	Int_t seg = i;
+	title = Form("%s_%s_%dL", nameDetector, nameSubDir, seg);
+      }else{
+	Int_t seg = i-NumOfSegT0;
+	title = Form("%s_%s_%dR", nameDetector, nameSubDir, seg);
+      }
+      sub_dir->Add(createTH1(target_id + i, title,
+     			     5000, 0, 50000,
+			     // 10000, 0, 400000,
+			     "TOT [ch]", ""));
+    }
+    top_dir->Add(sub_dir);
+  }
+  // { ///// TOT2D
+  //   TString strSubDir  = CONV_STRING(kTOT2D);
+  //   const char* nameSubDir = strSubDir.Data();
+  //   TList *sub_dir = new TList;
+  //   sub_dir->SetName(nameSubDir);
+  //   Int_t target_id = getUniqueID(kT0, 0, kTOT2D, 0);
+  //   for(Int_t i = 0; i<NumOfSegT0*2; ++i){
+  //     const char* title = NULL;
+  //     if(i < NumOfSegT0){
+  // 	Int_t seg = i;
+  // 	title = Form("%s_%s_%dL", nameDetector, nameSubDir, seg);
+  //     }else{
+  // 	Int_t seg = i-NumOfSegT0;
+  // 	title = Form("%s_%s_%dR", nameDetector, nameSubDir, seg);
+  //     }
+  //     sub_dir->Add(createTH2(target_id + i, title,
+  //    			     5000, 0, 50000,
+  // 			     5000, 0, 50000,
+  // 			     // 10000, 0, 400000,
+  // 			     "TOT [ch]", "TOT [ch]"));
+  //   }
+  //   top_dir->Add(sub_dir);
+  // }
+
+
   { ///// Hit parttern
     Int_t target_id = getUniqueID(kT0, 0, kHitPat, 0);
     top_dir->Add(createTH1(target_id, "T0_hit_pattern",

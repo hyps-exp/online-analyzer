@@ -121,6 +121,7 @@ process_begin(const std::vector<std::string>& argv)
   tab_macro->Add(macro::Get("dispSDC3_hyps"));
   tab_macro->Add(macro::Get("dispSDC_correlation_hyps"));
   tab_macro->Add(macro::Get("dispTOF_ADC"));
+  tab_macro->Add(macro::Get("dispTOF_TDC"));
   tab_macro->Add(macro::Get("dispCounter_TDC"));
   //  tab_macro->Add(macro::Get("dispTOF_ADC_tmp"));
   // tab_macro->Add(macro::Get("dispAC1"));
@@ -639,10 +640,13 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
     static const auto device_id = gUnpacker.get_device_id("T0");
     static const auto adc_id    = gUnpacker.get_data_id("T0", "adc");
     static const auto tdc_id    = gUnpacker.get_data_id("T0", "tdc");
+    static const Int_t trailing_id = gUnpacker.get_data_id("T0", "trailing");
     static const auto tdc_min   = gUser.GetParameter("TdcT0", 0);
     static const auto tdc_max   = gUser.GetParameter("TdcT0", 1);
     static const auto adc_hid   = gHist.getSequentialID(kT0, 0, kADC,     0);
     static const auto tdc_hid   = gHist.getSequentialID(kT0, 0, kTDC,     0);
+    static const Int_t tot_id   = gHist.getSequentialID(kT0, 0, kTOT,     0);
+    // static const Int_t tot2D_id = gHist.getSequentialID(kT0, 0, kTOT2D,   0);
     static const auto awt_hid   = gHist.getSequentialID(kT0, 0, kADCwTDC, 0);
     static const auto hit_hid   = gHist.getSequentialID(kT0, 0, kHitPat,  0);
     static const auto mul_hid   = gHist.getSequentialID(kT0, 0, kMulti,   0);
@@ -673,6 +677,42 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 	if (hit_flag[seg][lr] == 1) {
 	  hptr_array[awt_hid + lr*NumOfSegT0 + seg]->Fill(adc);
 	}
+	// TOT
+	Int_t nhit_l = gUnpacker.get_entries(device_id, 0, seg, lr, tdc_id);
+	Int_t nhit_t = gUnpacker.get_entries(device_id, 0, seg, lr, trailing_id);
+	if (nhit_l == 0) continue;
+
+	Int_t hit_l_max = 0;
+	Int_t hit_t_max = 0;
+
+	if (nhit_l != 0) {
+	  hit_l_max = gUnpacker.get(device_id, 0, seg, lr, tdc_id,  nhit_l - 1);
+	}
+	if (nhit_t != 0) {
+	  hit_t_max = gUnpacker.get(device_id, 0, seg, lr, trailing_id, nhit_t - 1);
+	}
+	if (nhit_l == nhit_t && hit_l_max > hit_t_max) {
+
+	  // ++multiplicity_ctot;
+	  for(Int_t m = 0; m<nhit_l; ++m) {
+	    Int_t tdc   = gUnpacker.get(device_id, 0, seg, lr, tdc_id, m);
+	    Int_t tdc_t = gUnpacker.get(device_id, 0, seg, lr, trailing_id, m);
+	    Int_t tot   = tdc - tdc_t;
+	    hptr_array[tot_id+lr]->Fill(tot);
+	    // hptr_array[tot2D_id+seg]->Fill(lr,tot);
+            // hptr_array[sdc0_tot_tdc2D_id+l]->Fill(tot,tdc);
+            // if (tot1st<tot) tot1st = tot;
+            // if (tot < tot_min) continue;
+	    // hptr_array[t0t_ctot_id + l]->Fill(tdc);
+	    // hptr_array[sdc0t2D_ctot_id + l]->Fill(w,tdc); //2D
+	    // hptr_array[sdc0tot_ctot_id+l]->Fill(tot);
+            // if (tdc1st<tdc) tdc1st = tdc;
+	    // if (tdc_min < tdc && tdc < tdc_max) {
+	    //   flag_hit_wt_ctot = true;
+	    // }
+	  }
+	}
+
       }
       if (hit_flag[seg][kL] == 1 && hit_flag[seg][kR] == 1) {
 	++multiplicity;
