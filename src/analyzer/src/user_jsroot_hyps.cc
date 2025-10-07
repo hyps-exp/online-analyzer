@@ -56,7 +56,7 @@
 #define DEBUG    0
 #define FLAG_DAQ 1
 #define TAG_PL_ADCNo 0
-#define TOF_indiv_TDC 1
+#define TOF_indiv_TDC 0
 //individual KURAMA LEPS for ADC w/TDC
 
 namespace

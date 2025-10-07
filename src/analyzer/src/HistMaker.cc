@@ -824,7 +824,8 @@ HistMaker::createT0(Bool_t flag_ps)
 	title = Form("%s_%s_%dR", nameDetector, nameSubDir, seg);
       }
       sub_dir->Add(createTH1(target_id + i, title,
-     			     1250, 300000, 350000,
+     			     // 1250, 300000, 350000,
+     			     500000, 0, 1000000,
 			     // 10000, 0, 400000,
 			     "TDC [ch]", ""));
     }
@@ -958,8 +959,9 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], nameSubDir);
       sub_dir->Add(createTH1(target_id + i, title,
-			     5000, 200000, 400000,
+			     // 5000, 200000, 400000,
 			     // 10000, 0, 400000,
+			     15000, 0, 1500000,
 			     "TDC [ch]", ""));
     }
     top_dir->Add(sub_dir);
@@ -2380,8 +2382,8 @@ TList* HistMaker::createTOF( Bool_t flag_ps )
       }
 
       sub_dir->Add(createTH1(target_id + i, title,
-			     2500, 170000, 270000,
-			     // 50000, 0, 2000000,
+			     // 2500, 170000, 270000,
+			     50000, 0, 2000000,
 			     "TDC [ch]", ""));
     }
 
@@ -3226,7 +3228,8 @@ TList* HistMaker::createCatchBGO( Bool_t flag_ps )
       Int_t seg = i+1; // 1 origin
       title = Form("%s_%s_%d", nameDetector, nameSubDir, seg);
       sub_dir->Add(createTH1(target_id + i+1, title, // 1 origin
-			     1024, 0, 1024,
+			     // 1024, 0, 1024,
+			     3000, 0, 3000,
 			     // 0x1000, 0, 0x1000,
 			     "TDC [ch]", ""));
     }
