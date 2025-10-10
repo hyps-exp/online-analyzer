@@ -100,18 +100,18 @@ Counter_TDC()
   auto c1 = new TCanvas(__func__, __func__);
   c1->Divide(3, 4);
 
-  int RF_id = HistMaker::getUniqueID(kRF, 0, kTDC, 0);
-  int TAG_SFF_id = HistMaker::getUniqueID(kTAG_SF, 0, kHitPat, 0);
-  int TAG_SFB_id = HistMaker::getUniqueID(kTAG_SF, 0, kHitPat, 1);
-  int TAG_PL_id = HistMaker::getUniqueID(kTAG_PL, 0, kHitPat, 0);
-  int UVeto_id = HistMaker::getUniqueID(kU_Veto, 0, kTDC, 0);
-  int SAC_id = HistMaker::getUniqueID(kSAC, 0, kTDC, 0);
-  int EVetoL_id = HistMaker::getUniqueID(kE_Veto, 0, kTDC, 0);
-  int EVetoR_id = HistMaker::getUniqueID(kE_Veto, 0, kTDC, 1);
-  int T0L_id = HistMaker::getUniqueID(kT0, 0, kTDC, 0);
-  int T0R_id = HistMaker::getUniqueID(kT0, 0, kTDC, 0) + 1;
-  int TOF_id = HistMaker::getUniqueID(kTOF, 0, kHitPat, 0);
-  int TOF_multi_id = HistMaker::getUniqueID(kTOF, 0, kMulti, 0);
+  int RF_id        = HistMaker::getUniqueID(kRF,     0, kTDC,    0);
+  int TAG_SFF_id   = HistMaker::getUniqueID(kTAG_SF, 0, kHitPat, 0);
+  int TAG_SFB_id   = HistMaker::getUniqueID(kTAG_SF, 0, kHitPat, 1);
+  int TAG_PL_id    = HistMaker::getUniqueID(kTAG_PL, 0, kHitPat, 0);
+  int UVeto_id     = HistMaker::getUniqueID(kU_Veto, 0, kTDC,    0);
+  int SAC_id       = HistMaker::getUniqueID(kSAC,    0, kTDC,    0);
+  int EVetoL_id    = HistMaker::getUniqueID(kE_Veto, 0, kTDC,    0);
+  int EVetoR_id    = HistMaker::getUniqueID(kE_Veto, 0, kTDC,    1);
+  int T0L_id       = HistMaker::getUniqueID(kT0,     0, kTDC,    0);
+  int T0R_id       = HistMaker::getUniqueID(kT0,     0, kTDC,    1);
+  int TOF_id       = HistMaker::getUniqueID(kTOF,    0, kHitPat, 0);
+  int TOF_multi_id = HistMaker::getUniqueID(kTOF,    0, kMulti,  0);
 
 
   c1->cd(1);
@@ -151,13 +151,16 @@ Counter_TDC()
   TH1 *h10 = (TH1*)GHist::get(T0R_id);
   h10->SetMinimum(0);
   h10->Draw();
+
   c1->cd(12);
   TH1 *h11 = (TH1*)GHist::get(TOF_id);
+  h11->SetMinimum(0);
   h11->Draw();
-
   c1->cd(9);
   TH1 *h12 = (TH1*)GHist::get(TOF_multi_id);
   h12->Draw();
+
+
 
   c1->Update();
 
@@ -651,9 +654,9 @@ SDCIn_HitPat(){
   c->Divide(3, 4);
 
   //draw TDC
-  int SDC0_base_id = HistMaker::getUniqueID(kSDC0, 0, kHitPat, 0);
+  int SDC0_base_id      = HistMaker::getUniqueID(kSDC0, 0, kHitPat, 0);
   int SDC0_base_id_ctot = HistMaker::getUniqueID(kSDC0, 0, kHitPat, kTOTcutOffset);
-  int SDC1_base_id = HistMaker::getUniqueID(kSDC1, 0, kHitPat, 0);
+  int SDC1_base_id      = HistMaker::getUniqueID(kSDC1, 0, kHitPat, 0);
   int SDC1_base_id_ctot = HistMaker::getUniqueID(kSDC1, 0, kHitPat, kTOTcutOffset);
 
   for( int i=0; i<NumOfLayersSDC0; ++i ){

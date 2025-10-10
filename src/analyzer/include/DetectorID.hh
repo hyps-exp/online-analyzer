@@ -25,7 +25,8 @@ const Int_t DetIdRF           = 781; // This value is temporarily
 const Int_t NumOfSegRF        =   1;
 
 inline const std::unordered_set<Int_t> TOF_Absent =
-  {0, 1, 2, 3, 4};
+  // {0, 1, 2, 3, 4};
+  {};
 
 // Counters ___________________________________________________________
 const Int_t DetIdBH1      =  1;
@@ -64,12 +65,15 @@ const Int_t DetIdScaler     = 22;
 const Int_t DetIdMsT        = 25;
 const Int_t DetIdMtx        = 26;
 const Int_t DetIdFpgaBH2Mt  = 29;
-const Int_t DetIdVmeRm      = 81;
+// const Int_t DetIdVmeRm      = 81;
+const Int_t DetIdVmeRm      = 101; //20251006
 const Int_t DetIdMsTRM      = 82;
-const Int_t DetIdHulRM      = 83;
+// const Int_t DetIdHulRM      = 83;
+const Int_t DetIdHulRM      = 102; // 20251006
 const Int_t NumOfSegTrig    = 32;
 const Int_t NumOfSegScaler  = 128;
-const Int_t NumOfPlaneVmeRm = 10;
+// const Int_t NumOfPlaneVmeRm = 10;
+const Int_t NumOfPlaneVmeRm = 2; // 20251006
 const Int_t NumOfVmeRm      = 10;
 
 const Int_t LSOGeFlag       = 0; // HbxTrig

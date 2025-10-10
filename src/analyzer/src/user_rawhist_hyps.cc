@@ -40,6 +40,7 @@
 #include "SsdAnalyzer.hh"
 // #include "TpcPadHelper.hh"
 #include "UserParamMan.hh"
+#include "RMAnalyzer.hh"
 
 #define DEBUG      0
 #define FLAG_DAQ   1
@@ -63,6 +64,7 @@ auto& gHist           = HistMaker::getInstance();
 const auto& gMatrix   = MatrixParamMan::GetInstance();
 // auto& gTpcPad         = TpcPadHelper::GetInstance();
 const auto& gUser     = UserParamMan::GetInstance();
+auto& gRM       = RMAnalyzer::GetInstance();
 std::vector<TH1*> hptr_array;
 Bool_t flag_event_cut = false;
 Int_t event_cut_factor = 1; // for fast semi-online analysis
@@ -225,6 +227,15 @@ process_event()
   const Int_t event_number = gUnpacker.get_event_number();
   if (flag_event_cut && event_number%event_cut_factor!=0)
     return 0;
+
+  if (event_number % 1000 == 1){
+    if(!gRM.Decode())
+      std::cout << "RM Decode Failed" << std::endl;
+    const Int_t evnum_rm     = gRM.EventNumber();
+    const Int_t spill_rm     = gRM.SpillNumber();
+    std::cout << "Unpacker Event: " << event_number << spill_rm << std::endl;
+    std::cout << "RM Info) Event: " << evnum_rm << ", Spill: " << spill_rm << std::endl;
+  }
 
   //------------------------------------------------------------------
   // TriggerFlag
