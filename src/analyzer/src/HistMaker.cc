@@ -414,7 +414,7 @@ TList* HistMaker::createRF( Bool_t flag_ps )
       const char* title = NULL;
       title = Form("%s_%s", nameDetector, nameSubDir);
       sub_dir->Add(createTH1(target_id, title,
-			     50000, 0, 1000000,
+			     50000, 400000, 1400000,
 			     "TDC [ch]", ""));
     }
 
@@ -730,7 +730,7 @@ HistMaker::createU_Veto(Bool_t flag_ps)
       const char* title = NULL;
       title = Form("%s_%s_%d", nameDetector, nameSubDir, seg);
       sub_dir->Add(createTH1(target_id + seg, title,
-			     10000, 0, 1000000,
+			     10000, 600000, 700000,
 			     "TDC [ch]", ""));
     }
     top_dir->Add(sub_dir);
@@ -823,7 +823,7 @@ HistMaker::createT0(Bool_t flag_ps)
 	title = Form("%s_%s_%dR", nameDetector, nameSubDir, seg);
       }
       sub_dir->Add(createTH1(target_id + i, title,
-     			     200000, 0, 1000000,
+     			     200000, 600000, 700000,
 			     "TDC [ch]", ""));
     }
     top_dir->Add(sub_dir);
@@ -956,7 +956,7 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], nameSubDir);
       sub_dir->Add(createTH1(target_id + i, title,
-			     15000, 0, 1500000,
+			     15000, 600000, 700000,
 			     "TDC [ch]", ""));
     }
     top_dir->Add(sub_dir);
@@ -983,7 +983,7 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
 
 
 // -------------------------------------------------------------------------
-// creatSeDC0
+// createSDC0
 // -------------------------------------------------------------------------
 TList* HistMaker::createSDC0( Bool_t flag_ps )
 {
@@ -1024,7 +1024,7 @@ TList* HistMaker::createSDC0( Bool_t flag_ps )
       title = Form("%s_%s_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH1(target_id + i, title,
 			     // NBinTDC, MinBinTDC, MaxBinTDC,
-			     1024, 0, 1024,
+			     1300, 300, 1300,
 			     "TDC [ch]", ""));
     }
     target_id = getUniqueID(kSDC0, 0, kTDC2D, 0);
@@ -1033,7 +1033,7 @@ TList* HistMaker::createSDC0( Bool_t flag_ps )
       title = Form("%s_%s1st_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH1(target_id + i, title,
 			     // NBinTDC, MinBinTDC, MaxBinTDC,
-			     1024, 0, 1024,
+			     1300, 300, 1300,
 			     "TDC [ch]", ""));
     }
 
@@ -2391,7 +2391,7 @@ TList* HistMaker::createTOF( Bool_t flag_ps )
 
       sub_dir->Add(createTH1(target_id + i, title,
 			     // 2500, 170000, 270000,
-			     2500, 400000, 600000,
+			     2500, 450000, 650000,
 			     "TDC [ch]", ""));
     }
 
