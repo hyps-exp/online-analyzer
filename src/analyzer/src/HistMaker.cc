@@ -2389,7 +2389,7 @@ TList* HistMaker::createTOF( Bool_t flag_ps )
 
       sub_dir->Add(createTH1(target_id + i, title,
 			     // 2500, 170000, 270000,
-			     50000, 0, 2000000,
+			     400000, 0, 600000,
 			     "TDC [ch]", ""));
     }
 
