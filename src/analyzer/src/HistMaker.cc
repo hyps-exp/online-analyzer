@@ -414,7 +414,7 @@ TList* HistMaker::createRF( Bool_t flag_ps )
       const char* title = NULL;
       title = Form("%s_%s", nameDetector, nameSubDir);
       sub_dir->Add(createTH1(target_id, title,
-			     200000, 0, 2000000,
+			     50000, 0, 1000000,
 			     "TDC [ch]", ""));
     }
 
@@ -730,7 +730,7 @@ HistMaker::createU_Veto(Bool_t flag_ps)
       const char* title = NULL;
       title = Form("%s_%s_%d", nameDetector, nameSubDir, seg);
       sub_dir->Add(createTH1(target_id + seg, title,
-			     200000, 0, 2000000,
+			     10000, 0, 1000000,
 			     "TDC [ch]", ""));
     }
     top_dir->Add(sub_dir);
@@ -823,7 +823,7 @@ HistMaker::createT0(Bool_t flag_ps)
 	title = Form("%s_%s_%dR", nameDetector, nameSubDir, seg);
       }
       sub_dir->Add(createTH1(target_id + i, title,
-     			     200000, 0, 2000000,
+     			     200000, 0, 1000000,
 			     "TDC [ch]", ""));
     }
     top_dir->Add(sub_dir);
@@ -956,7 +956,7 @@ TList* HistMaker::createSAC( Bool_t flag_ps )
       const char* title = NULL;
       title = Form("%s_%s", name_acs[i], nameSubDir);
       sub_dir->Add(createTH1(target_id + i, title,
-			     200000, 0, 2000000,
+			     15000, 0, 1500000,
 			     "TDC [ch]", ""));
     }
     top_dir->Add(sub_dir);
@@ -1007,7 +1007,7 @@ TList* HistMaker::createSDC0( Bool_t flag_ps )
   const char* name_Selflayer[NumOfDimSDC0] = {"X_XP", "U_UP"};
 
   const Int_t MinBinTDC =    0;
-  const Int_t MaxBinTDC = 2000;
+  const Int_t MaxBinTDC = 1500;
   const Int_t NBinTDC   = MaxBinTDC - MinBinTDC;
   // TDC---------------------------------------------------------
   {
@@ -1023,7 +1023,8 @@ TList* HistMaker::createSDC0( Bool_t flag_ps )
       const char* title = NULL;
       title = Form("%s_%s_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH1(target_id + i, title,
-			     NBinTDC, MinBinTDC, MaxBinTDC,
+			     // NBinTDC, MinBinTDC, MaxBinTDC,
+			     1024, 0, 1024,
 			     "TDC [ch]", ""));
     }
     target_id = getUniqueID(kSDC0, 0, kTDC2D, 0);
@@ -1031,7 +1032,8 @@ TList* HistMaker::createSDC0( Bool_t flag_ps )
       const char* title = NULL;
       title = Form("%s_%s1st_%s", nameDetector, nameSubDir, name_layer[i]);
       sub_dir->Add(createTH1(target_id + i, title,
-			     NBinTDC, MinBinTDC, MaxBinTDC,
+			     // NBinTDC, MinBinTDC, MaxBinTDC,
+			     1024, 0, 1024,
 			     "TDC [ch]", ""));
     }
 
@@ -1271,7 +1273,7 @@ TList* HistMaker::createSDC0( Bool_t flag_ps )
     top_dir->Add(sub_dir);
   }
 
-  // Return the TList pointer which is added into TGFileBrowser
+  // Return the TList pointe which is added into TGFileBrowser
   return top_dir;
 }
 
@@ -1301,7 +1303,7 @@ TList* HistMaker::createSDC1( Bool_t flag_ps )
   const char* name_Selflayer[NumOfDimSDC1] = {"XPP", "V", "UP_U", "XP_X"};
 
   const Int_t MinBinTDC =    0;
-  const Int_t MaxBinTDC = 2000;
+  const Int_t MaxBinTDC = 1500;
   const Int_t NBinTDC   = MaxBinTDC - MinBinTDC;
   // TDC---------------------------------------------------------
   {
@@ -1595,7 +1597,7 @@ TList* HistMaker::createSDC2( Bool_t flag_ps )
   const char* name_Selflayer[NumOfDimSDC2] = {"V", "UP_U", "XP_X"};
 
   const Int_t MinBinTDC =    0;
-  const Int_t MaxBinTDC = 2000;
+  const Int_t MaxBinTDC = 1500;
   const Int_t NBinTDC   = MaxBinTDC - MinBinTDC;
   // TDC---------------------------------------------------------
   {
@@ -1890,7 +1892,7 @@ TList* HistMaker::createSDC3( Bool_t flag_ps )
   const char* name_Selflayer[NumOfDimSDC3] = {"V", "UP_U", "XP_X"};
 
   const Int_t MinBinTDC =    0;
-  const Int_t MaxBinTDC = 2000;
+  const Int_t MaxBinTDC = 1500;
   const Int_t NBinTDC   = MaxBinTDC - MinBinTDC;
   // TDC---------------------------------------------------------
   {
@@ -2258,7 +2260,7 @@ TList* HistMaker::createE_Veto( Bool_t flag_ps )
       }
 
       sub_dir->Add(createTH1(target_id + i, title,
-			     200000, 0, 2000000,
+			     10000, 0, 1000000,
 			     "TDC [ch]", ""));
     }
 
@@ -2389,7 +2391,7 @@ TList* HistMaker::createTOF( Bool_t flag_ps )
 
       sub_dir->Add(createTH1(target_id + i, title,
 			     // 2500, 170000, 270000,
-			     400000, 0, 600000,
+			     2500, 400000, 600000,
 			     "TDC [ch]", ""));
     }
 
