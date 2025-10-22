@@ -254,7 +254,7 @@ process_event()
 
   gScaler.Decode();
 
-  Bool_t flush_flag = (gScaler.Get("CLK-1MHz") > 5.9e6);
+  Bool_t flush_flag = (gScaler.Get("CLK-1MHz") > 1.9e6);
 
   if(flush_flag){
     std::ofstream ofs("/misc/subdata/scaler/spill.txt");
