@@ -248,13 +248,13 @@ process_event()
   // Scaler Spill On
   auto now = std::chrono::duration_cast<std::chrono::milliseconds>
     (std::chrono::system_clock::now().time_since_epoch());
-  static auto prev_flush = now;
-  // Bool_t flush_flag = true;//(now - prev_flush) > flush_interval;
+  // static auto prev_flush = now;
+  // Bool_t flush_flag = (now - prev_flush) > flush_interval;
   // prev_flush = now;
 
   gScaler.Decode();
 
-  Bool_t flush_flag = (gScaler.Get("CLK-1MHz") > 1.9e6);
+  Bool_t flush_flag = (gScaler.Get("CLK-1MHz") > 5.9e6);
 
   if(flush_flag){
     std::ofstream ofs("/misc/subdata/scaler/spill.txt");
