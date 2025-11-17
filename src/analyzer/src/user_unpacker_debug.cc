@@ -36,10 +36,10 @@ namespace analyzer
 				       // "hul03sdc-1",
 				       // "hul03sdc-5",
 				       // "hul03sdc-9",
-				       // "hul01scr-1",
-				       "hul01scr-2",
+				       // "hul01scr-1"
+				       "hul01scr-2"
 				       // "hul01scr-3",
-				       // "hul03scr-1",
+				       // "hul03scr-1"
 				       // "hul01hr-1",
 				       // "hul01hr-2",
 				       // "hul01hr-3"
