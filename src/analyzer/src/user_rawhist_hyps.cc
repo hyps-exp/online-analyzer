@@ -134,6 +134,7 @@ process_begin(const std::vector<std::string>& argv)
   // tab_macro->Add(macro::Get("effBcOut"));
   tab_macro->Add(macro::Get("effSDC_hyps"));
   tab_macro->Add(macro::Get("effSAC_hyps"));
+  tab_macro->Add(macro::Get("dispTAGMulti"));
   // tab_macro->Add(macro::Get("effALL"));
   // tab_macro->Add(macro::Get("dispBH2Fit"));
   // tab_macro->Add(macro::Get("dispDAQ"));
@@ -229,13 +230,15 @@ process_event()
     return 0;
 
   if (event_number % 1000 == 1){
-    if(!gRM.Decode())
-      std::cout << "RM Decode Failed" << std::endl;
-    const Int_t evnum_rm     = gRM.EventNumber();
-    const Int_t spill_rm     = gRM.SpillNumber();
-    std::cout << "Unpacker Event: " << event_number << spill_rm << std::endl;
-    std::cout << "RM Info) Event: " << evnum_rm << ", Spill: " << spill_rm << std::endl;
+    gRM.Decode();
+    // if(!gRM.Decode())
+    //   std::cout << "RM Decode Failed" << std::endl;
+    // const Int_t evnum_rm     = gRM.EventNumber();
+    // const Int_t spill_rm     = gRM.SpillNumber();
+    // std::cout << "Unpacker Event: " << event_number << spill_rm << std::endl;
+    // std::cout << "RM Info) Event: " << evnum_rm << ", Spill: " << spill_rm << std::endl;
   }
+#if 1 // 20251123, R.Kurata
 
   //------------------------------------------------------------------
   // TriggerFlag
@@ -2058,6 +2061,8 @@ std::cout << __FILE__ << " " << __LINE__ << std::endl;
 #endif
 
 #endif // Corre, BTOF, TF_TF, TF_GN1, TF_GN2
+
+#endif // 20251123, R.Kurata
 
   return 0;
 } //process_event()
