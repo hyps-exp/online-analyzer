@@ -346,7 +346,8 @@ process_event()
       if(host.Contains("online") &&
 	 event_number > 1 && curr_time - prev_time > alert_interval){
 	std::cout << "exec alert sound!" << std::endl;
-	gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/alarm_sound.wav\" &");
+	gSystem->Exec("ssh db-hyps \"aplay /home/sks/sound/alarm_sound.wav\" &");
+	gSystem->Exec("ssh monitor-hyps@rcnp.osaka-u.ac.jp \"aplay /home/sks/sound/alarm_sound.wav\" &");
 	prev_time = curr_time;
       }
       std::cout << "[Warning] Tagger rate is decreasing. "
@@ -370,7 +371,8 @@ process_event()
       if(host.Contains("online") &&
 	 event_number > 1 && curr_time - prev_time > 3){
 	std::cout << "exec tagslip sound!" << std::endl;
-	gSystem->Exec("ssh db-hyps \"aplay /misc/software/online-analyzer/dev/sound/tagslip.wav\" &");
+	gSystem->Exec("ssh db-hyps \"aplay /home/sks/sound/tagslip.wav\" &");
+	gSystem->Exec("ssh monitor-hyps@rcnp.osaka-u.ac.jp \"aplay /home/sks/sound/tagslip.wav\" &");
 	prev_time = curr_time;
       }
       std::ifstream ifs(tout);
