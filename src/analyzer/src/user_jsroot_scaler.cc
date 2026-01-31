@@ -83,8 +83,17 @@ process_begin(const std::vector<std::string>& argv)
 
   std::ifstream ifs("/misc/subdata/scaler/tagger_rate_threshold.txt");
   TString line;
-  if(ifs.is_open() && line.ReadLine(ifs)){
-    tagger_rate_threshold = line.Atof();
+  if (ifs.is_open()) {
+    while (line.ReadLine(ifs)) {
+      line = line.Strip(TString::kBoth); // Remove space before and after the strings
+      if (line.IsNull() || line.BeginsWith("#")) {
+	continue;
+      } else {
+	tagger_rate_threshold = line.Atof();
+	std::cout << "#D Tagger rate threshold is set to " << tagger_rate_threshold << std::endl;
+	break;
+      }
+    }
   }
 
   gScaler.SetFlag(ScalerAnalyzer::kSeparateComma);
