@@ -31,7 +31,7 @@ void dispTOF_ADC()
       gPad->SetLogy();
       TH1 *h = (TH1*)GHist::get( adc_id + i );
       if( !h ) continue;
-      h->GetXaxis()->SetRangeUser( adc_min, adc_max);
+      // h->GetXaxis()->SetRangeUser( adc_min, adc_max);
       h->Draw();
 
       // TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
@@ -55,7 +55,7 @@ void dispTOF_ADC()
       gPad->SetLogy();
       TH1 *h = (TH1*)GHist::get( adc_id + i );
       if( !h ) continue;
-      h->GetXaxis()->SetRangeUser( adc_min, adc_max);
+      // h->GetXaxis()->SetRangeUser( adc_min, adc_max);
       h->Draw();
 
       // TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
@@ -79,7 +79,7 @@ void dispTOF_ADC()
       gPad->SetLogy();
       TH1 *h = (TH1*)GHist::get( adc_id + i );
       if( !h ) continue;
-      h->GetXaxis()->SetRangeUser( adc_min, adc_max);
+      // h->GetXaxis()->SetRangeUser( adc_min, adc_max);
       h->Draw();
 
       // TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
@@ -103,7 +103,7 @@ void dispTOF_ADC()
       gPad->SetLogy();
       TH1 *h = (TH1*)GHist::get( adc_id + i );
       if( !h ) continue;
-      h->GetXaxis()->SetRangeUser( adc_min, adc_max);
+      // h->GetXaxis()->SetRangeUser( adc_min, adc_max);
       h->Draw();
 
       // TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
@@ -127,7 +127,7 @@ void dispTOF_ADC()
       gPad->SetLogy();
       TH1 *h = (TH1*)GHist::get( adc_id + i );
       if( !h ) continue;
-      h->GetXaxis()->SetRangeUser( adc_min, adc_max);
+      // h->GetXaxis()->SetRangeUser( adc_min, adc_max);
       h->Draw();
 
       // TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
@@ -151,7 +151,7 @@ void dispTOF_ADC()
       gPad->SetLogy();
       TH1 *h = (TH1*)GHist::get( adc_id + i );
       if( !h ) continue;
-      h->GetXaxis()->SetRangeUser( adc_min, adc_max);
+      // h->GetXaxis()->SetRangeUser( adc_min, adc_max);
       h->Draw();
 
       // TH1 *hh = (TH1*)GHist::get( adcwtdc_id + i );
