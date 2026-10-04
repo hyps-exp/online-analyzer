@@ -17,6 +17,7 @@
 #include <TStyle.h>
 #include <TString.h>
 #include <TText.h>
+#include <TLegend.h>
 
 #include "DetectorID.hh"
 #include "Main.hh"
@@ -165,6 +166,24 @@ Counter_TDC()
   c1->Update();
 
   return c1;
+}
+
+//_____________________________________________________________________________
+TCanvas*
+TAG_TDC2D(){
+  auto c = new TCanvas(__func__, __func__);
+  c->Divide(2, 2);
+
+  //draw TDC
+  int TAG_SF_base_id = HistMaker::getUniqueID(kTAG_SF, 0, kTDC, 0);
+
+  for( int i=0; i<11; ++i ){
+    c->cd(i+1);
+    TH1 *h = GHist::get(TAG_SF_base_id + i);
+    h->Draw();
+  }
+  c->Update();
+  return c;
 }
 
 //_____________________________________________________________________________
@@ -563,6 +582,22 @@ SDCIn_TDC(){
     hh1->SetLineColor( kRed );
     hh1->Draw("same");
   }
+  TLine* l_raw = new TLine(0, 0, 1, 0);
+  l_raw->SetLineColor(kBlue);
+  l_raw->SetLineWidth(3);
+  TLine* l_cut_tot = new TLine(0, 0, 1, 0);
+  l_cut_tot->SetLineColor(kRed);
+  l_cut_tot->SetLineWidth(3);
+  TLine* l_cut_tot1st = new TLine(0, 0, 1, 0);
+  l_cut_tot1st->SetLineColor(kGreen);
+  l_cut_tot1st->SetLineWidth(3);
+
+  TLegend* leg = new TLegend(0.2, 0.2, 0.8, 0.8);
+  leg->SetBorderSize(2);
+  leg->AddEntry(l_raw, "No Cut", "l");
+  leg->AddEntry(l_cut_tot, "TOT Cut", "l");
+  leg->AddEntry(l_cut_tot1st, "TOT1st Cut", "l");
+  leg->Draw();
   c->Update();
   return c;
 }
@@ -643,6 +678,24 @@ SDCIn_TOT(){
     hh1->SetLineColor( kRed );
     hh1->Draw("same");
   }
+
+  c->cd(6);
+  TLine* l_raw = new TLine(0, 0, 1, 0);
+  l_raw->SetLineColor(kBlue);
+  l_raw->SetLineWidth(3);
+  TLine* l_cut_tot = new TLine(0, 0, 1, 0);
+  l_cut_tot->SetLineColor(kRed);
+  l_cut_tot->SetLineWidth(3);
+  TLine* l_cut_tot1st = new TLine(0, 0, 1, 0);
+  l_cut_tot1st->SetLineColor(kGreen);
+  l_cut_tot1st->SetLineWidth(3);
+
+  TLegend* leg = new TLegend(0.2, 0.2, 0.8, 0.8);
+  leg->SetBorderSize(2);
+  leg->AddEntry(l_raw, "No Cut", "l");
+  leg->AddEntry(l_cut_tot, "TOT Cut", "l");
+  leg->AddEntry(l_cut_tot1st, "TOT1st Cut", "l");
+  leg->Draw();
   c->Update();
   return c;
 }
@@ -682,6 +735,22 @@ SDCIn_HitPat(){
     hh1->SetLineColor( kRed );
     hh1->Draw("same");
   }
+
+  c->cd(6);
+  TLine* l_raw = new TLine(0, 0, 1, 0);
+  l_raw->SetLineColor(kBlue);
+  l_raw->SetLineWidth(3);
+  TLine* l_cut_tot = new TLine(0, 0, 1, 0);
+  l_cut_tot->SetLineColor(kRed);
+  l_cut_tot->SetLineWidth(3);
+
+  TLegend* leg = new TLegend(0.2, 0.2, 0.8, 0.8);
+  leg->SetBorderSize(0);
+  leg->SetFillStyle(0);
+  leg->AddEntry(l_raw, "No Cut", "l");
+  leg->AddEntry(l_cut_tot, "TOT Cut", "l");
+  leg->Draw();
+
   c->Update();
   return c;
 }
@@ -950,6 +1019,22 @@ SDCOut_HitPat(){
     hh1->SetLineColor( kRed );
     hh1->Draw("same");
   }
+
+  c->cd(6);
+  TLine* l_raw = new TLine(0, 0, 1, 0);
+  l_raw->SetLineColor(kBlue);
+  l_raw->SetLineWidth(3);
+  TLine* l_cut_tot = new TLine(0, 0, 1, 0);
+  l_cut_tot->SetLineColor(kRed);
+  l_cut_tot->SetLineWidth(3);
+
+  TLegend* leg = new TLegend(0.2, 0.2, 0.8, 0.8);
+  leg->SetBorderSize(0);
+  leg->SetFillStyle(0);
+  leg->AddEntry(l_raw, "No Cut", "l");
+  leg->AddEntry(l_cut_tot, "TOT Cut", "l");
+  leg->Draw();
+
   c->Update();
   return c;
 }
@@ -1811,7 +1896,11 @@ CFTHighGain2D_check2()
     h->Draw("colz");
 
     // missing channel
-    if(l==1){
+    if(l==0){
+      TLine *l1 = new TLine(388.5, 0, 388.5, 4000);
+      l1->SetLineColor(kRed);
+      l1->Draw("same");
+    }else if(l==1){
       TLine *l1 = new TLine(739.5, 0, 739.5, 4000);
       l1->SetLineColor(kRed);
       l1->Draw("same");
@@ -1964,7 +2053,7 @@ CFTHitPat()
 
   int base_id = HistMaker::getUniqueID(kCFT, 0, kHitPat, 1);
   int base_id_ct = HistMaker::getUniqueID(kCFT, 0, kHitPat, 11);
-  int base_id_ctwb = HistMaker::getUniqueID(kCFT, 0, kHitPat, 21);
+  // int base_id_ctwb = HistMaker::getUniqueID(kCFT, 0, kHitPat, 21);
 
   for(Int_t l=0; l<NumOfLayersCFT; ++l){
     c1->cd(l+1);
@@ -1977,12 +2066,26 @@ CFTHitPat()
     h2->SetMinimum(0);
     h2->SetLineColor(kRed);
     h2->Draw("same");
-    TH1 *h3 = GHist::get(base_id_ctwb+l);
-    if(!h3) continue;
-    h3->SetMinimum(0);
-    h3->SetLineColor(kGreen);
-    h3->Draw("same");
+    // TH1 *h3 = GHist::get(base_id_ctwb+l);
+    // if(!h3) continue;
+    // h3->SetMinimum(0);
+    // h3->SetLineColor(kGreen);
+    // h3->Draw("same");
   }
+  c1->cd(1);
+  TLine* l_raw = new TLine(0, 0, 1, 0);
+  l_raw->SetLineColor(kBlue);
+  l_raw->SetLineWidth(3);
+  TLine* l_cut_tot = new TLine(0, 0, 1, 0);
+  l_cut_tot->SetLineColor(kRed);
+  l_cut_tot->SetLineWidth(3);
+
+  TLegend* leg = new TLegend(0.5, 0.6, 0.9, 0.78);
+  leg->SetBorderSize(0);
+  leg->SetFillStyle(0);
+  leg->AddEntry(l_raw, "No Cut", "l");
+  leg->AddEntry(l_cut_tot, "TDC Cut", "l");
+  leg->Draw("same");
   return c1;
 }
 
@@ -2230,6 +2333,20 @@ BGOHitMulti()
   hh3->SetLineColor(kRed);
   hh3->Draw("same");
 
+  c1->cd(8);
+  TLine* l_raw = new TLine(0, 0, 1, 0);
+  l_raw->SetLineColor(kBlue);
+  l_raw->SetLineWidth(3);
+  TLine* l_cut_tot = new TLine(0, 0, 1, 0);
+  l_cut_tot->SetLineColor(kRed);
+  l_cut_tot->SetLineWidth(3);
+
+  TLegend* leg = new TLegend(0.2, 0.2, 0.8, 0.8);
+  leg->SetBorderSize(0);
+  leg->SetFillStyle(0);
+  leg->AddEntry(l_raw, "No Cut", "l");
+  leg->AddEntry(l_cut_tot, "TDC Cut", "l");
+  leg->Draw("same");
   return c1;
 }
 
@@ -2337,6 +2454,21 @@ PiIDADC2DHitMulti()
       h->Draw("same");
     }
   }
+  {
+    TLine* l_raw = new TLine(0, 0, 1, 0);
+    l_raw->SetLineColor(kBlue);
+    l_raw->SetLineWidth(3);
+    TLine* l_cut_tot = new TLine(0, 0, 1, 0);
+    l_cut_tot->SetLineColor(kRed);
+    l_cut_tot->SetLineWidth(3);
+
+    TLegend* leg = new TLegend(0.5, 0.6, 0.9, 0.78);
+    leg->SetBorderSize(0);
+    leg->SetFillStyle(0);
+    leg->AddEntry(l_raw, "No Cut", "l");
+    leg->AddEntry(l_cut_tot, "TDC Cut", "l");
+    leg->Draw("same");
+  }
   c1->cd(4);
   for(Int_t i=0; i<2; ++i){
     h = GHist::get(base_id_m+i);
@@ -2346,6 +2478,21 @@ PiIDADC2DHitMulti()
       h->SetLineColor(kRed);
       h->Draw("same");
     }
+  }
+  {
+    TLine* l_raw = new TLine(0, 0, 1, 0);
+    l_raw->SetLineColor(kBlue);
+    l_raw->SetLineWidth(3);
+    TLine* l_cut_tot = new TLine(0, 0, 1, 0);
+    l_cut_tot->SetLineColor(kRed);
+    l_cut_tot->SetLineWidth(3);
+
+    TLegend* leg = new TLegend(0.5, 0.6, 0.9, 0.78);
+    leg->SetBorderSize(0);
+    leg->SetFillStyle(0);
+    leg->AddEntry(l_raw, "No Cut", "l");
+    leg->AddEntry(l_cut_tot, "TDC Cut", "l");
+    leg->Draw("same");
   }
   return c1;
 }
