@@ -582,22 +582,6 @@ SDCIn_TDC(){
     hh1->SetLineColor( kRed );
     hh1->Draw("same");
   }
-  TLine* l_raw = new TLine(0, 0, 1, 0);
-  l_raw->SetLineColor(kBlue);
-  l_raw->SetLineWidth(3);
-  TLine* l_cut_tot = new TLine(0, 0, 1, 0);
-  l_cut_tot->SetLineColor(kRed);
-  l_cut_tot->SetLineWidth(3);
-  TLine* l_cut_tot1st = new TLine(0, 0, 1, 0);
-  l_cut_tot1st->SetLineColor(kGreen);
-  l_cut_tot1st->SetLineWidth(3);
-
-  TLegend* leg = new TLegend(0.2, 0.2, 0.8, 0.8);
-  leg->SetBorderSize(2);
-  leg->AddEntry(l_raw, "No Cut", "l");
-  leg->AddEntry(l_cut_tot, "TOT Cut", "l");
-  leg->AddEntry(l_cut_tot1st, "TOT1st Cut", "l");
-  leg->Draw();
   c->Update();
   return c;
 }
@@ -981,6 +965,23 @@ SDCOut_TOT(){
     hh1->SetLineColor( kRed );
     hh1->Draw("same");
   }
+  c->cd(12);
+  TLine* l_raw = new TLine(0, 0, 1, 0);
+  l_raw->SetLineColor(kBlue);
+  l_raw->SetLineWidth(3);
+  TLine* l_cut_tot = new TLine(0, 0, 1, 0);
+  l_cut_tot->SetLineColor(kRed);
+  l_cut_tot->SetLineWidth(3);
+  TLine* l_cut_tot1st = new TLine(0, 0, 1, 0);
+  l_cut_tot1st->SetLineColor(kGreen);
+  l_cut_tot1st->SetLineWidth(3);
+
+  TLegend* leg = new TLegend(0.2, 0.2, 0.8, 0.8);
+  leg->SetBorderSize(2);
+  leg->AddEntry(l_raw, "No Cut", "l");
+  leg->AddEntry(l_cut_tot, "TOT Cut", "l");
+  leg->AddEntry(l_cut_tot1st, "TOT1st Cut", "l");
+  leg->Draw();
   c->Update();
   return c;
 }
