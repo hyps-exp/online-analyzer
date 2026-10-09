@@ -6,6 +6,8 @@
 #include <iostream>
 #include <cstdlib>
 
+#include <TMath.h>
+
 #include "ConfMan.hh"
 #include "DetectorID.hh"
 #include "EMCParamMan.hh"
