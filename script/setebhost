@@ -9,5 +9,8 @@ for ip in $ip_list; do
     elif [[ $ip == 192.168.30.* ]]; then
 	ebhost=eb-hyps.user.hypsnet
 	break
+    elif [[ $ip == 172.16.*.* ]]; then
+	ebhost=eb-hyps.rcnp.osaka-u.ac.jp
+	break
     fi
 done
